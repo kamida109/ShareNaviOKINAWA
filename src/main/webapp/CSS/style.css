@@ -1,0 +1,108 @@
+
+/* home & my_page & search & details & add_store & category & contact */
+
+/* メニューバーから下のスクロール可能なフレーム */
+.frame {
+	position: fixed;
+	top: calc(100px + 45px + 4px + 10px);
+	bottom: 35px;
+	left: 2.5vw;
+	right: 2.5vw;
+	height: auto;
+	width: auto;
+	z-index: 1;
+	overflow-y: auto;
+	text-align: center;
+}
+
+/* 入力フォームのフレーム */
+.input_form {
+	display: inline-block;
+	margin-top: 20px;
+	width: auto;
+	padding: 10px 300px 10px 300px;
+	background-color: #d0ddff88;
+}
+
+/* 入力フォームの隠れたフレーム */
+.input_form_hidden {
+	margin-top: 20px;
+}
+
+/* 入力フォームのインナーフレーム */
+.input_form_inner {
+	top: 0;
+	width: auto;
+	height: auto;
+	text-align: right;
+}
+
+/* 表のための折り畳み */
+details {
+	margin-top: 20px;
+
+}
+
+/* 表のための折り畳みタイトル */
+summary {
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 90%;
+	border: 2px solid #c0c0c0;
+	background-color: #c0c0c0;
+}
+
+/* 表のためのスクロール可能なフレーム */
+.scroll {
+	margin-top: 0;
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 90%;
+	height: 500px;
+	border: 2px solid #c0c0c0;
+	background-color: #e0e0ff80;
+	overflow-y: auto;
+}
+
+/* 表の設定 */
+.scroll table {
+	width: 100%;
+}
+
+/* お店表の設定 */
+.store_table .top {
+	border: 1px solid #000000;
+}
+.store_table .bottom {
+	border: 1px solid #000000;
+}
+.store_table img {
+	width: 180px;
+	height: 180px;
+}
+.store_table a {
+	font-size: 35px;
+	font-weight: bold;
+}
+.store_table .t_image {
+	height: 200px;
+}
+.store_table .t_cities {
+	height: 50px;
+}
+.store_table .t_name {
+	height: 50px;
+}
+
+/* 一覧表の設定 */
+.other_table th {
+	position: sticky;
+	top: 0px;
+	background-color: #e0e0f0;
+}
+.other_table tr {
+	background-color: #eeeef0;
+}
+.other_table td {
+	text-align: center;
+}

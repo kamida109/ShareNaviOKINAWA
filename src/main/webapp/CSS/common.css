@@ -1,0 +1,81 @@
+
+body {
+	margin: 0;
+	position: relative;
+	width: 100vw;
+	min-height: 100vh;
+	z-index: 0;
+	background-image: url(image/okinawa.jpg);
+	font-size: 25px;
+	color: #000080;
+}
+
+/* 背景画像を白く濁らせる1 */
+.white_noise1 {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	z-index: 0;
+	background-color: #f5f5f595;
+}
+
+/* 背景画像を白く濁らせる2 */
+.white_noise2 {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	z-index: 0;
+	background-color: #f5f5f570;
+}
+
+/* ボタンの色 */
+button {
+	border: solid 2px #000080;
+	border-radius: 3px;
+	background-color: #b0e0ff;
+	font-size: 20px;
+	color: #000080;
+}
+button:hover{
+	background-color: #8fffd3;
+}
+
+/* inputのサイズ */
+input {
+	width: 195px;
+	height: 30px;
+	border-radius: 3px;
+	font-size: 20px;
+}
+
+/* checkboxのサイズ */
+input[type=checkbox] {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
+
+/* selectのサイズ */
+select {
+	width: 200px;
+	height: 35px;
+	border-radius: 3px;
+	font-size: 20px;
+}
+
+/* 各入力部品の色 */
+input, select, textarea {
+	border: solid 2px #000080;
+	border-radius: 3px;
+	background-color: #f0ffff;
+}
+
+/* textareaの周りが下寄せにならないように */
+textarea{
+	vertical-align: top;
+}
+
+/* 赤文字 */
+.error {
+	color: #ff0000;
+}

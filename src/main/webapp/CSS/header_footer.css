@@ -1,0 +1,107 @@
+
+/* ---------- ヘッダー ---------- */
+
+	header {
+		position: fixed;
+		top: 0px;
+		height: calc(100px + 45px + 4px);
+		z-index: 5;
+	}
+
+	header h1 {
+		position: fixed;
+		top: 0px;
+		left: 5vw;
+		z-index: 5;
+		font-size: 50px;
+		font-style: italic;
+		color: #000080;
+	}
+
+	header .signin_userinfo {
+		position: fixed;
+		top: 60px;
+		right: calc(2.5vw + 120px);
+		z-index: 5;
+		font-size: 20px;
+		color: #000080;
+	}
+
+	header 	.signout{
+		position: fixed;
+		display: block;
+		top: 60px;
+		right: 2.5vw;
+		width: 100px;
+		height: auto;
+		text-align: center;
+		z-index: 5;
+		border: 1px solid #ccccec;;
+		border-radius: 5px;
+		background-color: #ccccec;
+		font-size: 20px;
+		text-decoration: none;
+		color: #ffffff;
+	}
+
+	header div {
+		position: fixed;
+		top: 100px;
+		left: 2.5vw;
+		right: 2.5vw;
+		width: 95vw;
+		height: auto;
+		z-index: 5;
+	}
+
+	header ul{
+		margin-top: 0;
+		padding: 0;
+		width: auto;
+		height: auto;
+		z-index: 5;
+		list-style-type: none;
+	}
+
+	header li{
+		display: inline;
+		margin: 0;
+		padding: 0;
+		height: auto;
+		z-index: 5;
+		float: left;
+	}
+
+	header li a{
+		display: block;
+		width: calc(95vw / 5 - 4px );
+		height: 45px;
+		text-align: center;
+		z-index: 6;
+		font-size: 33px;
+		border: 2px solid #ccccec;
+		background-color: #ccccec;
+		text-decoration: none;
+		color: #ffffff;
+	}
+
+	header li a:hover,
+	header .signout:hover {
+		border: 2px solid #8fffd3;
+		background-color: #8fffd3;
+	}
+
+	header .current {
+		border: 2px solid #5555ff;
+		background-color: #5555ff;
+	}
+
+/* ---------- フッター ---------- */
+
+	footer {
+		position: fixed;
+		bottom: 0;
+		left: 2vw;
+		font-weight: normal;
+		color: #494949;
+	}

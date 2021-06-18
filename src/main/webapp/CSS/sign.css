@@ -1,0 +1,31 @@
+
+/* topから10%ほどの位置からコンテンツを始める */
+/* 全てのコンテンツを中央揃え */
+.sign_frame {
+	padding-top: 10%;
+	padding-bottom: 5%;
+	text-align: center;
+}
+
+/* タイトル */
+h1 {
+	color: #000080;
+	font-style: italic;
+}
+
+/* 入力フォームのフレーム */
+.sign_form {
+	display: inline-block;
+	width: auto;
+	padding: 20px 80px 20px 80px;
+	background-color: #d0ddff88;
+}
+
+/* 入力フォームの隠れたフレーム */
+.sign_form_hidden {
+	display: inline-block;
+	text-align: right;
+	padding: 0;
+	font-weight: bold;
+	color: #000080;
+}
