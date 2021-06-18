@@ -14,6 +14,17 @@
 				<!-- ---------- ここから本体 ---------- -->
 
 
+				<h2></h2>
+				<form:form>
+					<form:input path="userName"/>
+
+
+
+				</form:form>
+
+				<form action="add_store_check">
+					<p><button class="btn" type="submit" name="check">確認</button></p>
+				</form>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
