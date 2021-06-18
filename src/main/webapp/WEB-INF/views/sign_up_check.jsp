@@ -11,9 +11,9 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<h2>新規登録</h2>
+				<h2>新規登録確認</h2>
 
-				<p>IDとPASSは半角英数字で入力してください</p>
+				<p>こちらの内容でよろしいでしょうか？</p>
 
 				<p class="error">${msg}</p>
 
@@ -22,6 +22,7 @@
 					<p><label>NAME : <input type="text" name="name"/></label></p>
 					<p><label>  ID : <input type="text" name="userId"/></label></p>
 					<p><label>PASS : <input type="password" name="pass"/></label></p>
+					<p><label>PASS(再) : <input type="password" name="passRe"/></label></p>
 				</div></div>
 				<div class="sign_form">
 					この中であなたが好きなものを3つまで選んでください<br>
@@ -44,10 +45,10 @@
 						<option>インドア</option>
 					</select>
 				</div>
-					<p><button class="btn" type="submit" name="check">確認</button></p>
+					<p><button class="btn" type="submit" name="update">登録</button></p>
 				</form>
 
-				<p><button class="btn" type="button" onclick="location.href='sign_in'">戻る</button></p>
+				<p><button class="btn" type="button" onclick="location.href='sign_up'">戻る</button></p>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

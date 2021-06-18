@@ -8,7 +8,7 @@ public class HomeController {
 
 	// ホーム画面
 	@RequestMapping(value = "/home")
-	public String home() {
+	public String jumpHome() {
 		return "home";
 	}
 
