@@ -37,7 +37,7 @@ public class SearchDaoImpl implements SearchDao{
 
 	// 店舗検索
 	@Override
-	public List<Store> storeSearch(String storeName, String category, String city, Integer hyouka) {
+	public List<Store> storeSearch(String storeName, String category, String city, boolean hyouka) {
 		String storeSearch = SQL_SEARCH;
 
 		List<Store> storeList = new ArrayList<Store>();
@@ -90,7 +90,7 @@ public class SearchDaoImpl implements SearchDao{
 		}
 
 		// 評価3以上
-		if(hyouka!=null) {
+		if(hyouka) {
 			storeSearch += " HAVING avg(hyouka) >= 3";
 		}
 
