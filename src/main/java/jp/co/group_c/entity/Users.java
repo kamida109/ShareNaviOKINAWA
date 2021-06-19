@@ -1,6 +1,6 @@
 package jp.co.group_c.entity;
 
-public class users {
+public class Users {
 
 	private Integer userId;
 	private String userName;
@@ -13,7 +13,7 @@ public class users {
 	private String categoryName;
 	private Integer mainCategory;
 
-	public users() {
+	public Users() {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
