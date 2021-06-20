@@ -43,10 +43,6 @@ public class SearchController {
 	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
 	public String searchResult(@ModelAttribute("search") SearchForm form, Model model) {
 
-		System.out.println("キーワード：" + form.getStoreName());
-		System.out.println("カテゴリ：" + form.getCategory());
-		System.out.println("場所：" + form.getCity());
-
 		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategoryId(), form.getCitiesId(), form.isHyouka());
 
 		// 店舗検索
