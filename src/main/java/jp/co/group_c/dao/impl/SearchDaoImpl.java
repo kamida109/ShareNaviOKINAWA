@@ -95,6 +95,24 @@ public class SearchDaoImpl implements SearchDao{
 		}
 
 		storeList = jdbcTemplate.query(storeSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
-		return storeList;	}
+		return storeList;
+
+	}
+
+	// あいまい検索
+	@Override
+	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
+		String partSearch = SQL_SEARCH + "AND store_name LIKE %:storeName%";
+
+		param.addValue("storeName", storeName);
+
+		if(hyouka) {
+			partSearch += " HAVING avg(hyouka) >= 3";
+		}
+
+		List<Store> partStore = jdbcTemplate.query(partSearch, param, new BeanPropertyRowMapper<Store>(Store.class));;
+
+		return partStore;
+	}
 
 }

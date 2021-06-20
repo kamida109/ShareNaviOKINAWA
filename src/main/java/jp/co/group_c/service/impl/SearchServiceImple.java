@@ -23,4 +23,10 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.storeSearch(storeName, category, city, hyouka);
 	}
 
+	// あいまい検索
+	@Override
+	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
+		return searchDao.partStoreSearch(storeName, hyouka);
+	}
+
 }
