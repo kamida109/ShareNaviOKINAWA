@@ -39,6 +39,13 @@ public class SearchController {
 		}
 
 		// あいまい検索
+		List<Store> partStoreList = searchService.partStoreSearch(form.getStoreName(), form.isChecked());
+
+		if(partStoreList.isEmpty()) {
+			model.addAttribute("selectResult", "対象のデータはありませんでした");
+		} else {
+			model.addAttribute("selectPartResult", partStoreList);
+		}
 
 		return "search";
 	}
