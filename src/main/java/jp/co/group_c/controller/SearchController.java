@@ -56,8 +56,10 @@ public class SearchController {
 			model.addAttribute("selectResult", storeList);
 		}
 
+		// あいまい検索用にキーワードの前後に「%」をつける
+		String index = "%" + form.getStoreName() + "%";
 		// あいまい検索
-		List<Store> partStoreList = searchService.partStoreSearch(form.getStoreName(), form.isHyouka());
+		List<Store> partStoreList = searchService.partStoreSearch(index, form.isHyouka());
 
 		if(partStoreList.isEmpty()) {
 			model.addAttribute("selectResult", "対象のデータはありませんでした");

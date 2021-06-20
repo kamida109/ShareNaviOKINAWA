@@ -33,12 +33,12 @@ public class SearchDaoImpl implements SearchDao{
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
 	private static final String SQL_SEARCH = "SELECT store_name, category_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '')"
-												+ "FROM store AS s"
-												+ "JOIN store_category AS sc ON s.store_id = sc.store_id"
-												+ "JOIN category AS c ON sc.category_id = c.category_id"
-												+ "JOIN cities AS city ON s.cities_id = city.cities_id"
-												+ "JOIN review AS r ON s.store_id = r.store_id"
-												+ "JOIN images AS i ON s.store_id = i.store_id"
+												+ "FROM store AS s\n"
+												+ "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
+												+ "JOIN category AS c ON sc.category_id = c.category_id\n"
+												+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
+												+ "JOIN review AS r ON s.store_id = r.store_id\n"
+												+ "JOIN images AS i ON s.store_id = i.store_id\n"
 												+ "WHERE 1=1";
 
 	// 市町村テーブル全件取得
@@ -64,54 +64,62 @@ public class SearchDaoImpl implements SearchDao{
 
 		// 全入力
 		if(!storeName.isEmpty() && categoryId!=null && cityId!=null) {
-			storeSearch += " AND store_name = :storeName AND category_id = :categoryId AND cities_id = :cityId";
+			storeSearch += " AND store_name = :storeName AND c.category_id = :category AND city.cities_id = :city\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("storeName", storeName);
-			param.addValue("categoryId", categoryId);
-			param.addValue("cityId", cityId);
+			param.addValue("category", categoryId);
+			param.addValue("city", cityId);
 		}
 
 		// 店舗名+カテゴリ
 		if(!storeName.isEmpty() && categoryId!=null && cityId==null) {
-			storeSearch += " AND store_name = :storeName AND category_id = :category";
+			storeSearch += " AND store_name = :storeName AND c.category_id = :category\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("storeName", storeName);
 			param.addValue("category", categoryId);
 		}
 
 		// 店舗名+市町村
 		if(!storeName.isEmpty() && categoryId==null && cityId!=null) {
-			storeSearch += " AND store_name = :storeName AND cities_id = :city";
+			storeSearch += " AND store_name = :storeName AND city.cities_id = :city\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("storeName", storeName);
 			param.addValue("city", cityId);
 		}
 
 		// カテゴリ+市町村
 		if(storeName.isEmpty() && categoryId!=null && cityId!=null) {
-			storeSearch += " AND category_id = :category AND cities_id = :city";
+			System.out.println("メソッド");
+			storeSearch += " AND c.category_id = :category AND city.cities_id = :city\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("category", categoryId);
 			param.addValue("city", cityId);
 		}
 
 		// 店舗名のみ
 		if(!storeName.isEmpty() && categoryId==null && cityId==null) {
-			storeSearch += " AND store_name = :storeName";
+			storeSearch += " AND store_name = :storeName\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("storeName", storeName);
 		}
 
 		// カテゴリのみ
 		if(storeName.isEmpty() && categoryId!=null && cityId==null) {
-			storeSearch += " AND category_id = :category";
+			storeSearch += " AND c.category_id = :category\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("category", categoryId);
 		}
 
 		// 市町村のみ
 		if(storeName.isEmpty() && categoryId==null && cityId!=null) {
-			storeSearch += " AND cities_Id = :city";
+			storeSearch += " AND city.cities_Id = :city\n"
+						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("city", cityId);
 		}
 
 		// 評価3以上
 		if(hyouka) {
-			storeSearch += " HAVING avg(hyouka) >= 3";
+			storeSearch += "\nHAVING avg(hyouka) >= 3";
 		}
 
 		storeList = jdbcTemplate.query(storeSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
@@ -122,12 +130,12 @@ public class SearchDaoImpl implements SearchDao{
 	// あいまい検索
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
-		String partSearch = SQL_SEARCH + "AND store_name LIKE %:storeName%";
-
+		String partSearch = SQL_SEARCH + "AND store_name LIKE :storeName\n"
+							+ "GROUP BY store_name, category_name, cities_name";
 		param.addValue("storeName", storeName);
 
 		if(hyouka) {
-			partSearch += " HAVING avg(hyouka) >= 3";
+			partSearch += "\n HAVING avg(hyouka) >= 3";
 		}
 
 		List<Store> partStore = jdbcTemplate.query(partSearch, param, new BeanPropertyRowMapper<Store>(Store.class));;
