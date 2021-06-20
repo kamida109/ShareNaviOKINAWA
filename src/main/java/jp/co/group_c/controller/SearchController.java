@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,8 +39,9 @@ public class SearchController {
 		return "search";
 	}
 
+	// 検索結果
 	@RequestMapping(value = "/search", method=RequestMethod.GET)
-	public String searchResult(SearchForm form, Model model) {
+	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
 		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategory(), form.getCity(), form.isChecked());
 
