@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jp.co.group_c.dao.SearchDao;
+import jp.co.group_c.entity.Category;
+import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 
 @Repository
@@ -26,6 +28,10 @@ public class SearchDaoImpl implements SearchDao{
 	// 入力値の埋め込み
     MapSqlParameterSource param = new MapSqlParameterSource();
 
+    private static final String SQL_CITEIS = "SELECT * FROM cities";
+
+    private static final String SQL_CATEGORY = "SELECT * FROM category";
+
 	private static final String SQL_SEARCH = "SELECT store_name, category_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '')"
 												+ "FROM store AS s"
 												+ "JOIN store_category AS sc ON s.store_id = sc.store_id"
@@ -34,6 +40,20 @@ public class SearchDaoImpl implements SearchDao{
 												+ "JOIN review AS r ON s.store_id = r.store_id"
 												+ "JOIN images AS i ON s.store_id = i.store_id"
 												+ "WHERE 1=1";
+
+	// 市町村テーブル全件取得
+	@Override
+	public List<Cities> cities() {
+		List<Cities> citiesList = jdbcTemplate.query(SQL_CITEIS, new BeanPropertyRowMapper<Cities>(Cities.class));
+		return citiesList;
+	}
+
+	// カテゴリテーブル全件取得
+	@Override
+	public List<Category> category() {
+		List<Category> categoryList = jdbcTemplate.query(SQL_CATEGORY, new BeanPropertyRowMapper<Category>(Category.class));
+		return categoryList;
+	}
 
 	// 店舗検索
 	@Override

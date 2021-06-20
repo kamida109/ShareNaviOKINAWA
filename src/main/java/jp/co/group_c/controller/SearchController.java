@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.group_c.controller.form.SearchForm;
+import jp.co.group_c.entity.Category;
+import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.service.SearchService;
 
@@ -26,8 +29,17 @@ public class SearchController {
 	@RequestMapping(value = "/search")
 	public String search(SearchForm form, Model model) {
 
-		//modelテスト
-//		model.addAttribute("selectResult", "国立劇場のラーメン屋");
+		List<Cities> citiesList = searchService.cities();
+		session.setAttribute("cities", citiesList);
+
+		List<Category> categoryList = searchService.category();
+		session.setAttribute("category", categoryList);
+
+		return "search";
+	}
+
+	@RequestMapping(value = "/search", method=RequestMethod.GET)
+	public String searchResult(SearchForm form, Model model) {
 
 		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategory(), form.getCity(), form.isChecked());
 

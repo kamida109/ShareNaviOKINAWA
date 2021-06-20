@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.group_c.dao.SearchDao;
+import jp.co.group_c.entity.Category;
+import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.service.SearchService;
 
@@ -16,6 +18,16 @@ public class SearchServiceImple implements SearchService{
 
 	@Autowired
 	private SearchDao searchDao;
+
+	@Override
+	public List<Cities> cities() {
+		return searchDao.cities();
+	}
+
+	@Override
+	public List<Category> category() {
+		return searchDao.category();
+	}
 
 	// 店舗検索
 	@Override
