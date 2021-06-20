@@ -28,7 +28,7 @@ public class SearchController {
 
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
-	public String search(SearchForm form, Model model) {
+	public String search(@ModelAttribute("search") SearchForm form, Model model) {
 
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
@@ -40,10 +40,10 @@ public class SearchController {
 	}
 
 	// 検索結果
-	@RequestMapping(value = "/search", method=RequestMethod.GET)
-	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
+	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
+	public String searchResult(@ModelAttribute("search") SearchForm form, Model model) {
 
-		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategory(), form.getCity(), form.isChecked());
+		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategory(), form.getCity(), form.isHyouka());
 
 		// 店舗検索
 		if(storeList.isEmpty()) {
@@ -53,7 +53,7 @@ public class SearchController {
 		}
 
 		// あいまい検索
-		List<Store> partStoreList = searchService.partStoreSearch(form.getStoreName(), form.isChecked());
+		List<Store> partStoreList = searchService.partStoreSearch(form.getStoreName(), form.isHyouka());
 
 		if(partStoreList.isEmpty()) {
 			model.addAttribute("selectResult", "対象のデータはありませんでした");
