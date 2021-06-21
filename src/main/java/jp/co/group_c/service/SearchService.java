@@ -15,7 +15,7 @@ public interface SearchService {
 	public List<Category> mainCategory();
 
 	// カテゴリテーブルのサブカテゴリを取得
-	public List<Category> subCategory();
+	public List<Category> subCategory(Integer mainId);
 
 	// 店舗検索
 	public List<Store> storeSearch(String storeName, Integer categoryId, Integer cityid, boolean hyouka);

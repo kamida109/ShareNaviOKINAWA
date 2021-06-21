@@ -58,9 +58,15 @@ public class SearchDaoImpl implements SearchDao{
 
 	// カテゴリメインカテゴリ取得
 	@Override
-	public List<Category> subCategory() {
-		String subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null";
-		List<Category> subCategoryList = jdbcTemplate.query(subCategory, new BeanPropertyRowMapper<Category>(Category.class));
+	public List<Category> subCategory(Integer mainId) {
+		String subCategory = SQL_CATEGORY;
+		if(mainId==null) {
+			subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null";
+		}else {
+			subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null AND main_category = :mainId";
+		}
+		param.addValue("mainId", mainId);
+		List<Category> subCategoryList = jdbcTemplate.query(subCategory, param, new BeanPropertyRowMapper<Category>(Category.class));
 		return subCategoryList;
 	}
 

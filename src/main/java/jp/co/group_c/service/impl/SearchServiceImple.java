@@ -30,8 +30,8 @@ public class SearchServiceImple implements SearchService{
 	}
 
 	@Override
-	public List<Category> subCategory() {
-		return searchDao.subCategory();
+	public List<Category> subCategory(Integer mainId) {
+		return searchDao.subCategory(mainId);
 	}
 
 	// 店舗検索

@@ -1,4 +1,3 @@
-search.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -22,12 +21,16 @@ search.jsp
 
 					<p>
 					<label>カテゴリ：
-						<form:select path="mainCategoryId">
+						<form:select id="mainCategory" path="mainCategoryId">
 							<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
 						</form:select>
-						<form:select path="subCategoryId">
-							<form:options items="${subCategory}" itemLabel="categoryName" itemValue="categoryId" />
-						</form:select>
+<%-- 						<form:select id="subCategory" path="subCategoryId"> --%>
+<%-- 							<form:options items="${subCategory}" itemLabel="categoryName" itemValue="categoryId" /> --%>
+<%-- 						</form:select> --%>
+
+						<select id="subCategory">
+<!-- 						<option value=""></option> -->
+						</select>
 					</label>
 					</p>
 
@@ -46,7 +49,6 @@ search.jsp
 
 				</form:form>
 
-
 				<details open>
 				<summary>店名検索</summary>
 					<jsp:include page="/COMMON/table_store.jsp"/>
@@ -56,6 +58,25 @@ search.jsp
 				<summary>あいまい検索</summary>
 					<jsp:include page="/COMMON/table_store.jsp"/>
 				</details>
+
+				<script src="/js/jquery-3.6.0.min.js"></script>
+				<script>
+					$(function(){
+						$("#mainCategory").change(function(){
+							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
+							var value = $("#mainCategory").val();
+							//$("#subCategory").removeAttr(data);
+							// コントローラに送信
+							$.get("pulldown/"+value, function(data){
+								console.log(data);
+								var obj = data;
+								//$("#subCategory").removeAttr();
+								$("#subCategory").html(data);
+							})
+						})
+					})
+				</script>
+
 
 				<!-- ---------- ここまで本体 ---------- -->
 

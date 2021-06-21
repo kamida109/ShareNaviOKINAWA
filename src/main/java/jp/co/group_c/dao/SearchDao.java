@@ -15,7 +15,7 @@ public interface SearchDao {
 	public List<Category> mainCategory();
 
 	// カテゴリテーブルのサブカテゴリを取得
-	public List<Category> subCategory();
+	public List<Category> subCategory(Integer mianId);
 
 	// 店舗検索
 	public List<Store> storeSearch(String storeName, Integer categoryId, Integer cityId, boolean hyouka);
