@@ -24,7 +24,7 @@
 		});
 	</script>
 
-	<a href="/home"><h1>ShareNaviOKINAWA<h1></a>
+	<a href="/home"><h1>ShareNaviOKINAWA</h1></a>
 	<span class="signin_userinfo"><a href="/user_info">${fn:escapeXml(signInUser)}</a>さん</span>
 	<a class="signout" href="/sign_out">LOGOUT</a>
 	<div>
