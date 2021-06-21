@@ -15,32 +15,44 @@ public class SignController {
 
 	// ログイン -------------------------------------------------------------------------------------------
 
-		// ログイン画面
+		// ログイン画面に飛ぶ
 		@RequestMapping(value = "/sign_in")
-		public String jumpSignIn() {
+		public String jumpSignIn(/*@ModelAttribute("signIn") SignInForm form*/) {
 			return "sign_in";
 		}
 
 		// ログイン処理
 		@RequestMapping(value = "/home", params = "sign_in")
-		public String signIn() {
+		public String signIn(/*@Validated @ModelAttribute("signIn") SignInForm form, BindingResult bindingResult, Model model*/) {
 
 			// ここに処理を記述
+
+			//test
+			session.setAttribute("signInUser", "ログインユーザ");
 
 			return "home";
 		}
 
 	// 新規登録 -------------------------------------------------------------------------------------------
 
-		// 新規登録画面
+		// 新規登録画面に飛ぶ
 		@RequestMapping(value = "/sign_up")
-		public String jumpSignUp() {
+		public String jumpSignUp(/*@ModelAttribute("signUp") SignUpForm form*/) {
 			return "sign_up";
 		}
 
+		// 新規登録確認
+		@RequestMapping(value = "/sign_up", params = "check"/*, method = RequestMethod.POST*/)
+		public String signUpCheck(/*@Validated @ModelAttribute("signUp") SignUpForm form, BindingResult bindingResult, Model model*/) {
+
+			// ここに処理を記述
+
+			return "sign_up_check";
+		}
+
 		// 新規登録処理
-		@RequestMapping(value = "/sign_up", params = "sign_up")
-		public String signUp(Model model) {
+		@RequestMapping(value = "/sign_up", params = "update"/*, method = RequestMethod.POST)*/)
+		public String signUp(/*@Validated @ModelAttribute("signUp") SignUpForm form, BindingResult bindingResult, */Model model) {
 
 			// ここに処理を記述
 
@@ -48,6 +60,7 @@ public class SignController {
 
 			return "sign_out";
 		}
+
 	// ログアウト -----------------------------------------------------------------------------------------
 
 		// ログアウト処理

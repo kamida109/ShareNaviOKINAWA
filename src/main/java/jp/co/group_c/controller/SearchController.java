@@ -20,6 +20,7 @@ import jp.co.group_c.service.SearchService;
 @Controller
 public class SearchController {
 
+	// 店舗検索画面に飛ぶ
 	@Autowired
 	private SearchService searchService;
 
@@ -29,7 +30,6 @@ public class SearchController {
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
 	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
-
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
 
@@ -74,7 +74,7 @@ public class SearchController {
 	}
 
 	// 店舗詳細画面
-	@RequestMapping(value = "/details")
+	@RequestMapping(value = "/details"/*"/details/{id}"*/)
 	public String details() {
 		return "details";
 	}
