@@ -13,7 +13,7 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<form action="add_store_check">
+				<form action="user_info_check">
 					<p><button class="btn" type="submit" name="check">確認</button></p>
 				</form>
 

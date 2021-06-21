@@ -13,9 +13,7 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<form action="add_store_check">
-					<p><button class="btn" type="submit" name="check">確認</button></p>
-				</form>
+<p><button class="btn" type="button" onclick="location.href='user_info_update'">登録情報変更</button></p>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

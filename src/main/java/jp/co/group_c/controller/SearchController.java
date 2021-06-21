@@ -27,8 +27,9 @@ public class SearchController {
 	HttpSession session;
 
 	// 店舗検索画面
+	// 店舗検索画面に飛ぶ
 	@RequestMapping(value = "/search")
-	public String search(@ModelAttribute("search") SearchForm form, Model model) {
+	public String jampSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
@@ -67,7 +68,7 @@ public class SearchController {
 	}
 
 	// 店舗詳細画面
-	@RequestMapping(value = "/details")
+	@RequestMapping(value = "/details"/*"/details/{id}"*/)
 	public String details() {
 		return "details";
 	}
