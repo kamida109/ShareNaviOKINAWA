@@ -14,46 +14,37 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<form action="user_info_check">
+				<h2>登録情報</h2>
 
-					<div class="input_form">
-					<div class="inner_frame_hidden">
-					<div class="inner_frame_left">
-						ID：<br>
-						名前：<br>
-						お住まいの地域：<br>
+				<form:form action="user_info_check" method="post" modelAttribute="userInfo">
+					<div class="out_frame">
+						<div class="inner_frame_hidden">
+							<div class="inner_frame_left">
+								ID：<br>
+								名前：<br>
+								お住まいの地域：<br>
+							</div>
+							<div class="inner_frame_right">
+								<form:input type="text" path="loginId"/><br>
+								<form:input type="text" path="userName"/><br>
+								<form:input type="text" path=""/><br>
+							</div>
+						</div>
+						<div style="margin-top: 130px; clear: both;">
+							<span style="font-weight: bold;">好きなカテゴリ<br></span>
+							<form:select path="categoryId1">
+								<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
+							</form:select>
+							<form:select path="categoryId2">
+								<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
+							</form:select>
+							<form:select path="categoryId3">
+								<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
+							</form:select>
+						</div>
 					</div>
-					<div class="inner_frame_right">
-						${fn:escapeXml(signInUser)}<br>
-						${fn:escapeXml(signInUser)}<br>
-						${fn:escapeXml(signInUser)}<br>
-					</div>
-					</div>
-					<div style="clear:both;">
-					好きなカテゴリ<br>
-					<select name="category">
-						<option></option>
-						<option>飲食店</option>
-						<option>アウトドア</option>
-						<option>インドア</option>
-					</select>
-					<select name="category">
-						<option></option>
-						<option>飲食店</option>
-						<option>アウトドア</option>
-						<option>インドア</option>
-					</select>
-					<select name="category">
-						<option></option>
-						<option>飲食店</option>
-						<option>アウトドア</option>
-						<option>インドア</option>
-					</select>
-					</div>
-				</div>
-
-					<p><button class="btn" type="submit" name="check">確認</button></p>
-				</form>
+					<p><form:button class="btn" type="submit" name="check">確認</form:button></p>
+				</form:form>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

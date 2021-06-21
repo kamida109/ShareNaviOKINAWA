@@ -43,7 +43,7 @@
 .out_frame {
 	display: inline-block;
 	margin: 0 auto;
-	width: 600px;
+	width: 700px;
 	padding-top: 30px;
 	padding-bottom: 30px;
 	text-align: center;
@@ -67,6 +67,7 @@
 	text-align: right;
 	border: 0px;
 	float: left;
+	font-weight: bold;
 }
 
 /* 右側のインナーフレーム */

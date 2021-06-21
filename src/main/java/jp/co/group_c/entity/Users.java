@@ -17,6 +17,14 @@ public class Users {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
+	// ログインユーザの登録情報変更で使用する
+	public Users(Integer userId, String userName, Integer citiesId, String loginId) {
+		this.userId = userId;
+		this.userName = userName;
+		this.citiesId = citiesId;
+		this.loginId = loginId;
+	}
+
 	/* アクセサ */
 	public Integer getUserId() {
 		return userId;

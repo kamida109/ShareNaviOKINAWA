@@ -13,21 +13,23 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
+				<h2>登録情報</h2>
+
 				<div class="out_frame">
 					<div class="inner_frame_hidden">
-					<div class="inner_frame_left">
-						ID：<br>
-						名前：<br>
-						お住まいの地域：<br>
+						<div class="inner_frame_left">
+							ID：<br>
+							名前：<br>
+							お住まいの地域：<br>
+						</div>
+						<div class="inner_frame_right">
+							${fn:escapeXml(signInUser)}<br>
+							${fn:escapeXml(signInUser)}<br>
+							${fn:escapeXml(signInUser)}<br>
+						</div>
 					</div>
-					<div class="inner_frame_right">
-						aaa<br>
-						aaa<br>
-						aaa<br>
-					</div>
-					</div>
-					<div style="clear:both;">
-						好きなカテゴリ<br>
+					<div style="margin-top: 130px; clear: both;">
+						<span style="font-weight: bold;">好きなカテゴリ<br></span>
 						カテゴリ1
 						カテゴリ2
 						カテゴリ3

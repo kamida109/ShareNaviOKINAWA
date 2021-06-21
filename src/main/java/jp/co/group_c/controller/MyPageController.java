@@ -1,10 +1,14 @@
 package jp.co.group_c.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.group_c.controller.form.UserInfoForm;
 
 @Controller
 public class MyPageController {
+
 
 	// マイページ画面
 	@RequestMapping(value = "/my_page")
@@ -20,19 +24,20 @@ public class MyPageController {
 
 	// 登録情報変更画面
 	@RequestMapping(value = "/user_info_update")
-	public String UserInfo(/*@ModelAttribute("userInfo") SignUpForm form*/) {
+	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form) {
+
 		return "/user_info_update";
 	}
 
 	// 登録情報変更確認
 	@RequestMapping(value = "/user_info_check", params = "check"/*, method = RequestMethod.POST*/)
-	public String updateUserInfoCheck(/*@Validated @ModelAttribute("userInfo") SignUpForm form, BindingResult bindingResult, Model model*/) {
+	public String updateUserInfoCheck(/*@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model*/) {
 		return "/user_info_check";
 	}
 
 	// 登録情報変更処理
 	@RequestMapping(value = "/user_info", params = "update"/*, method = RequestMethod.POST*/)
-	public String updateUserInfo(/*@Validated @ModelAttribute("userInfo") SignUpForm form, BindingResult bindingResult, Model model*/) {
+	public String updateUserInfo(/*@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model*/) {
 		// 遷移先はuser_infoでリザルトはアラートのみでいいかしら
 		return "/user_info";
 	}
