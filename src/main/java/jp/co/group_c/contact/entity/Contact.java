@@ -1,6 +1,7 @@
 package jp.co.group_c.contact.entity;
 
 //問い合わせ用エンティティ
+//contactテーブルの全カラム＋usersテーブルからuser_nameも
 public class Contact {
 
 	private Integer contactId;
@@ -8,7 +9,7 @@ public class Contact {
 	private Integer contactCategoryId;
 	private String contents;
 	private boolean flag;
-	//ユーザー名、いる？
+	private String userName;
 
 	//コンストラクター引数なし
 	public Contact() {
@@ -54,6 +55,12 @@ public class Contact {
 	}
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 

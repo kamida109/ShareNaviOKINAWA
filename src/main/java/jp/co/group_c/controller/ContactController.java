@@ -20,11 +20,10 @@ public class ContactController {
 	@Autowired
 	ContactService contactService;
 
-	// 問い合わせ画面
+
 	// 問い合わせ画面に飛ぶ
 	@RequestMapping(value = "/contact")
-	public String contact(@ModelAttribute("contactInfo") ContactForm form) {
-	//public String jampContact(/*@ModelAttribute("contactInfo") ContactForm form, Model model*/) {
+	public String jampContact(@ModelAttribute("contactInfo") ContactForm form) {
 
 		// sessionからログインユーザの情報を取得して
 		// ログインユーザが管理者なら
@@ -36,7 +35,7 @@ public class ContactController {
 
 	// 問い合わせ送信処理
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String insert(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
+	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
 
 		//入力内容をもとにContactインスタンス生成→サービスのメソッドに引き継いでデータ登録
 		//引数の中はContactFormのフィールドにつながる
@@ -46,15 +45,17 @@ public class ContactController {
 		return "contact_result";
 	}
 
-	// 問い合わせ処理
-	@RequestMapping(value = "/contact" , params = "insert"/*, method = RequestMethod.POST*/)
-	public String contact(/*@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model*/) {
-		return "contact_result";
-	}
 
-	// 問い合わせ解決処理
-	@RequestMapping(value = "/contact" , params = "update"/*, method = RequestMethod.POST*/)
-	public String updateContact(/*@ModelAttribute("contactInfo") ContactForm form, Model model*/) {
+	// 問い合わせ解決処理.管理者用
+	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
+	public String updateContact(@Validated @ModelAttribute("contactInfo") ContactForm form, BindingResult bindingResult, Model model) {
+
+		//？？
+		Integer contactId = (form.getContactId());
+
+		contactService.findAll();
+		contactService.find(contactId);
+
 		return "contact";
 	}
 
