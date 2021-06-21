@@ -1,3 +1,4 @@
+search.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -14,15 +15,18 @@
 
 			<div class="frame">
 
-				<form:form class="input_form" action="searchResult" modelAttribute="search" method="GET">
+				<form:form class="input_form" action="searchResult" modelAttribute="userInfo" method="GET">
 				<fieldset class="input_form_inner">
 
 					<p><label>キーワード：<form:input path="storeName" /></label></p>
 
 					<p>
 					<label>カテゴリ：
-						<form:select path="categoryId">
-							<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
+						<form:select path="mainCategoryId">
+							<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
+						</form:select>
+						<form:select path="subCategoryId">
+							<form:options items="${subCategory}" itemLabel="categoryName" itemValue="categoryId" />
 						</form:select>
 					</label>
 					</p>

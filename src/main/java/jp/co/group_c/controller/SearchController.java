@@ -28,22 +28,29 @@ public class SearchController {
 
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
-	public String search(@ModelAttribute("search") SearchForm form, Model model) {
+	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
 
-		List<Category> categoryList = searchService.category();
-		session.setAttribute("category", categoryList);
+		List<Category> mainCategoryList = searchService.mainCategory();
+		session.setAttribute("mainCategory", mainCategoryList);
+
+		List<Category> subCategoryList = searchService.subCategory();
+		session.setAttribute("subCategory", subCategoryList);
 
 		return "search";
 	}
 
+
 	// 検索結果
 	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
-	public String searchResult(@ModelAttribute("search") SearchForm form, Model model) {
+	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
-		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getCategoryId(), form.getCitiesId(), form.isHyouka());
+		System.out.println(form.getMainCategoryId());
+		System.out.println(form.getSubCategoryId());
+
+		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getSubCategoryId(), form.getCitiesId(), form.isHyouka());
 
 		// 店舗検索
 		if(storeList.isEmpty()) {

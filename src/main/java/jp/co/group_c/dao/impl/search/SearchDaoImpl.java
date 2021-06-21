@@ -48,11 +48,20 @@ public class SearchDaoImpl implements SearchDao{
 		return citiesList;
 	}
 
-	// カテゴリテーブル全件取得
+	// カテゴリメインカテゴリ取得
 	@Override
-	public List<Category> category() {
-		List<Category> categoryList = jdbcTemplate.query(SQL_CATEGORY, new BeanPropertyRowMapper<Category>(Category.class));
-		return categoryList;
+	public List<Category> mainCategory() {
+		String mainCategory = SQL_CATEGORY + "\nWHERE main_category IS null";
+		List<Category> mainCategoryList = jdbcTemplate.query(mainCategory, new BeanPropertyRowMapper<Category>(Category.class));
+		return mainCategoryList;
+	}
+
+	// カテゴリメインカテゴリ取得
+	@Override
+	public List<Category> subCategory() {
+		String subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null";
+		List<Category> subCategoryList = jdbcTemplate.query(subCategory, new BeanPropertyRowMapper<Category>(Category.class));
+		return subCategoryList;
 	}
 
 	// 店舗検索
@@ -89,7 +98,6 @@ public class SearchDaoImpl implements SearchDao{
 
 		// カテゴリ+市町村
 		if(storeName.isEmpty() && categoryId!=null && cityId!=null) {
-			System.out.println("メソッド");
 			storeSearch += " AND c.category_id = :category AND city.cities_id = :city\n"
 						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("category", categoryId);
