@@ -5,6 +5,7 @@ public class UserInfoForm {
 	private String loginId;
 	private String userName;
 	private Integer citiesId;
+	private String citiesName;
 	private Integer categoryId1;
 	private Integer categoryId2;
 	private Integer categoryId3;
@@ -55,6 +56,13 @@ public class UserInfoForm {
 	}
 	public void setCitiesId(Integer citiesId) {
 		this.citiesId = citiesId;
+	}
+
+	public String getCitiesName() {
+		return citiesName;
+	}
+	public void setCitiesName(String citiesName) {
+		this.citiesName = citiesName;
 	}
 
 	public Integer getCategoryId1() {
