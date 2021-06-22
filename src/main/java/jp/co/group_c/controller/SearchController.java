@@ -32,6 +32,7 @@ public class SearchController {
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
 	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
+
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
 

@@ -119,7 +119,7 @@ summary {
 .store_table .bottom {
 	border: 1px solid #000000;
 }
-.store_table img {
+.store_table .storeimg {
 	width: 180px;
 	height: 180px;
 }
