@@ -79,6 +79,7 @@
 		text-align: center;
 		z-index: 6;
 		font-size: 33px;
+		white-space: nowrap;
 		border: 2px solid #ccccec;
 		background-color: #ccccec;
 		text-decoration: none;

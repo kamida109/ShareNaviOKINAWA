@@ -72,6 +72,9 @@
 				<p><button class="btn" type="submit" name="check">確認</button></p>
 
 				</form:form>
+				<form action="add_store_check">
+					<p><button class="btn" type="submit" name="check">確認</button></p>
+				</form>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

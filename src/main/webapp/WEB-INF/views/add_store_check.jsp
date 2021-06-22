@@ -13,15 +13,9 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<details open>
-				<summary>お気に入り</summary>
-					<jsp:include page="/COMMON/table_store.jsp"/>
-				</details>
-
-				<details open>
-				<summary>レビュー履歴</summary>
-					<jsp:include page="/COMMON/table_store.jsp"/>
-				</details>
+				<form action="add_store_result">
+					<p><button class="btn" type="submit" name="update">登録</button></p>
+				</form>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

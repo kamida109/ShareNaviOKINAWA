@@ -17,6 +17,7 @@ import jp.co.group_c.controller.add_store_form.AddStoreForm;
 @Controller
 public class AddStoreController {
 
+
 	@Autowired
 	AddStoreService addStoreService;
 
@@ -37,12 +38,15 @@ public class AddStoreController {
 		System.out.println(cityList.size());
 		System.out.println(mainCateList.size());
 		System.out.println(childCateList.size());
+
 		return "add_store";
 	}
+
 	@RequestMapping(value = "/add_store_check", method = RequestMethod.POST)
 	public String addStoreCheck(@ModelAttribute("add_store") AddStoreForm form, Model model) {
 		return "add_store_check";
 	}
+
 
 	@RequestMapping(value = "/categories", method = RequestMethod.POST)
 	public String category(@ModelAttribute("add_store") AddStoreForm form, Model model) {
@@ -50,4 +54,17 @@ public class AddStoreController {
 		return null;
 
 	}
+
+	// 店舗登録確認
+	@RequestMapping(value = "/add_store_check", params = "check"/*, method = RequestMethod.POST*/)
+	public String addStoreCheck(/*@Validated @ModelAttribute("storeInfo") storeInfoForm form, BindingResult bindingResult, Model model*/) {
+		return "add_store_check";
+	}
+
+	// 店舗登録処理
+	@RequestMapping(value = "/add_store_result", params = "update"/*, method = RequestMethod.POST*/)
+	public String addStore(/*@Validated @ModelAttribute("storeInfo") storeInfoForm form, BindingResult bindingResult, Model model*/) {
+		return "add_store_result";
+	}
+
 }
