@@ -1,14 +1,20 @@
 package jp.co.group_c.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.group_c.controller.form.UserInfoForm;
+import jp.co.group_c.entity.Users;
 
 @Controller
 public class MyPageController {
 
+    @Autowired
+    HttpSession session;
 
 	// マイページ画面
 	@RequestMapping(value = "/my_page")
@@ -19,6 +25,11 @@ public class MyPageController {
 	// 登録情報画面に飛ぶ
 	@RequestMapping(value = "/user_info")
 	public String jumpUserInfo() {
+
+		// テスト用
+		Users signInUser = new Users(1, "groupC", 24, "groupC");
+		session.setAttribute("signInUser", signInUser);
+
 		return "user_info";
 	}
 

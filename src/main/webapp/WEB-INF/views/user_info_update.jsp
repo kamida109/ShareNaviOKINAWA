@@ -27,7 +27,9 @@
 							<div class="inner_frame_right">
 								<form:input type="text" path="loginId"/><br>
 								<form:input type="text" path="userName"/><br>
-								<form:input type="text" path=""/><br>
+								<form:select path="citiesId">
+									<form:options items="${cities}" itemLabel="citiesName" itemValue="citiesId" />
+								</form:select><br>
 							</div>
 						</div>
 						<div style="margin-top: 130px; clear: both;">

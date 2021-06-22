@@ -23,8 +23,8 @@
 							お住まいの地域：<br>
 						</div>
 						<div class="inner_frame_right">
-							${fn:escapeXml(signInUser)}<br>
-							${fn:escapeXml(signInUser)}<br>
+							${fn:escapeXml(signInUser.loginId)}<br>
+							${fn:escapeXml(signInUser.userName)}<br>
 							${fn:escapeXml(signInUser)}<br>
 						</div>
 					</div>
