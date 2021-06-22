@@ -17,7 +17,7 @@
 
 
 		<h3>ユーザー管理</h3>
-<form:form action="user_management" method="post" modelAttribute="userManagement">
+		<form:form action="user_management" method="post" modelAttribute="userManagement">
 			<label>ID:
 			<form:input path="userId" /></label>
 
@@ -27,26 +27,24 @@
 		<form:button type= "submit" name= "select">検索</form:button>
 
 <table border="1">
-  <!-- <thead> -->
+ <thead>
 	<tr>
 		<th>ユーザーID</th>
 		<th>名前</th>
-		<th>登録日</th>
 		<th>ログインID</th>
 
 	</tr>
- <!--  </thead> -->
- <!--  <tbody> -->
+  </thead>
+  <tbody>
   	 <c:forEach var="userManagement" items= "${userManagementList}">
   		<tr>
-			<td>${fn:escapeXml(userManagement.user_id)}</td>
-			<td>${fn:escapeXml(userManagement.user_name)}</td>
-			<td>${fn:escapeXml(userManagement.insert_day)}</td>
-			<td>${fn:escapeXml(userManagement.login_id)}</td>
+			<td>${fn:escapeXml(userManagement.userId)}</td>
+			<td>${fn:escapeXml(userManagement.userName)}</td>
+			<td>${fn:escapeXml(userManagement.loginId)}</td>
 		</tr>
 
  	</c:forEach>
-<!--   </tbody> -->
+   </tbody>
 </table>
 </form:form>
 

@@ -8,7 +8,6 @@ public class UserManagement {
 
 	private Integer userId;
 	private String userName;
-	private String insertDay;
 	private String loginId;
 
 	//引数なしコンストラクター
@@ -37,12 +36,7 @@ public class UserManagement {
 
 		return userId == null && ParamUtil.isNullOrEmpty(userName);
 	}
-	public String getInsertDay() {
-		return insertDay;
-	}
-	public void setInsertDay(String insertDay) {
-		this.insertDay = insertDay;
-	}
+
 	public String getLoginId() {
 		return loginId;
 	}

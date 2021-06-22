@@ -21,7 +21,7 @@ public class PgContactDao implements ContactDao{
 			+ "VALUES(:userId, :contactCategoryId, :contents, :flag)";
 
 	//問い合わせ内容一覧表示
-	private static final String SELECT_FIND_ALL = "SELECT contact_id, user_name, contact_category_id, flag FROM contact"
+	private static final String FIND_ALL = "SELECT contact_id, user_name, contact_category_id, flag FROM contact"
 			+ " INNER JOIN users ON users.user_id = contact.user_id ORDER BY flag ASC";
 
 	//問い合わせ内容詳細の取得
@@ -30,9 +30,13 @@ public class PgContactDao implements ContactDao{
 			+ " INNER JOIN users ON users.user_id = contact.user_id"
 			+ " WHERE contact_id = :contactId";
 
+	//IDと名前検索時（全件取得）
+	private static final String SELECT_FIND_ALL = "SELECT user_id, user_name, login_id"
+			+ " FROM users ORDER BY user_id ASC";
+
 	//IDと名前検索時
-	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name,"
-			+ "insert_day, login_id FROM users INNER JOIN store ON users.cities_id = store.cities_id WHERE ";
+	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name, login_id"
+			+ " FROM users WHERE ";
 
 
 	//プレースホルダーを使うときはこの型のクラス使う
@@ -54,7 +58,7 @@ public class PgContactDao implements ContactDao{
 	//問い合わせ内容一覧表示
 	@Override
 	public List<Contact> findAll(){
-		String sql = SELECT_FIND_ALL;
+		String sql = FIND_ALL;
 
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
 	}
