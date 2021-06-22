@@ -26,8 +26,13 @@ public class HomeController {
 		//カテゴリ表示
 		List<Store> mainCategoryList = homeService.mainCategory(newArrivalList.get(0).getStoreName());
 
-		model.addAttribute("storeList", newArrivalList);
-		model.addAttribute("mainCategoryList", mainCategoryList);
+		//DBが何もない時の対策
+		if(newArrivalList.isEmpty()) {
+			model.addAttribute("storeList", newArrivalList);
+			model.addAttribute("mainCategoryList", mainCategoryList);
+		}else {
+			model.addAttribute("notList", "undefinde");
+		}
 
 		return "home";
 	}

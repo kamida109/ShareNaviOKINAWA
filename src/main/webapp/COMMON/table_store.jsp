@@ -22,7 +22,7 @@
 
 		</c:forEach>
 		</c:if>
-		<c:if test="${empty storeList}">
+		<c:if test="${not empty notList}">
 			<p>検索した内容が見つかりません</p>
 			<p>店舗を登録したい場合は<br>
 				<a href="input">こちらをクリック</a
