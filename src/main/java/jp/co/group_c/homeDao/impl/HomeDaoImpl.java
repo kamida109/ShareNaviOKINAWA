@@ -30,11 +30,9 @@ public class HomeDaoImpl implements HomeDao{
     											 + "GROUP BY s.store_id, store_name, cities_name, hyouka, paths\n"
     											 + "ORDER BY s.store_id DESC LIMIT 5";
 
-    private static final String MAIN_CATEGORY = "SELECT category_name\n"
-    											   + "FROM store as s\n"
-    											   + "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
-    											   + "JOIN category AS c ON sc.category_id = c.category_id\n"
-    											   + "WHERE store_name = :storeName";
+    private static final String MAIN_CATEGORY = "SELECT s.store_id, category_name\n"
+    											   + "FROM store_category as s\n"
+    											   + "JOIN category as c on s.category_id = c.category_id\n";
 
     //新着機能メソッド
 	@Override
@@ -48,9 +46,7 @@ public class HomeDaoImpl implements HomeDao{
 	@Override
 	public List<Store> mainCategory(String storeName) {
 		String mainCategory = MAIN_CATEGORY;
-		param.addValue("storeName", storeName);
-
-		List<Store> mainCategoryList = jdbcTemplate.query(mainCategory, param, new BeanPropertyRowMapper<Store>(Store.class));
+		List<Store> mainCategoryList = jdbcTemplate.query(mainCategory, new BeanPropertyRowMapper<Store>(Store.class));
 		return mainCategoryList;
 	}
 

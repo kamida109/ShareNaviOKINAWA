@@ -13,7 +13,9 @@
 				<td class="star">${store.hyouka}</td>
 			</tr><tr class="bottom">
 			<c:forEach var="main" items="${mainCategoryList}">
+				<c:if test="${store.storeId eq main.storeId }">
 				<td valign="top">${main.categoryName}</td>
+				</c:if>
 			</c:forEach></tr>
 		</c:forEach>
 	</tbody>
