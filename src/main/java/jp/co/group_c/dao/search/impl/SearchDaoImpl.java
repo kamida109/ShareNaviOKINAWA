@@ -32,7 +32,7 @@ public class SearchDaoImpl implements SearchDao{
 
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
-	private static final String SQL_SEARCH = "SELECT store_name, category_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '')"
+	private static final String SQL_SEARCH = "SELECT s.store_id, store_name, category_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '')"
 												+ "FROM store AS s\n"
 												+ "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
 												+ "JOIN category AS c ON sc.category_id = c.category_id\n"
@@ -41,8 +41,9 @@ public class SearchDaoImpl implements SearchDao{
 												+ "JOIN images AS i ON s.store_id = i.store_id\n"
 												+ "WHERE 1=1";
 
-	public static final String STORE_CATEGORY = "SELECT sc.store_id, category_name FROM store_category AS sc\n"
-												+ "JOIN category AS c ON sc.category_id = c.category_id";
+	public static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
+													+ "FROM store_category AS sc\n"
+													+ "JOIN category AS c ON sc.category_id = c.category_id";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -124,7 +125,7 @@ public class SearchDaoImpl implements SearchDao{
 			param.addValue("city", cityId);
 		}
 
-		storeSearch += "GROUP BY store_name, category_name, city.cities_id, cities_name";
+		storeSearch += "GROUP BY s.store_id, store_name, category_name, city.cities_id, cities_name";
 
 		// 評価3以上
 		if(hyouka) {
@@ -149,7 +150,7 @@ public class SearchDaoImpl implements SearchDao{
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
 		String partSearch = SQL_SEARCH + "AND store_name LIKE :storeName\n"
-							+ "GROUP BY store_name, category_name, cities_name";
+							+ "GROUP BY s.store_id, store_name, category_name, cities_name";
 		param.addValue("storeName", storeName);
 
 		if(hyouka) {

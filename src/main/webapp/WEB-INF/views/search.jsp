@@ -17,7 +17,7 @@
 				<form:form class="input_form" action="searchResult" modelAttribute="userInfo" method="GET">
 				<fieldset class="input_form_inner">
 
-					<p><label>キーワード：<form:input path="storeName" /></label></p>
+					<p><label>キーワード：<form:input id="keyWord" path="storeName" /></label></p>
 
 					<p>
 					<label>カテゴリ：</label>
@@ -33,18 +33,20 @@
 
 					<p>
 					<label>場所：
-						<form:select path="citiesId">
+						<form:select id="prace" path="citiesId">
 							<form:options items="${cities}" itemLabel="citiesName" itemValue="citiesId" />
 						</form:select>
 					</label>
 					</p>
 					</fieldset>
 
-					<p><label><form:checkbox path="hyouka" />☆3以上のお店のみ表示</label></p>
+					<p><label><form:checkbox id="check" path="hyouka"/>☆3以上のお店のみ表示</label></p>
 
 					<form:button>検索</form:button>
 
 				</form:form>
+
+				<button type="button" id="button">非同期</button>
 
 				<details open>
 				<summary>店名検索</summary>
@@ -58,8 +60,6 @@
 
 				<script>
 					$(function(){
-						// 子カテゴリをはじめは非表示
-						$("#subCategory").hide();
 						// 親カテゴリを変更したときの処理
 						$("#mainCategory").change(function(){
 							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
@@ -73,14 +73,24 @@
 									var obj = data;
 									$("#subCategory").html(data);
 								})
-
 							} else {
 								$("#subCategory").hide();
 							}
 						})
+					});
+
+					// 検索非同期
+					$("#button").click(function(){
+						var keyWord = $("#keyWord").val();
+						var subCategory = $("#subCategory").val();
+						var prace = $("#prace").val();
+						var check = $("#check").val();
+
+						$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, function(keyWord, subCategory){
+
+						})
 					})
 				</script>
-
 
 				<!-- ---------- ここまで本体 ---------- -->
 
