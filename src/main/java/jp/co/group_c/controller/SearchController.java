@@ -50,14 +50,20 @@ public class SearchController {
 	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
 	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
-		String subCategory = request.getParameter("name");
+		String subCategory = null;
+		subCategory =request.getParameter("name");
+
+		// サブカテゴリが未選択の時
+		if(subCategory==null || form.getMainCategoryId()==0) {
+			return "redirect:search";
+		}
 
 		List<Store> storeList = searchService.storeSearch(form.getStoreName(), subCategory, form.getCitiesId(), form.isHyouka());
-
+		for (Store s : storeList) {
+			System.out.println(s.getStoreName());
+		}
 		// 店舗検索
-		if(storeList.isEmpty()) {
-			model.addAttribute("selectResult", "対象のデータはありませんでした");
-		} else {
+		if(!storeList.isEmpty()) {
 			model.addAttribute("selectResult", storeList);
 		}
 
@@ -66,16 +72,13 @@ public class SearchController {
 		// あいまい検索
 		List<Store> partStoreList = searchService.partStoreSearch(index, form.isHyouka());
 
-		if(partStoreList.isEmpty()) {
-			model.addAttribute("selectResult", "対象のデータはありませんでした");
-		} else {
+		if(!partStoreList.isEmpty()) {
 			model.addAttribute("selectPartResult", partStoreList);
 		}
-
 		return "search";
 	}
 
-
+	// セレクトタグを非同期で切替
 	@RequestMapping(value="/pulldown/{value}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String changeCategory(@PathVariable("value")String value) {

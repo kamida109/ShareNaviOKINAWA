@@ -20,6 +20,9 @@ public interface SearchService {
 	// 店舗検索
 	public List<Store> storeSearch(String storeName, String subCategory, Integer cityid, boolean hyouka);
 
+	// 店舗のカテゴリを取得
+	public List<Store> storeCategory();
+
 	// あいまい検索
 	public List<Store> partStoreSearch(String storeName, boolean hyouka);
 

@@ -34,6 +34,12 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.subCategory(mainId);
 	}
 
+	// 店舗のカテゴリを取得
+	@Override
+	public List<Store> storeCategory() {
+		return searchDao.storeCategory();
+	}
+
 	// 店舗検索
 	@Override
 	public List<Store> storeSearch(String storeName, String subCategiry, Integer cityId, boolean hyouka) {

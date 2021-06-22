@@ -26,7 +26,8 @@
 						</form:select>
 
 						<select id="subCategory" name="name">
-							<option value="aaa"></option>
+							<option selected>------------</option>
+							<!-- 非同期でサブカテゴリが入ってくる -->
 						</select>
 					</p>
 
@@ -63,14 +64,19 @@
 						$("#mainCategory").change(function(){
 							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
 							var value = $("#mainCategory").val();
-							// 子カテゴリ表示
-							$("#subCategory").show();
-							// コントローラに送信
-							$.get("pulldown/"+value, function(data){
-								console.log(data);
-								var obj = data;
-								$("#subCategory").html(data);
-							})
+							if(value != 0){
+								// 子カテゴリ表示
+								$("#subCategory").show();
+								// コントローラに送信
+								$.get("pulldown/"+value, function(data){
+									console.log(data);
+									var obj = data;
+									$("#subCategory").html(data);
+								})
+
+							} else {
+								$("#subCategory").hide();
+							}
 						})
 					})
 				</script>
