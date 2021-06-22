@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="jp">
@@ -13,7 +13,30 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-<p><button class="btn" type="button" onclick="location.href='user_info_update'">登録情報変更</button></p>
+				<h2>登録情報</h2>
+
+				<div class="out_frame">
+					<div class="inner_frame_hidden">
+						<div class="inner_frame_left">
+							ID：<br>
+							名前：<br>
+							お住まいの地域：<br>
+						</div>
+						<div class="inner_frame_right">
+							${fn:escapeXml(signInUser.loginId)}<br>
+							${fn:escapeXml(signInUser.userName)}<br>
+							${fn:escapeXml(signInUser)}<br>
+						</div>
+					</div>
+					<div style="margin-top: 130px; clear: both;">
+						<span style="font-weight: bold;">好きなカテゴリ<br></span>
+						カテゴリ1
+						カテゴリ2
+						カテゴリ3
+					</div>
+				</div>
+
+				<p><button class="btn" type="button" onclick="location.href='user_info_update'">登録情報変更</button></p>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

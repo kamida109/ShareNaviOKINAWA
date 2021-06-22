@@ -21,6 +21,7 @@
 	margin-top: 20px;
 	width: auto;
 	padding: 10px 300px 10px 300px;
+	text-align: center;
 	background-color: #d0ddff88;
 }
 
@@ -35,6 +36,48 @@
 	width: auto;
 	height: auto;
 	text-align: right;
+	border: 0px;
+}
+
+/* フレーム */
+.out_frame {
+	display: inline-block;
+	margin: 0 auto;
+	width: 700px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	text-align: center;
+	background-color: #d0ddff88;
+}
+
+/* 左右のインナーフレームをまとめるインナーフレーム */
+.inner_frame_hidden {
+	margin: 0 auto 0 auto;
+	width: max-content;
+	height: auto;
+	text-align: center;
+	border: 0px;
+}
+
+/* 左側のインナーフレーム */
+.inner_frame_left {
+	margin: 0 auto 0 auto;
+	width: max-content;
+	height: auto;
+	text-align: right;
+	border: 0px;
+	float: left;
+	font-weight: bold;
+}
+
+/* 右側のインナーフレーム */
+.inner_frame_right {
+	margin: 0 auto 0 auto;
+	width: max-content;
+	height: auto;
+	text-align: left;
+	border: 0px;
+	float: right;
 }
 
 /* 表のための折り畳み */
@@ -76,7 +119,7 @@ summary {
 .store_table .bottom {
 	border: 1px solid #000000;
 }
-.store_table img {
+.store_table .storeimg {
 	width: 180px;
 	height: 180px;
 }

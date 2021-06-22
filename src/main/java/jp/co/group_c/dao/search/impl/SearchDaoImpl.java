@@ -1,4 +1,4 @@
-package jp.co.group_c.dao.impl;
+package jp.co.group_c.dao.search.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import jp.co.group_c.dao.SearchDao;
+import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
@@ -48,11 +48,26 @@ public class SearchDaoImpl implements SearchDao{
 		return citiesList;
 	}
 
-	// カテゴリテーブル全件取得
+	// カテゴリメインカテゴリ取得
 	@Override
-	public List<Category> category() {
-		List<Category> categoryList = jdbcTemplate.query(SQL_CATEGORY, new BeanPropertyRowMapper<Category>(Category.class));
-		return categoryList;
+	public List<Category> mainCategory() {
+		String mainCategory = SQL_CATEGORY + "\nWHERE main_category IS null ORDER BY category_id";
+		List<Category> mainCategoryList = jdbcTemplate.query(mainCategory, new BeanPropertyRowMapper<Category>(Category.class));
+		return mainCategoryList;
+	}
+
+	// カテゴリメインカテゴリ取得
+	@Override
+	public List<Category> subCategory(Integer mainId) {
+		String subCategory = SQL_CATEGORY;
+		if(mainId==null) {
+			subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null";
+		}else {
+			subCategory = SQL_CATEGORY + "\nWHERE main_category IS NOT null AND main_category = :mainId";
+		}
+		param.addValue("mainId", mainId);
+		List<Category> subCategoryList = jdbcTemplate.query(subCategory, param, new BeanPropertyRowMapper<Category>(Category.class));
+		return subCategoryList;
 	}
 
 	// 店舗検索
@@ -89,7 +104,6 @@ public class SearchDaoImpl implements SearchDao{
 
 		// カテゴリ+市町村
 		if(storeName.isEmpty() && categoryId!=null && cityId!=null) {
-			System.out.println("メソッド");
 			storeSearch += " AND c.category_id = :category AND city.cities_id = :city\n"
 						+ "GROUP BY store_name, category_name, cities_name";
 			param.addValue("category", categoryId);

@@ -13,7 +13,15 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
+				<details open>
+				<summary>お気に入り</summary>
+					<jsp:include page="/COMMON/table_store.jsp"/>
+				</details>
 
+				<details open>
+				<summary>レビュー履歴</summary>
+					<jsp:include page="/COMMON/table_store.jsp"/>
+				</details>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
