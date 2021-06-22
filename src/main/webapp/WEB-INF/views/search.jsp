@@ -25,8 +25,8 @@
 							<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
 						</form:select>
 
-						<select id="subCategory">
-	 						<option value=""></option>
+						<select id="subCategory" name="name">
+							<option value="aaa"></option>
 						</select>
 					</p>
 

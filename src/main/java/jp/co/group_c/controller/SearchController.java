@@ -2,6 +2,7 @@ package jp.co.group_c.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class SearchController {
 	@Autowired
 	HttpSession session;
 
+	@Autowired
+	HttpServletRequest request;
+
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
 	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
@@ -46,7 +50,9 @@ public class SearchController {
 	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
 	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
-		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getSubCategoryId(), form.getCitiesId(), form.isHyouka());
+		String subCategory = request.getParameter("name");
+
+		List<Store> storeList = searchService.storeSearch(form.getStoreName(), subCategory, form.getCitiesId(), form.isHyouka());
 
 		// 店舗検索
 		if(storeList.isEmpty()) {
@@ -78,7 +84,7 @@ public class SearchController {
 		List<Category> subCategoryList = searchService.subCategory(val);
 
 		for(Category c : subCategoryList) {
-			str += "<option name=\""+ c.getCategoryName() +"\">" +  c.getCategoryName() + "</option>";
+			str += "<option value=\"" + c.getCategoryName() +"\">" +  c.getCategoryName() + "</option>";
 		}
 
 		return str;
