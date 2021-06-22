@@ -6,7 +6,7 @@
 	<tbody>
 		<c:forEach items="${storeList}" var="store" >
 			<tr class="top">
-				<td class="image" rowspan="3"  valign="middle"><img src="CSS/image/no_image1.png"></td>
+				<td class="image" rowspan="3"  valign="middle"><img class="storeimg" src="CSS/image/no_image1.png"></td>
 				<td class="cities" colspan="3" align="left" valign="bottom">${store.citiesName}</td>
 			</tr><tr>
 				<td class="name" colspan="2" align="left"><a href="details">${fn:escapeXml(store.storeName)}</a></td>

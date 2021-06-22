@@ -25,5 +25,12 @@
 		<!-- 共通部品_footer -->
 		<footer id="footer"></footer>
 	</div>
+	<script type="text/javascript" src="js/jquery.raty.js"></script>
+	<script type="text/javascript" src="js/star.js"></script>
+	<script>
+		$(function(){
+			$("#footer").load("/COMMON/footer.html");
+		});
+	</script>
 </body>
 </html>
