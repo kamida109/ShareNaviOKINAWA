@@ -1,4 +1,4 @@
-package jp.co.group_c.dao;
+package jp.co.group_c.dao.search;
 
 import java.util.List;
 

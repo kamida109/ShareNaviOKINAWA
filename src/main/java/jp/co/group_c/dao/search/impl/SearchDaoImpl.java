@@ -1,4 +1,4 @@
-package jp.co.group_c.dao.impl.search;
+package jp.co.group_c.dao.search.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import jp.co.group_c.dao.SearchDao;
+import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
@@ -51,7 +51,7 @@ public class SearchDaoImpl implements SearchDao{
 	// カテゴリメインカテゴリ取得
 	@Override
 	public List<Category> mainCategory() {
-		String mainCategory = SQL_CATEGORY + "\nWHERE main_category IS null";
+		String mainCategory = SQL_CATEGORY + "\nWHERE main_category IS null ORDER BY category_id";
 		List<Category> mainCategoryList = jdbcTemplate.query(mainCategory, new BeanPropertyRowMapper<Category>(Category.class));
 		return mainCategoryList;
 	}

@@ -20,18 +20,14 @@
 					<p><label>キーワード：<form:input path="storeName" /></label></p>
 
 					<p>
-					<label>カテゴリ：
+					<label>カテゴリ：</label>
 						<form:select id="mainCategory" path="mainCategoryId">
 							<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
 						</form:select>
-<%-- 						<form:select id="subCategory" path="subCategoryId"> --%>
-<%-- 							<form:options items="${subCategory}" itemLabel="categoryName" itemValue="categoryId" /> --%>
-<%-- 						</form:select> --%>
 
 						<select id="subCategory">
-<!-- 						<option value=""></option> -->
+	 						<option value=""></option>
 						</select>
-					</label>
 					</p>
 
 					<p>
@@ -59,18 +55,20 @@
 					<jsp:include page="/COMMON/table_store.jsp"/>
 				</details>
 
-				<script src="/js/jquery-3.6.0.min.js"></script>
 				<script>
 					$(function(){
+						// 子カテゴリをはじめは非表示
+						$("#subCategory").hide();
+						// 親カテゴリを変更したときの処理
 						$("#mainCategory").change(function(){
 							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
 							var value = $("#mainCategory").val();
-							//$("#subCategory").removeAttr(data);
+							// 子カテゴリ表示
+							$("#subCategory").show();
 							// コントローラに送信
 							$.get("pulldown/"+value, function(data){
 								console.log(data);
 								var obj = data;
-								//$("#subCategory").removeAttr();
 								$("#subCategory").html(data);
 							})
 						})

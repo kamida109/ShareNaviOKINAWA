@@ -17,7 +17,7 @@ import jp.co.group_c.controller.form.SearchForm;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
-import jp.co.group_c.service.SearchService;
+import jp.co.group_c.service.search.SearchService;
 
 @Controller
 public class SearchController {
@@ -38,9 +38,6 @@ public class SearchController {
 		List<Category> mainCategoryList = searchService.mainCategory();
 		session.setAttribute("mainCategory", mainCategoryList);
 
-//		List<Category> subCategoryList = searchService.subCategory(null);
-//		session.setAttribute("subCategory", subCategoryList);
-
 		return "search";
 	}
 
@@ -48,9 +45,6 @@ public class SearchController {
 	// 検索結果
 	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
 	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
-
-		System.out.println(form.getMainCategoryId());
-		System.out.println(form.getSubCategoryId());
 
 		List<Store> storeList = searchService.storeSearch(form.getStoreName(), form.getSubCategoryId(), form.getCitiesId(), form.isHyouka());
 
@@ -79,47 +73,16 @@ public class SearchController {
 	@RequestMapping(value="/pulldown/{value}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String changeCategory(@PathVariable("value")String value) {
-		System.out.println("value:"+ value);
 		Integer val = Integer.parseInt(value);
-
 		String str = "";
-
 		List<Category> subCategoryList = searchService.subCategory(val);
 
 		for(Category c : subCategoryList) {
-			str += "<option>" +  c.getCategoryName() + "</option>";
+			str += "<option name=\""+ c.getCategoryName() +"\">" +  c.getCategoryName() + "</option>";
 		}
-
-		System.out.println(str);
 
 		return str;
 
-//		s.append("[");
-//
-//		for(int i=0; i<subCategoryList.size(); i++) {
-//			s.append("\"");
-//			s.append("itemValue");
-//			s.append("\"");
-//			s.append(":");
-//			s.append(subCategoryList.get(i).getCategoryId());
-//			s.append(",");
-//			s.append("\"");
-//			s.append("itemLabel");
-//			s.append("\"");
-//			s.append(":");
-//			s.append("\"");
-//			s.append(subCategoryList.get(i).getCategoryName());
-//			s.append("\"");
-//			s.append(",");
-//		}
-//
-//		s.deleteCharAt(s.lastIndexOf(","));
-//		s.append("]");
-//		str = s.toString();
-//
-//		System.out.println(str);
-//
-//		return str;
 	}
 
 	// 店舗詳細画面

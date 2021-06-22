@@ -1,4 +1,4 @@
-package jp.co.group_c.service;
+package jp.co.group_c.service.search;
 
 import java.util.List;
 

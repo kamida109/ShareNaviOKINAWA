@@ -1,4 +1,4 @@
-package jp.co.group_c.service.impl;
+package jp.co.group_c.service.search.impl;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jp.co.group_c.dao.SearchDao;
+import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
-import jp.co.group_c.service.SearchService;
+import jp.co.group_c.service.search.SearchService;
 
 @Service
 @Transactional
