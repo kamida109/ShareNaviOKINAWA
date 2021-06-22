@@ -8,6 +8,9 @@ public class UserInfoForm {
 	private Integer categoryId1;
 	private Integer categoryId2;
 	private Integer categoryId3;
+	private Integer mainCategoryId1;
+	private Integer mainCategoryId2;
+	private Integer mainCategoryId3;
 
 	public UserInfoForm() {}
 
@@ -18,6 +21,19 @@ public class UserInfoForm {
 		this.categoryId1 = categoryId1;
 		this.categoryId2 = categoryId2;
 		this.categoryId3 = categoryId3;
+	}
+
+	public UserInfoForm(String loginId, String userName, Integer citiesId, Integer categoryId1, Integer categoryId2, Integer categoryId3, Integer mainCategoryId1, Integer mainCategoryId2, Integer mainCategoryId3) {
+
+		this.loginId = loginId;
+		this.userName = userName;
+		this.citiesId = citiesId;
+		this.categoryId1 = categoryId1;
+		this.categoryId2 = categoryId2;
+		this.categoryId3 = categoryId3;
+		this.mainCategoryId1 = mainCategoryId1;
+		this.mainCategoryId2 = mainCategoryId2;
+		this.mainCategoryId3 = mainCategoryId3;
 	}
 
 	public String getLoginId() {
@@ -60,6 +76,27 @@ public class UserInfoForm {
 	}
 	public void setCategoryId3(Integer categoryId3) {
 		this.categoryId3 = categoryId3;
+	}
+
+	public Integer getMainCategoryId1() {
+		return mainCategoryId1;
+	}
+	public void setMainCategoryId1(Integer mainCategoryId1) {
+		this.mainCategoryId1 = mainCategoryId1;
+	}
+
+	public Integer getMainCategoryId2() {
+		return mainCategoryId2;
+	}
+	public void setMainCategoryId2(Integer mainCategoryId2) {
+		this.mainCategoryId2 = mainCategoryId2;
+	}
+
+	public Integer getMainCategoryId3() {
+		return mainCategoryId3;
+	}
+	public void setMainCategoryId3(Integer mainCategoryId3) {
+		this.mainCategoryId3 = mainCategoryId3;
 	}
 
 }

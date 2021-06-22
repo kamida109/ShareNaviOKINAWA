@@ -34,6 +34,16 @@
 						</div>
 						<div style="margin-top: 130px; clear: both;">
 							<span style="font-weight: bold;">好きなカテゴリ<br></span>
+
+							<label>カテゴリ：
+								<form:select id="mainCategory1" path="mainCategoryId1">
+									<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
+								</form:select></label>
+
+								<select id="subCategory1">
+			 						<option value=""></option>
+								</select>
+
 							<form:select path="categoryId1">
 								<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
 							</form:select>
@@ -47,6 +57,26 @@
 					</div>
 					<p><form:button class="btn" type="submit" name="check">確認</form:button></p>
 				</form:form>
+
+				<script>
+					$(function(){
+						// 子カテゴリをはじめは非表示
+						$("#subCategory1").hide();
+						// 親カテゴリを変更したときの処理
+						$("#mainCategory1").change(function(){
+							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
+							var value = $("#mainCategory1").val();
+							// 子カテゴリ表示
+							$("#subCategory1").show();
+							// コントローラに送信
+							$.get("pulldown/"+value, function(data){
+								console.log(data);
+								var obj = data;
+								$("#subCategory1").html(data);
+							})
+						})
+					})
+				</script>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
