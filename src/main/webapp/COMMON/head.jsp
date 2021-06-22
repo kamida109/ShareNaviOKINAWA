@@ -5,12 +5,15 @@
 	<link href="/CSS/common.css" rel="stylesheet" type="text/css">
 	<link href="/CSS/sign.css" rel="stylesheet" type="text/css">
 	<link href="/CSS/style.css" rel="stylesheet" type="text/css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
 		$(function(){
 			$("#footer").load("/COMMON/footer.html");
 		});
 	</script>
+
+	<script src="js/jquery-3.6.0.min.js"></script>
+
 	<title>ShareNaviOKINAWA</title>
 </head>
 

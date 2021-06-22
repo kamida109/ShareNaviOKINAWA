@@ -6,7 +6,8 @@ public class SearchForm {
 	private String category;
 	private String city;
 	private boolean hyouka;
-	private Integer categoryId;
+	private Integer mainCategoryId;
+	private Integer subCategoryId;
 	private Integer citiesId;
 
 	public String getStoreName() {
@@ -38,11 +39,18 @@ public class SearchForm {
 		this.hyouka = hyouka;
 	}
 
-	public Integer getCategoryId() {
-		return categoryId;
+	public Integer getMainCategoryId() {
+		return mainCategoryId;
 	}
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
+	public void setMainCategoryId(Integer mainCategoryId) {
+		this.mainCategoryId = mainCategoryId;
+	}
+
+	public Integer getSubCategoryId() {
+		return subCategoryId;
+	}
+	public void setSubCategoryId(Integer subCategoryId) {
+		this.subCategoryId = subCategoryId;
 	}
 
 	public Integer getCitiesId() {
@@ -51,7 +59,6 @@ public class SearchForm {
 	public void setCitiesId(Integer citiesId) {
 		this.citiesId = citiesId;
 	}
-
 
 
 }
