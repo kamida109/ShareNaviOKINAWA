@@ -87,7 +87,7 @@ public class ContactController {
 		return "user_management";
 	}
 
-	//確定ボタン押されたとき、この画面に戻る
+	//確定ボタン押されたとき、この画面に戻る（削除）
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
 	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
 		//処理記述

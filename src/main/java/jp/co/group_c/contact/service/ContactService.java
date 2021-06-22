@@ -20,4 +20,7 @@ public interface ContactService {
 
 	//IDか名前検索時（ユーザー管理画面で）
 	public List<UserManagement> managementFind(UserManagement userManagement);
+
+	//ユーザーIDで削除（ユーザー管理画面で）
+	//public void managementDelete(Integer userId);
 }

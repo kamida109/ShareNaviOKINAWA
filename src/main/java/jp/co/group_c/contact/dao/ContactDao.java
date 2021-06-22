@@ -17,4 +17,7 @@ public interface ContactDao {
 
 	//IDか名前検索時（ユーザー管理画面で）
 	public List<UserManagement> managementFind(UserManagement userManagement);
+
+	//ユーザー管理画面での削除用
+	//public void managementDelete(Integer userId);
 }

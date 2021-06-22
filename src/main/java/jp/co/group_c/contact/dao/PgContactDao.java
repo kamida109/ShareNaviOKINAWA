@@ -116,6 +116,10 @@ public class PgContactDao implements ContactDao{
 			System.out.println(sql);
 
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<UserManagement>(UserManagement.class));
-
 	}
+
+	//ユーザー管理画面での削除用
+	//public void
+
+
 }
