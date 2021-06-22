@@ -37,6 +37,11 @@ public class ContactController {
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
 	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
 
+		//バリデーションの結果で処理分岐
+		if(bindingResult.hasErrors()) {
+			return "contact";
+		}
+
 		//入力内容をもとにContactインスタンス生成→サービスのメソッドに引き継いでデータ登録
 		//引数の中はContactFormのフィールドにつながる
 		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());

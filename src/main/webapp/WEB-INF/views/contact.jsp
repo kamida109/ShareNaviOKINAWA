@@ -27,7 +27,7 @@
 	</c:forEach> --%>
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
-	 <span>問い合わせ内容</span>
+	<%--  <span>問い合わせ内容</span>
 	<form:form action="contact_result" method="post" modelAttribute="contact">
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
@@ -46,7 +46,9 @@
 
 	</form:form>
 
-	<a href="contactController">ユーザー管理</a>
+	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
+	<a href="user_management">ユーザー管理</a>
+ --%>
 <%-- </c:if>
 
 
@@ -63,8 +65,9 @@
  </form:select>
  </label>
 
- <label>本文<br>
+ <br><label>本文<br>
  <form:textarea path="contents"/> </label>
+ <br><form:errors path="contents" cssStyle="color: red"/><br>
  <form:button type= "submit" name= "insert">送信</form:button>
  </form:form>
 

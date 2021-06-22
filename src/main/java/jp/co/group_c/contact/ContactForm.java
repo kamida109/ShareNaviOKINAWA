@@ -1,5 +1,7 @@
 package jp.co.group_c.contact;
 
+import javax.validation.constraints.NotBlank;
+
 public class ContactForm {
 
 	//フィールド
@@ -7,6 +9,8 @@ public class ContactForm {
 	private Integer userId;
 	private String userName;
 	private Integer contactCategoryId;
+
+	@NotBlank(message="本文を入力してください。")
 	private String contents;
 	private boolean flag;
 
