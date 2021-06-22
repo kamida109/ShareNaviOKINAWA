@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.group_c.contact.ContactForm;
+import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.service.ContactService;
 
@@ -55,20 +56,38 @@ public class ContactController {
 	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
 	public String updateContact(@Validated @ModelAttribute("contactInfo") ContactForm form, BindingResult bindingResult, Model model) {
 
-		//？？
-		Integer contactId = (form.getContactId());
+
+		//Integer contactId = (form.getContactId());
 
 		contactService.findAll();
-		contactService.find(contactId);
+		//contactService.find(contactId);
 
 		return "contact";
 	}
 
 	// ユーザ管理画面に飛ぶ
 	@RequestMapping(value = "/user_management")
-	public String jampUserManegement(/*@ModelAttribute("contactInfo") ContactForm form, Model model*/) {
-		return "user_manegement";
+	public String jampUserManagement(@ModelAttribute("userManagement") UserManagementForm form) {
+
+		return "user_management";
 	}
 
+	//ユーザー管理画面で
+	//検索ボタン押されたとき、この画面に戻る
+	@RequestMapping(value = "/user_management", params = "select", method = RequestMethod.POST)
+	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
+		//処理記述
+
+		return "user_management";
+	}
+
+	//確定ボタン押されたとき、この画面に戻る
+	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
+	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
+		//処理記述
+
+		return "user_management";
+	}
 }
+
 

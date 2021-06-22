@@ -16,7 +16,20 @@
 				<!-- ---------- ここから本体 ---------- -->
 <!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
 
-<%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
+ <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
+
+
+	<table border="1">
+		<caption>問い合わせ</caption>
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>ユーザー名</th>
+			<th>種類</th>
+			<th>状況</th>
+		</tr>
+		</thead>
+
 	<c:forEach var="contact" items= "${selectResult}">
 		<tr>
 			<td>${fn:escapeXml(contact.user_id)}</td>
@@ -24,10 +37,15 @@
 			<td>${fn:escapeXml(contact.contact_category_id)}</td>
 			<td>${fn:escapeXml(contact.flag)}</td>
 		</tr>
-	</c:forEach> --%>
+	</c:forEach>
+</table>
+
+
+
+
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
-	<%--  <span>問い合わせ内容</span>
+<%-- 	  <h3>問い合わせ内容</h3>
 	<form:form action="contact_result" method="post" modelAttribute="contact">
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
@@ -45,16 +63,17 @@
 
 
 	</form:form>
-
-	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-	<a href="user_management">ユーザー管理</a>
  --%>
-<%-- </c:if>
+	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
+	<a href="/user_management">ユーザー管理</a>
+
+ <%-- </c:if> --%>
 
 
 
-<c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
- <h2>問い合わせ</h2>
+<%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
+
+  <h3>問い合わせ</h3>
 <form:form action="contact_result" method="post" modelAttribute="contactInfo">
 
  <label>目的<br>
@@ -68,10 +87,10 @@
  <br><label>本文<br>
  <form:textarea path="contents"/> </label>
  <br><form:errors path="contents" cssStyle="color: red"/><br>
+
  <form:button type= "submit" name= "insert">送信</form:button>
  </form:form>
-
-<%-- </c:if> --%>
+ <%--  </c:if> --%>
 
 
 				<!-- ---------- ここまで本体 ---------- -->
