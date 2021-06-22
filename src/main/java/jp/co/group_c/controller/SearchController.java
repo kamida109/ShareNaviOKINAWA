@@ -47,38 +47,38 @@ public class SearchController {
 	}
 
 
-	// 検索結果
-	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
-	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
-
-		String subCategory = null;
-		subCategory =request.getParameter("name");
-
-		// サブカテゴリが未選択の時
-		if(subCategory==null || form.getMainCategoryId()==0) {
-			return "redirect:search";
-		}
-
-		List<Store> storeList = searchService.storeSearch(form.getStoreName(), subCategory, form.getCitiesId(), form.isHyouka());
-		// 店舗検索
-		if(!storeList.isEmpty()) {
-			model.addAttribute("storeList", storeList);
-		} else {
-			model.addAttribute("notList", "undefinde");
-		}
-
-		// あいまい検索用にキーワードの前後に「%」をつける
-		String index = "%" + form.getStoreName() + "%";
-		// あいまい検索
-		List<Store> partStoreList = searchService.partStoreSearch(index, form.isHyouka());
-		model.addAttribute("ssstoreList", partStoreList);
-
-		List<Store> storeCategoryList = searchService.storeCategory();
-		model.addAttribute("mainCategoryList", storeCategoryList);
-
-		return "search";
-
-	}
+//	// 検索結果
+//	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
+//	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
+//
+//		String subCategory = null;
+//		subCategory =request.getParameter("name");
+//
+//		// サブカテゴリが未選択の時
+//		if(subCategory==null || form.getMainCategoryId()==0) {
+//			return "redirect:search";
+//		}
+//
+//		List<Store> storeList = searchService.storeSearch(form.getStoreName(), subCategory, form.getCitiesId(), form.isHyouka());
+//		// 店舗検索
+//		if(!storeList.isEmpty()) {
+//			model.addAttribute("storeList", storeList);
+//		} else {
+//			model.addAttribute("notList", "undefinde");
+//		}
+//
+//		// あいまい検索用にキーワードの前後に「%」をつける
+//		String index = "%" + form.getStoreName() + "%";
+//		// あいまい検索
+//		List<Store> partStoreList = searchService.partStoreSearch(index, form.isHyouka());
+//		model.addAttribute("ssstoreList", partStoreList);
+//
+//		List<Store> storeCategoryList = searchService.storeCategory();
+//		model.addAttribute("mainCategoryList", storeCategoryList);
+//
+//		return "search";
+//
+//	}
 
 	// セレクトタグを非同期で切替
 	@RequestMapping(value="/pulldown/{value}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
@@ -100,12 +100,28 @@ public class SearchController {
 	@RequestMapping(value="/result/{keyWord}/{subCategory}/{prace}/{check}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String searchResult(@PathVariable("keyWord")String keyWord, @PathVariable("subCategory")String subCategory,
-			@PathVariable("prace")String prace, @PathVariable("check")String check) {
+			@PathVariable("prace")String prace, @PathVariable("check")String check, Model model) {
 
-		System.out.println(keyWord);
-		System.out.println(subCategory);
-		System.out.println(prace);
-		System.out.println(check);
+		Integer intPrace = Integer.parseInt(prace);
+		boolean boolCheck = Boolean.valueOf(check);
+
+		List<Store> storeList = searchService.storeSearch(keyWord, subCategory, intPrace, boolCheck);
+		// 店舗検索
+		if(!storeList.isEmpty()) {
+			model.addAttribute("storeList", storeList);
+		//	session.setAttribute("storeList", storeList);
+		} else {
+			model.addAttribute("notList", "undefinde");
+		}
+
+		// あいまい検索用にキーワードの前後に「%」をつける
+		String index = "%" + keyWord + "%";
+		// あいまい検索
+		List<Store> partStoreList = searchService.partStoreSearch(index, boolCheck);
+		model.addAttribute("ssstoreList", partStoreList);
+
+		List<Store> storeCategoryList = searchService.storeCategory();
+		model.addAttribute("mainCategoryList", storeCategoryList);
 
 		return null;
 	}

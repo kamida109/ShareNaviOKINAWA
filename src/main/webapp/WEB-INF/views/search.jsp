@@ -11,91 +11,83 @@
 		<div class="white_noise2">
 			<!-- 共通部品_header -->
 			<jsp:include page="/COMMON/header.jsp"/>
-
 			<div class="frame">
 
-				<form:form class="input_form" action="searchResult" modelAttribute="userInfo" method="GET">
-				<fieldset class="input_form_inner">
+				<div class="input_form">
+				<div class="input_form_inner">
+					<p><label>キーワード：<input type="text" id="keyWord"/></label></p>
 
-					<p><label>キーワード：<form:input id="keyWord" path="storeName" /></label></p>
+					<p><label>カテゴリ：</label>
+					<select id="mainCategory">
+					<c:forEach var="main" items="${mainCategory}">
+						<option value="${main.categoryId}">${main.categoryName}</option>
+					</c:forEach>
+					</select>
 
-					<p>
-					<label>カテゴリ：</label>
-						<form:select id="mainCategory" path="mainCategoryId">
-							<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
-						</form:select>
-
-						<select id="subCategory" name="name">
-							<option selected>------------</option>
-							<!-- 非同期でサブカテゴリが入ってくる -->
-						</select>
+					<select id="subCategory" name="name">
+						<option selected>------------</option>
+					</select>
 					</p>
 
-					<p>
-					<label>場所：
-						<form:select id="prace" path="citiesId">
-							<form:options items="${cities}" itemLabel="citiesName" itemValue="citiesId" />
-						</form:select>
-					</label>
-					</p>
-					</fieldset>
+					<p><label>場所：<select id="prace">
+						<c:forEach var="city" items="${cities}">
+							<option value="${city.citiesId}">${city.citiesName}</option>
+						</c:forEach>
+					</select></label></p>
+				</div>
+					<p><label><input type="checkbox" id="check"/>☆3以上のお店のみ表示</label></p>
+					<p><button class="btn" type="button" name="select" id="button">検索</button></p>
+				</div>
 
-					<p><label><form:checkbox id="check" path="hyouka"/>☆3以上のお店のみ表示</label></p>
-
-					<form:button>検索</form:button>
-
-				</form:form>
-
-				<button type="button" id="button">非同期</button>
-
+				<div id="search">
 				<details open>
 				<summary>店名検索</summary>
-					<jsp:include page="/COMMON/table_store.jsp"/>
+					<jsp:include  page="/COMMON/table_store.jsp"/>
 				</details>
+				</div>
 
 				<details open>
 				<summary>あいまい検索</summary>
 					<jsp:include page="/COMMON/table_store.jsp"/>
 				</details>
 
+
 				<script>
-					$(function(){
-						// 親カテゴリを変更したときの処理
-						$("#mainCategory").change(function(){
-							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
-							var value = $("#mainCategory").val();
-							if(value != 0){
-								// 子カテゴリ表示
-								$("#subCategory").show();
-								// コントローラに送信
-								$.get("pulldown/"+value, function(data){
-									console.log(data);
-									var obj = data;
-									$("#subCategory").html(data);
-								})
-							} else {
-								$("#subCategory").hide();
-							}
-						})
-					});
-
-					// 検索非同期
-					$("#button").click(function(){
-						var keyWord = $("#keyWord").val();
-						var subCategory = $("#subCategory").val();
-						var prace = $("#prace").val();
-						var check = $("#check").val();
-
-						$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, function(keyWord, subCategory){
-
-						})
+				$(function(){
+					// 親カテゴリを変更したときの処理
+					$("#mainCategory").change(function(){
+						// 親カテゴリが選択されたときに、valueに選択された内容を入れる
+						var value = $("#mainCategory").val();
+						if(value != 0){
+							// 子カテゴリ表示
+							$("#subCategory").show();
+							// コントローラに送信
+							$.get("pulldown/"+value, function(data){
+								console.log(data);
+								var obj = data;
+								$("#subCategory").html(data);
+							})
+						} else {
+							$("#subCategory").hide();
+						}
 					})
+				});
+
+				// 検索非同期
+				$("#button").click(function(){
+					var keyWord = $("#keyWord").val();
+					var subCategory = $("#subCategory").val();
+					var prace = $("#prace").val();
+					var check = $('#check').prop("checked");
+
+					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, function(data){
+						const page = $("#search").html();
+						$("#search").html(page);
+					})
+				})
 				</script>
 
-				<!-- ---------- ここまで本体 ---------- -->
-
 			</div>
-
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
 		</div>
