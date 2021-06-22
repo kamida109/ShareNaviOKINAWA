@@ -25,14 +25,14 @@
 						<div class="inner_frame_right">
 							${fn:escapeXml(signInUser.loginId)}<br>
 							${fn:escapeXml(signInUser.userName)}<br>
-							${fn:escapeXml(signInUser)}<br>
+							${fn:escapeXml(signInUser.citiesName)}<br>
 						</div>
 					</div>
 					<div style="margin-top: 130px; clear: both;">
 						<span style="font-weight: bold;">好きなカテゴリ<br></span>
-						カテゴリ1
-						カテゴリ2
-						カテゴリ3
+						<span>${fn:escapeXml(favoriteCategory[0].categoryName)}</span>
+						<span style="padding-left:10px;">${fn:escapeXml(favoriteCategory[1].categoryName)}</span>
+						<span style="padding-left:10px;">${fn:escapeXml(favoriteCategory[2].categoryName)}</span>
 					</div>
 				</div>
 
