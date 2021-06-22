@@ -11,4 +11,5 @@ public interface HomeService {
 
 	//カテゴリ表示用メソッド
 		List<Store> mainCategory(String storeName);
+
 }
