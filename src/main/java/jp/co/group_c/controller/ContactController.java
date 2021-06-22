@@ -1,5 +1,7 @@
 package jp.co.group_c.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.group_c.contact.ContactForm;
 import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
+import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.service.ContactService;
 
 @Controller
@@ -76,7 +79,10 @@ public class ContactController {
 	//検索ボタン押されたとき、この画面に戻る
 	@RequestMapping(value = "/user_management", params = "select", method = RequestMethod.POST)
 	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
-		//処理記述
+
+		UserManagement userManagement = new UserManagement(form.getUserId(), form.getUserName());
+		List<UserManagement> list = contactService.managementFind(userManagement);
+		model.addAttribute("userManagementList", list);
 
 		return "user_management";
 	}

@@ -1,5 +1,7 @@
 package jp.co.group_c.contact.entity;
 
+import jp.co.group_c.contact.util.ParamUtil;
+
 //問い合わせ用エンティティ
 //contactテーブルの全カラム＋usersテーブルからuser_nameも
 public class Contact {
@@ -61,6 +63,10 @@ public class Contact {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public boolean isEmptyCondition() {
+		// TODO 自動生成されたメソッド・スタブ
+		return userId == null && ParamUtil.isNullOrEmpty(userName);
 	}
 
 

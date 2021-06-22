@@ -1,5 +1,6 @@
 package jp.co.group_c.contact.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jp.co.group_c.contact.entity.Contact;
+import jp.co.group_c.contact.entity.UserManagement;
+import jp.co.group_c.contact.util.ParamUtil;
 
 @Repository
 public class PgContactDao implements ContactDao{
@@ -18,16 +21,18 @@ public class PgContactDao implements ContactDao{
 			+ "VALUES(:userId, :contactCategoryId, :contents, :flag)";
 
 	//問い合わせ内容一覧表示
-	private static final String SELECT_FIND_ALL = "SELECT contact_id, user_name,"
-			+ "contact_category_id, flag FROM contact"
-			+ "INNER JOIN users ON users.user_id = contact.user_id"
-			+ "ORDER BY flag ASC";
+	private static final String SELECT_FIND_ALL = "SELECT contact_id, user_name, contact_category_id, flag FROM contact"
+			+ " INNER JOIN users ON users.user_id = contact.user_id ORDER BY flag ASC";
 
 	//問い合わせ内容詳細の取得
 	private static final String SELECT_FIND ="SELECT contact_id, user_name,"
-			+ "contact_category_id, contents, flag FROM contact"
-			+ "INNER JOIN users ON users.user_id = contact.user_id"
-			+ "WHERE contact_id = :contactId";
+			+ " contact_category_id, contents, flag FROM contact"
+			+ " INNER JOIN users ON users.user_id = contact.user_id"
+			+ " WHERE contact_id = :contactId";
+
+	//IDと名前検索時
+	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name,"
+			+ "insert_day, login_id FROM users INNER JOIN store ON users.cities_id = store.cities_id WHERE ";
 
 
 	//プレースホルダーを使うときはこの型のクラス使う
@@ -65,6 +70,48 @@ public class PgContactDao implements ContactDao{
 		return contactDetails;
 
 	}
+	//IDと名前検索未入力時
+	public List<UserManagement> managementFindAll(){
+		String sql = SELECT_FIND_ALL;
+
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<UserManagement>(UserManagement.class));
+	}
 
 
+    //IDと名前検索時
+	public List<UserManagement> managementFind(UserManagement userManagement){
+		//未入力時、全検索（Entityのメソッド呼ぶ）
+		if (userManagement == null || userManagement.isEmptyCondition()) {
+			return managementFindAll();
+		}
+
+		List<String> condition = new ArrayList<String>();
+		MapSqlParameterSource param = new MapSqlParameterSource();
+
+		//値チェックのためDBからゲットする
+		Integer userId = userManagement.getUserId();
+		String userName = userManagement.getUserName();
+
+		//conditionとparamに追加
+		if(userId != null) {
+			condition.add("user_id= :userId");
+			param.addValue("userId", userId);
+		}
+			System.out.println(userId);
+
+		if(!ParamUtil.isNullOrEmpty(userName)) {
+			condition.add("user_name= :userName");
+			param.addValue("userName", userName);
+		}
+			System.out.println(userName);
+
+		String whereString = String.join(" AND ", condition.toArray(new String[] {}));
+
+		String sql = FINDBY_ID_OR_NAME + whereString;
+
+			System.out.println(sql);
+
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<UserManagement>(UserManagement.class));
+
+	}
 }

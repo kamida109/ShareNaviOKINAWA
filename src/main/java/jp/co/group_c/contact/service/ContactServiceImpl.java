@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.group_c.contact.dao.ContactDao;
 import jp.co.group_c.contact.entity.Contact;
+import jp.co.group_c.contact.entity.UserManagement;
 
 
 
@@ -30,5 +31,9 @@ public class ContactServiceImpl implements ContactService{
 		return contactDao.find(contactId);
 	}
 
+	//ユーザー管理画面での検索用
+	public List<UserManagement> managementFind(UserManagement userManagement){
+		return contactDao.managementFind(userManagement);
+	}
 
 }

@@ -27,7 +27,7 @@
 		<form:button type= "submit" name= "select">検索</form:button>
 
 <table border="1">
-  <thead>
+  <!-- <thead> -->
 	<tr>
 		<th>ユーザーID</th>
 		<th>名前</th>
@@ -35,21 +35,23 @@
 		<th>ログインID</th>
 
 	</tr>
-  </thead>
-  <tbody>
-  	<c:forEach var="contact" items= "${selectResult}">
+ <!--  </thead> -->
+ <!--  <tbody> -->
+  	 <c:forEach var="userManagement" items= "${userManagementList}">
   		<tr>
-			<td>${fn:escapeXml(contact.user_id)}</td>
-			<td>${fn:escapeXml(contact.user_name)}</td>
-			<td>${fn:escapeXml(contact.insert_day)}</td>
-			<td>${fn:escapeXml(contact.login_id)}</td>
+			<td>${fn:escapeXml(userManagement.user_id)}</td>
+			<td>${fn:escapeXml(userManagement.user_name)}</td>
+			<td>${fn:escapeXml(userManagement.insert_day)}</td>
+			<td>${fn:escapeXml(userManagement.login_id)}</td>
 		</tr>
 
-  	</c:forEach>
-  </tbody>
+ 	</c:forEach>
+<!--   </tbody> -->
 </table>
+</form:form>
 
 		<h3>ユーザーの削除</h3>
+		<form:form action="user_management" method="post" modelAttribute="userManagement">
 		<label>削除するユーザーID:
 		<form:input path="userId" /></label>
 

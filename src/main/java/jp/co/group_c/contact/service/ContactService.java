@@ -3,6 +3,7 @@ package jp.co.group_c.contact.service;
 import java.util.List;
 
 import jp.co.group_c.contact.entity.Contact;
+import jp.co.group_c.contact.entity.UserManagement;
 
 public interface ContactService {
 
@@ -17,4 +18,6 @@ public interface ContactService {
 	public Contact find (Integer contactId);
 
 
+	//IDか名前検索時（ユーザー管理画面で）
+	public List<UserManagement> managementFind(UserManagement userManagement);
 }
