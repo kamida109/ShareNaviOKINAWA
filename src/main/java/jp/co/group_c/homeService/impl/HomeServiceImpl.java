@@ -29,5 +29,4 @@ public class HomeServiceImpl implements HomeService{
 		return homeDao.mainCategory(storeName);
 	}
 
-
 }
