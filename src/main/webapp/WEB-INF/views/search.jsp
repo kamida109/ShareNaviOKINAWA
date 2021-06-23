@@ -57,13 +57,12 @@
 					// 親カテゴリを変更したときの処理
 					$("#mainCategory").change(function(){
 						// 親カテゴリが選択されたときに、valueに選択された内容を入れる
-						var value = $("#mainCategory").val();
+						let value = $("#mainCategory").val();
 						if(value != 0){
 							// 子カテゴリ表示
 							$("#subCategory").show();
 							// コントローラに送信
 							$.get("pulldown/"+value, function(data){
-								var obj = data;
 								console.log(data);
 								$("#subCategory").html(data);
 							})
@@ -75,15 +74,14 @@
 
 				// 検索非同期
 				$("#button").click(function(){
-					var keyWord = $("#keyWord").val();
-					var subCategory = $("#subCategory").val();
-					var prace = $("#prace").val();
-					var check = $('#check').prop("checked");
+					let keyWord = $("#keyWord").val();
+					let subCategory = $("#subCategory").val();
+					let prace = $("#prace").val();
+					let check = $('#check').prop("checked");
 
 
 					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, "turbolinks:load",function(data){
 						location.reload();
-						//$("#search").load();
 					})
 				})
 
