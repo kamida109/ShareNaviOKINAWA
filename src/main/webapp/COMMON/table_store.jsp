@@ -4,7 +4,6 @@
 
 <div class="scroll"><table class="store_table">
 	<tbody>
-	<c:if test="${not empty storeList}">
 		<c:forEach items="${storeList}" var="store" >
 			<tr class="top">
 				<td class="image" rowspan="3"  valign="middle"><img class="storeimg" src="CSS/image/no_image1.png"></td>
@@ -21,12 +20,12 @@
 			</c:forEach></tr>
 
 		</c:forEach>
-		</c:if>
-		<c:if test="${empty storeList}">
+		<c:if test="${not empty notList}">
 			<p>検索した内容が見つかりません</p>
 			<p>店舗を登録したい場合は<br>
-				<a href="input">こちらをクリック</a
-			></p>
+				<a href="input">こちらをクリック</a>
+			</p>
 		</c:if>
 	</tbody>
-</table></div>
+</table>
+</div>

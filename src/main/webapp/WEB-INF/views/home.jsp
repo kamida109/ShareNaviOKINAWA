@@ -20,6 +20,15 @@
 				<summary>新着</summary>
 					<jsp:include page="/COMMON/table_store.jsp"/>
 				</details>
+				<details open>
+				<summary>おすすめ</summary>
+					<jsp:include page="/COMMON/table_store2.jsp"/>
+				</details>
+				<details open>
+				<summary>新しい提案</summary>
+					<jsp:include page="/COMMON/table_store3.jsp"/>
+				</details>
+
 
 			<!-- ---------- ここまで本体 ---------- -->
 
