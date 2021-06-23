@@ -18,7 +18,7 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
-
+<%-- <form:form action="contact" method="post" modelAttribute="contact"> --%>
 	<table border="1">
 		<caption>問い合わせ</caption>
 		<thead>
@@ -30,15 +30,16 @@
 		</tr>
 		</thead>
 
-	<c:forEach var="contact" items= "${selectResult}">
+	<c:forEach var="result" items= "${selectResult}">
 		<tr>
-			<td>${fn:escapeXml(contact.user_id)}</td>
-			<td>${fn:escapeXml(contact.user_name)}</td>
-			<td>${fn:escapeXml(contact.contact_category_id)}</td>
-			<td>${fn:escapeXml(contact.flag)}</td>
+			<td>${fn:escapeXml(result.contactId)}</td>
+			<td>${fn:escapeXml(result.userName)}</td>
+			<td>${fn:escapeXml(result.contactCategoryId)}</td>
+			<td>${fn:escapeXml(result.flag)}</td>
 		</tr>
 	</c:forEach>
 </table>
+
 
 
 

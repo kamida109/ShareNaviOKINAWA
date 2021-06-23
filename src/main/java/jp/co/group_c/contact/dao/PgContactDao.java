@@ -60,7 +60,7 @@ public class PgContactDao implements ContactDao{
 		jdbcTemplate.update(sql, param);
 	}
 	//問い合わせ内容一覧表示
-	@Override
+	//@Override
 	public List<Contact> findAll(){
 		String sql = FIND_ALL;
 

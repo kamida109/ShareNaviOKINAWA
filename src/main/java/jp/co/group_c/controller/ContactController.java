@@ -27,12 +27,15 @@ public class ContactController {
 
 	// 問い合わせ画面に飛ぶ
 	@RequestMapping(value = "/contact")
-	public String jampContact(@ModelAttribute("contactInfo") ContactForm form) {
+	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model) {
 
 		// sessionからログインユーザの情報を取得して
 		// ログインユーザが管理者なら
 		// 問い合わせ情報を全件取得(あとあと全件じゃなくなるかも)
 		// ORDER BY でcontactcategoryの昇順に取得してください
+
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
 
 		return "contact";
 	}
@@ -55,14 +58,14 @@ public class ContactController {
 	}
 
 
-	// 問い合わせ解決処理.管理者用
+	// 問い合わせ内容の詳細を表示させる
 	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
 	public String updateContact(@Validated @ModelAttribute("contactInfo") ContactForm form, BindingResult bindingResult, Model model) {
 
 
 		//Integer contactId = (form.getContactId());
 
-		contactService.findAll();
+		//contactService.findAll();
 		//contactService.find(contactId);
 
 		return "contact";
@@ -92,8 +95,16 @@ public class ContactController {
 	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
 
 
+		//削除するIDが存在しない場合
+//		Integer userId = form.getUserId();
+//
+//				if(userId == null) {
+//					model.addAttribute("errMsg", "入力されたIDのユーザーは存在しません。");
+//					return "user_management";
+//				}
+
 		String getName = contactService.managementDelete(form.getUserId());
-		model.addAttribute("msg", "ユーザー" + (getName) + "を削除しました。");
+		model.addAttribute("msg", "ユーザー" + (getName) + "さんを削除しました。");
 
 		return "user_management";
 	}

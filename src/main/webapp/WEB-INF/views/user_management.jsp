@@ -59,6 +59,9 @@
 		<form:input path="userId" /></label>
 
 		<form:button type= "submit" name= "delete">確定</form:button>
+		<c:if test="${not empty msg}">
+		<p class="error">${errMsg}</p>
+		</c:if>
 
 </form:form>
 
