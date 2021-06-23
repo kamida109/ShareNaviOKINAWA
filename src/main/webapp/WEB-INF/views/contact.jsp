@@ -19,51 +19,78 @@
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
 
-	<table border="1">
-		<caption>問い合わせ</caption>
-		<thead>
-		<tr>
-			<th>ID</th>
-			<th>ユーザー名</th>
-			<th>種類</th>
-			<th>状況</th>
-		</tr>
-		</thead>
+<!-- 	<table border="1"> -->
+<%-- 		<caption>問い合わせ</caption> --%>
 
-	<c:forEach var="contact" items= "${selectResult}">
-		<tr>
-			<td>${fn:escapeXml(contact.user_id)}</td>
-			<td>${fn:escapeXml(contact.user_name)}</td>
-			<td>${fn:escapeXml(contact.contact_category_id)}</td>
-			<td>${fn:escapeXml(contact.flag)}</td>
-		</tr>
-	</c:forEach>
-</table>
+<!-- 		<thead> -->
+<!-- 		<tr> -->
+<!-- 			<th>ID</th> -->
+<!-- 			<th>ユーザー名</th> -->
+<!-- 			<th>種類</th> -->
+<!-- 			<th>状況</th> -->
+<!-- 		</tr> -->
+<!-- 		</thead> -->
+
+<%-- 	<c:forEach var="result" items= "${selectResult}"> --%>
+<!-- 		<tr> -->
+<%-- 			<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td> --%>
+<%-- 			<td>${fn:escapeXml(result.userName)}</td> --%>
+
+<!-- 			<td> -->
+<%-- 				<c:choose> --%>
+<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}"> --%>
+<!-- 					<span>通報</span> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}"> --%>
+<!-- 					<span>問い合わせ</span> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}"> --%>
+<!-- 					<span>要望</span> -->
+<%-- 				</c:when> --%>
+<%-- 				</c:choose> --%>
+<!-- 			</td> -->
+
+<!-- 			<td> -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${fn:escapeXml(result.flag eq 'true')}"> --%>
+<!-- 					<span>解決</span> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<!-- 					<span>未解決</span> -->
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+<!-- 			</td> -->
+<!-- 		</tr> -->
+<%-- 	</c:forEach> --%>
+<!-- </table> -->
+
 
 
 
 
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
-<%-- 	  <h3>問い合わせ内容</h3>
-	<form:form action="contact_result" method="post" modelAttribute="contact">
-	<form:input type="hidden" path="contactId" readonly="true"/>
+ 	  <h3>問い合わせ内容</h3>
+<form:form action="contacts" method="post" modelAttribute="contact_management">
+	<form:input type="input" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
-	<form:select path="userName" readonly="true"/>
+	<form:input path="userName" readonly="true"/>
 	</label>
 
-	<label>目的<br>
-	<form:select path="contactCategoryId" readonly="true"/>
+	<br><label>目的<br>
+	<form:input path="contactCategoryId" readonly="true"/>
+
 	</label>
 
-	<label>本文<br>
-	<form:textarea path="contents" readonly="true"/>
+	<br><label>本文<br>
+	<%--  form:textarea path="contents" readonly="true"/>--%>
+
+	<form:textarea path="contents"/>
 	</label>
-	<form:button type="submit" name="update">解決</form:button>
+	<form:button  name="update">解決</form:button>
 
+ </form:form>
 
-	</form:form>
- --%>
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
 	<a href="/user_management">ユーザー管理</a>
 

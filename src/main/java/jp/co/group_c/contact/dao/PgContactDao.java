@@ -30,6 +30,11 @@ public class PgContactDao implements ContactDao{
 			+ " INNER JOIN users ON users.user_id = contact.user_id"
 			+ " WHERE contact_id = :contactId";
 
+	//解決ボタンおしたとき、問い合わせ内容削除＆flagがtrueになるようにアップデート
+	private static final String FLAG_UPDATE = "UPDATE contact SET flag = true"
+			+ " WHERE contact_id = :contactId";
+
+
 	//IDと名前検索時（全件取得）
 	private static final String SELECT_FIND_ALL = "SELECT user_id, user_name, login_id"
 			+ " FROM users ORDER BY user_id ASC";
@@ -37,6 +42,10 @@ public class PgContactDao implements ContactDao{
 	//IDと名前検索時
 	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name, login_id"
 			+ " FROM users WHERE ";
+
+	//ユーザー管理画面での削除用
+	private static final String GET_NAME = "SELECT user_name FROM users WHERE user_id = :userId";
+	private static final String DELETE = "DELETE FROM users WHERE user_id = :userId";
 
 
 	//プレースホルダーを使うときはこの型のクラス使う
@@ -56,7 +65,7 @@ public class PgContactDao implements ContactDao{
 		jdbcTemplate.update(sql, param);
 	}
 	//問い合わせ内容一覧表示
-	@Override
+	//@Override
 	public List<Contact> findAll(){
 		String sql = FIND_ALL;
 
@@ -69,11 +78,23 @@ public class PgContactDao implements ContactDao{
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("contactId", contactId);
 
-		Contact contactDetails = (Contact) jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<Contact>());
+		Contact contactDetails = (Contact) jdbcTemplate.queryForObject(sql, param, new BeanPropertyRowMapper<Contact>(Contact.class));
 
 		return contactDetails;
-
 	}
+
+	//解決ボタン→flagをtrueに
+	public void flagUpdate(Integer contactId) {
+		String sql = FLAG_UPDATE;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("contactId", contactId);
+
+		jdbcTemplate.update(sql, param);
+	}
+
+
+
 	//IDと名前検索未入力時
 	public List<UserManagement> managementFindAll(){
 		String sql = SELECT_FIND_ALL;
@@ -119,7 +140,19 @@ public class PgContactDao implements ContactDao{
 	}
 
 	//ユーザー管理画面での削除用
-	//public void
+	public String managementDelete(Integer userId) {
+		String selectSql = GET_NAME;
+		String deleteSql = DELETE;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userName", userId);
+		param.addValue("userId", userId);
+
+		String getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
+		jdbcTemplate.update(deleteSql, param);
+
+		return getName;
+	}
 
 
 }

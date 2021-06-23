@@ -24,6 +24,10 @@ public class Contact {
 		this.contents = contents;
 		this.flag = flag;
 	}
+	//コンストラクター解決ボタン→flagをtrueにする
+	public Contact(Integer userId) {
+		this.userId = userId;
+	}
 
 
 

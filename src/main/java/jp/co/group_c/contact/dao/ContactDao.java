@@ -15,9 +15,13 @@ public interface ContactDao {
 	//問い合わせ内容詳細の取得
 	public Contact find(Integer contactId);
 
+	//解決ボタン→flagをtrueに
+	public void flagUpdate (Integer contactId);
+
+
 	//IDか名前検索時（ユーザー管理画面で）
 	public List<UserManagement> managementFind(UserManagement userManagement);
 
 	//ユーザー管理画面での削除用
-	//public void managementDelete(Integer userId);
+	public String managementDelete(Integer userId);
 }

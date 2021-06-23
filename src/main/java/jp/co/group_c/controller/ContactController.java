@@ -27,15 +27,21 @@ public class ContactController {
 
 	// 問い合わせ画面に飛ぶ
 	@RequestMapping(value = "/contact")
-	public String jampContact(@ModelAttribute("contactInfo") ContactForm form) {
+	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model,
+								@ModelAttribute("contact_management") ContactForm contactForm) {
 
 		// sessionからログインユーザの情報を取得して
 		// ログインユーザが管理者なら
 		// 問い合わせ情報を全件取得(あとあと全件じゃなくなるかも)
 		// ORDER BY でcontactcategoryの昇順に取得してください
 
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
+
+
 		return "contact";
 	}
+
 
 	// 問い合わせ送信処理
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
@@ -54,16 +60,39 @@ public class ContactController {
 		return "contact_result";
 	}
 
+	// 問い合わせ内容詳細表示
+	@RequestMapping(value = "/contact/{id}")
+	public String detaileContact(@ModelAttribute("id") Integer id,
+									@ModelAttribute("contact_management") ContactForm form, Model model,
+									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-	// 問い合わせ解決処理.管理者用
-	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
-	public String updateContact(@Validated @ModelAttribute("contactInfo") ContactForm form, BindingResult bindingResult, Model model) {
+		Contact detailInfo = contactService.find(id);
+		model.addAttribute("detailInfo", detailInfo);
 
 
-		//Integer contactId = (form.getContactId());
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
 
-		contactService.findAll();
-		//contactService.find(contactId);
+		//内容をjspのフォームに入れるとき、セットして引数にゲットする
+		form.setContactId(detailInfo.getContactId());
+		form.setUserName(detailInfo.getUserName());
+		form.setContactCategoryId(detailInfo.getContactCategoryId());
+		form.setContents(detailInfo.getContents());
+
+		return "contact";
+	}
+
+	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
+	@RequestMapping(value = "/contacts" , /*params = "update",*/ method = RequestMethod.POST)
+	public String updateContact(@ModelAttribute("contact_management") ContactForm form,
+									@ModelAttribute("contactInfo") ContactForm contactForm) {
+
+		//Contact contactId = new Contact(form.getContactId());
+		System.out.println(form.getContactId());
+
+		System.out.println("action");
+
+		contactService.flagUpdate(form.getContactId());
 
 		return "contact";
 	}
@@ -90,7 +119,18 @@ public class ContactController {
 	//確定ボタン押されたとき、この画面に戻る（削除）
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
 	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
-		//処理記述
+
+
+		//削除するIDが存在しない場合
+//		Integer userId = form.getUserId();
+//
+//				if(userId == null) {
+//					model.addAttribute("errMsg", "入力されたIDのユーザーは存在しません。");
+//					return "user_management";
+//				}
+
+		String getName = contactService.managementDelete(form.getUserId());
+		model.addAttribute("msg", "ユーザー" + (getName) + "さんを削除しました。");
 
 		return "user_management";
 	}
