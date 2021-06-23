@@ -1,12 +1,14 @@
 package jp.co.group_c.add_store_entity;
 
-public class AddStore {
+public class Store {
 
+	private int storeId;
 	private String storeName;
 	private String mainCategory;
 	private String category;
 	private String address1;
 	private String address2;
+	private String TEL;
 	private String workTime;
 	private String image;
 
@@ -54,6 +56,18 @@ public class AddStore {
 	}
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
+	}
+	public String getTEL() {
+		return TEL;
+	}
+	public void setTEL(String tEL) {
+		TEL = tEL;
+	}
+	public int getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
 	}
 
 
