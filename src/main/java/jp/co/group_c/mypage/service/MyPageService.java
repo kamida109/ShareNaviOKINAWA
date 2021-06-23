@@ -3,6 +3,7 @@ package jp.co.group_c.mypage.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.entity.Users;
 import jp.co.group_c.mypage.dao.MyPageDao;
 
@@ -16,10 +17,8 @@ public class MyPageService {
 		return myPageDao.findByLoginId(loginId);
 	}
 
-	/*
-	public void update(Users user) {
-		usersDao.updateUser(user);
+	public void updateUserInfo(Integer userId, UserInfoForm userInfo) {
+		myPageDao.updateUserInfo(userId, userInfo);
 	}
-	*/
 
 }
