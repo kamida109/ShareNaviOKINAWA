@@ -2,30 +2,27 @@ package jp.co.group_c.entity;
 
 public class Users {
 
+	// フィールド
 	private Integer userId;
 	private String userName;
 	private Integer citiesId;
 	private String citiesName;
-	private Integer authorityId;
+	private Integer authoeityId;
 	private String loginId;
 	private String password;
-	private Integer categoryId;
-	private String categoryName;
-	private Integer mainCategory;
 
-	public Users() {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
+	public Users() {};
 
-	// ログインユーザの登録情報変更で使用する
-	public Users(Integer userId, String userName, Integer citiesId, String loginId) {
+	public Users(Integer userId, String userName, Integer citiesId, String citiesName, Integer authoeityId, String loginId, String password) {
 		this.userId = userId;
 		this.userName = userName;
 		this.citiesId = citiesId;
+		this.citiesName = citiesName;
+		this.authoeityId = authoeityId;
 		this.loginId = loginId;
+		this.password = password;
 	}
 
-	/* アクセサ */
 	public Integer getUserId() {
 		return userId;
 	}
@@ -54,11 +51,11 @@ public class Users {
 		this.citiesName = citiesName;
 	}
 
-	public Integer getAuthorityId() {
-		return authorityId;
+	public Integer getAuthoeityId() {
+		return authoeityId;
 	}
-	public void setAuthorityId(Integer authorityId) {
-		this.authorityId = authorityId;
+	public void setAuthoeityId(Integer authoeityId) {
+		this.authoeityId = authoeityId;
 	}
 
 	public String getLoginId() {
@@ -73,27 +70,6 @@ public class Users {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public Integer getMainCategory() {
-		return mainCategory;
-	}
-	public void setMainCategory(Integer mainCategory) {
-		this.mainCategory = mainCategory;
 	}
 
 }
