@@ -17,6 +17,9 @@ public interface ContactService {
 	//問い合わせ内容詳細の取得.引数は検索する条件を入れる。WHERE句
 	public Contact find (Integer contactId);
 
+	//解決ボタン→flagをtrueに
+	public void flagUpdate (Integer contactId);
+
 
 	//IDか名前検索時（ユーザー管理画面で）
 	public List<UserManagement> managementFind(UserManagement userManagement);

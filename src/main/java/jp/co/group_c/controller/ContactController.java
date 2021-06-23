@@ -43,8 +43,6 @@ public class ContactController {
 	}
 
 
-
-
 	// 問い合わせ送信処理
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
 	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
@@ -71,6 +69,11 @@ public class ContactController {
 		Contact detailInfo = contactService.find(id);
 		model.addAttribute("detailInfo", detailInfo);
 
+
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
+
+		//内容をjspのフォームに入れるとき、セットして引数にゲットする
 		form.setContactId(detailInfo.getContactId());
 		form.setUserName(detailInfo.getUserName());
 		form.setContactCategoryId(detailInfo.getContactCategoryId());
@@ -79,15 +82,17 @@ public class ContactController {
 		return "contact";
 	}
 
-	// 問い合わせ内容詳細表示。解決ボタン押したとき
-	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
-	public String updateContact(@Validated @ModelAttribute("contact_management") ContactForm form, BindingResult bindingResult, Model model) {
+	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
+	@RequestMapping(value = "/contacts" , /*params = "update",*/ method = RequestMethod.POST)
+	public String updateContact(@ModelAttribute("contact_management") ContactForm form,
+									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
+		//Contact contactId = new Contact(form.getContactId());
+		System.out.println(form.getContactId());
 
-		//Integer contactId = (form.getContactId());
+		System.out.println("action");
 
-		//contactService.findAll();
-		//contactService.find(contactId);
+		contactService.flagUpdate(form.getContactId());
 
 		return "contact";
 	}

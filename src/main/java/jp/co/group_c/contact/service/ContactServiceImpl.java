@@ -31,6 +31,11 @@ public class ContactServiceImpl implements ContactService{
 		return contactDao.find(contactId);
 	}
 
+	//解決ボタン→flagをtrueに
+	public void flagUpdate (Integer contactId) {
+		contactDao.flagUpdate(contactId);
+	}
+
 	//ユーザー管理画面での検索用
 	public List<UserManagement> managementFind(UserManagement userManagement){
 		return contactDao.managementFind(userManagement);
