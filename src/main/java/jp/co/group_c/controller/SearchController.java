@@ -31,12 +31,15 @@ public class SearchController {
 	@Autowired
 	HttpSession session;
 
+
+	// 店舗検索画面に飛ぶ
 	@Autowired
 	HttpServletRequest request;
 
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
-	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
+	public String jampSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
+	//public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
 		session.removeAttribute("storeList");
 		session.removeAttribute("notList");
