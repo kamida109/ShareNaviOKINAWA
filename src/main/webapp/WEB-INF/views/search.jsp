@@ -48,7 +48,7 @@
 
 				<details open>
 				<summary>あいまい検索</summary>
-					<jsp:include page="/COMMON/table_store.jsp"/>
+					<jsp:include page="/COMMON/table_store3.jsp"/>
 				</details>
 
 
@@ -79,10 +79,11 @@
 					let prace = $("#prace").val();
 					let check = $('#check').prop("checked");
 
-
-					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, "turbolinks:load",function(data){
-						location.reload();
-					})
+					if(keyWord){
+						$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, "turbolinks:load",function(data){
+							location.reload();
+						})
+					}
 				})
 
 				</script>
@@ -90,6 +91,9 @@
 			</div>
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
+			<script type="text/javascript" src="js/jquery.raty.js"></script>
+			<script type="text/javascript" src="js/star.js"></script>
+
 		</div>
 	</body>
 </html>
