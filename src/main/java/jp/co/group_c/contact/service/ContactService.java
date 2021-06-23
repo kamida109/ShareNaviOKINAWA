@@ -22,5 +22,5 @@ public interface ContactService {
 	public List<UserManagement> managementFind(UserManagement userManagement);
 
 	//ユーザーIDで削除（ユーザー管理画面で）
-	//public void managementDelete(Integer userId);
+	public String managementDelete(Integer userId);
 }

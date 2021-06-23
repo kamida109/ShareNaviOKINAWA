@@ -19,5 +19,5 @@ public interface ContactDao {
 	public List<UserManagement> managementFind(UserManagement userManagement);
 
 	//ユーザー管理画面での削除用
-	//public void managementDelete(Integer userId);
+	public String managementDelete(Integer userId);
 }

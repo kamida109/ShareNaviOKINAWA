@@ -90,7 +90,10 @@ public class ContactController {
 	//確定ボタン押されたとき、この画面に戻る（削除）
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
 	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
-		//処理記述
+
+
+		String getName = contactService.managementDelete(form.getUserId());
+		model.addAttribute("msg", "ユーザー" + (getName) + "を削除しました。");
 
 		return "user_management";
 	}

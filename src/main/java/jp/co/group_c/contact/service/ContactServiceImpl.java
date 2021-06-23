@@ -36,7 +36,7 @@ public class ContactServiceImpl implements ContactService{
 		return contactDao.managementFind(userManagement);
 	}
 	//ユーザー管理画面での削除用
-//	public void delete(Integer userId) {
-//		contactDao.managementDelete(userId);
-//	}
+	public String managementDelete(Integer userId) {
+		return contactDao.managementDelete(userId);
+	}
 }

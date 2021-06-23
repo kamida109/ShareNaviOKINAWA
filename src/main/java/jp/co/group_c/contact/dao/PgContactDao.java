@@ -38,6 +38,10 @@ public class PgContactDao implements ContactDao{
 	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name, login_id"
 			+ " FROM users WHERE ";
 
+	//ユーザー管理画面での削除用
+	private static final String GET_NAME = "SELECT user_name FROM users WHERE user_id = :userId";
+	private static final String DELETE = "DELETE FROM users WHERE user_id = :userId";
+
 
 	//プレースホルダーを使うときはこの型のクラス使う
 	@Autowired
@@ -119,7 +123,19 @@ public class PgContactDao implements ContactDao{
 	}
 
 	//ユーザー管理画面での削除用
-	//public void
+	public String managementDelete(Integer userId) {
+		String selectSql = GET_NAME;
+		String deleteSql = DELETE;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userName", userId);
+		param.addValue("userId", userId);
+
+		String getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
+		jdbcTemplate.update(deleteSql, param);
+
+		return getName;
+	}
 
 
 }
