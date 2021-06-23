@@ -31,6 +31,9 @@ public class HomeController {
 		session.removeAttribute("storeList");
 		session.removeAttribute("notList");
 		session.removeAttribute("mainCategoryList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notPlanList");
+		session.removeAttribute("setImages");
 
 		//新着表示
 		List<Store> newArrivalList = homeService.newArrival();
@@ -49,6 +52,8 @@ public class HomeController {
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
 		Collections.shuffle(planList);
 
+		System.out.println(newArrivalList.get(0).getHyouka());
+
 		//DBが何もない時の対策
 		if(!newArrivalList.isEmpty()) {
 			model.addAttribute("storeList", newArrivalList);
@@ -57,6 +62,8 @@ public class HomeController {
 			model.addAttribute("planList", planList);
 		}else {
 			model.addAttribute("notList", "undefinde");
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
 		}
 
 		return "home";

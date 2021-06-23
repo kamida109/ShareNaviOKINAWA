@@ -59,7 +59,7 @@ public class HomeDaoImpl implements HomeDao{
     									 + "WHERE sc.category_id NOT IN (SELECT fc.category_id\n"
     									 + "FROM users AS u\n"
     									 + "JOIN favorite_category AS fc ON :userId = fc.user_id)\n"
-    									 + "LIMIT 1";
+    									 + "ORDER BY random() LIMIT 1";
 
     //新着機能メソッド
 	@Override
