@@ -11,4 +11,10 @@ public interface HomeDao {
 
 	//カテゴリ表示用メソッド
 	List<Store> mainCategory(String storeName);
+
+	//ユーザー情報の取得
+	List<Store> user();
+
+	//おすすめの取得用メソッド
+	List<Store> recommend(int userId);
 }

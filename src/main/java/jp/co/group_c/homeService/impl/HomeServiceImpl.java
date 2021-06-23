@@ -29,4 +29,16 @@ public class HomeServiceImpl implements HomeService{
 		return homeDao.mainCategory(storeName);
 	}
 
+	//ユーザー情報取得メソッド
+	@Override
+	public List<Store> user(){
+		return homeDao.user();
+	}
+
+	//おすすめ表示メソッド
+	@Override
+	public List<Store> recommend(int userId) {
+		return homeDao.recommend(userId);
+	}
+
 }

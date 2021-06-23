@@ -34,6 +34,21 @@ public class HomeDaoImpl implements HomeDao{
     											   + "FROM store_category as s\n"
     											   + "JOIN category as c on s.category_id = c.category_id\n";
 
+    private static final String USER = "SELECT * FROM users";
+
+    private static final String RECOMMEND = "SELECT s.store_id, store_name, category_name, cities_name, hyouka, paths\n"
+    									       + "FROM store AS s\n"
+    									       + "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
+    									       + "JOIN category AS c ON sc.category_id = c.category_id\n"
+    									       + "JOIN cities AS city ON s.cities_id = city.cities_id\n"
+    									       + "JOIN review AS r ON s.store_id = r.store_id\n"
+    									       + "JOIN images AS i ON s.store_id = i.store_id\n"
+    									       + "WHERE sc.category_id IN (SELECT fc.category_id\n"
+    									       + "FROM users AS u\n"
+    									       + "JOIN favorite_category AS fc ON :userId = fc.user_id)\n"
+    									       + "ORDER BY random() LIMIT 3;";
+
+
     //新着機能メソッド
 	@Override
 	public List<Store> newArrival() {
@@ -42,12 +57,29 @@ public class HomeDaoImpl implements HomeDao{
 		return newArrivalList;
 	}
 
-	//カテゴリ表示用メソッド
+	//カテゴリ表示メソッド
 	@Override
 	public List<Store> mainCategory(String storeName) {
 		String mainCategory = MAIN_CATEGORY;
 		List<Store> mainCategoryList = jdbcTemplate.query(mainCategory, new BeanPropertyRowMapper<Store>(Store.class));
 		return mainCategoryList;
+	}
+
+	//ユーザー情報の取得メソッド
+	@Override
+	public List<Store> user(){
+		String user = USER;
+		List<Store> userList = jdbcTemplate.query(user, new BeanPropertyRowMapper<Store>(Store.class));
+		return userList;
+	}
+
+	//おすすめ表示メソッド
+	@Override
+	public List<Store> recommend(int userId) {
+		String recommend = RECOMMEND;
+		param.addValue("userId", userId);
+		List<Store> recommendList = jdbcTemplate.query(recommend, param, new BeanPropertyRowMapper<Store>(Store.class));
+		return recommendList;
 	}
 
 }
