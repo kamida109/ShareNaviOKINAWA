@@ -39,12 +39,12 @@
 					<p><button class="btn" type="button" name="select" id="button">検索</button></p>
 				</div>
 
-				<div id="search">
 				<details open>
 				<summary>店名検索</summary>
+				<span id="search">
 					<jsp:include  page="/COMMON/table_store.jsp"/>
+				</span>
 				</details>
-				</div>
 
 				<details open>
 				<summary>あいまい検索</summary>
@@ -63,8 +63,8 @@
 							$("#subCategory").show();
 							// コントローラに送信
 							$.get("pulldown/"+value, function(data){
-								console.log(data);
 								var obj = data;
+								console.log(data);
 								$("#subCategory").html(data);
 							})
 						} else {
@@ -80,11 +80,13 @@
 					var prace = $("#prace").val();
 					var check = $('#check').prop("checked");
 
-					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, function(data){
-						const page = $("#search").html();
-						$("#search").html(page);
+
+					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, "turbolinks:load",function(data){
+						location.reload();
+						//$("#search").load();
 					})
 				})
+
 				</script>
 
 			</div>

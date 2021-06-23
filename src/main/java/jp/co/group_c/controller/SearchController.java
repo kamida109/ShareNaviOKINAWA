@@ -37,6 +37,9 @@ public class SearchController {
 	@RequestMapping(value = "/search")
 	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
+		session.removeAttribute("storeList");
+		session.removeAttribute("notList");
+
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
 
@@ -89,7 +92,7 @@ public class SearchController {
 		List<Category> subCategoryList = searchService.subCategory(val);
 
 		for(Category c : subCategoryList) {
-			str += "<option value=\"" + c.getCategoryName() +"\">" +  c.getCategoryName() + "</option>";
+			str += "<option value=\"" + c.getCategoryId() +"\"" + "label=\""+ c.getCategoryName() + "\">" +  c.getCategoryName() + "</option>";
 		}
 
 		return str;
@@ -102,23 +105,36 @@ public class SearchController {
 	public String searchResult(@PathVariable("keyWord")String keyWord, @PathVariable("subCategory")String subCategory,
 			@PathVariable("prace")String prace, @PathVariable("check")String check, Model model) {
 
+		String inputSubCategory = null;
+		inputSubCategory =request.getParameter("name");
+
+		// サブカテゴリが未選択の時
+		if(inputSubCategory=="------------") {
+			return "redirect:search";
+		}
+
 		Integer intPrace = Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
 		List<Store> storeList = searchService.storeSearch(keyWord, subCategory, intPrace, boolCheck);
+
+		for(Store s : storeList) {
+			System.out.println(s.getStoreName());
+		}
+
 		// 店舗検索
 		if(!storeList.isEmpty()) {
-			model.addAttribute("storeList", storeList);
-		//	session.setAttribute("storeList", storeList);
+		//	model.addAttribute("storeList", storeList);
+			session.setAttribute("storeList", storeList);
 		} else {
-			model.addAttribute("notList", "undefinde");
+			session.setAttribute("notList", "undefinde");
 		}
 
 		// あいまい検索用にキーワードの前後に「%」をつける
 		String index = "%" + keyWord + "%";
 		// あいまい検索
 		List<Store> partStoreList = searchService.partStoreSearch(index, boolCheck);
-		model.addAttribute("ssstoreList", partStoreList);
+		session.setAttribute("ssstoreList", partStoreList);
 
 		List<Store> storeCategoryList = searchService.storeCategory();
 		model.addAttribute("mainCategoryList", storeCategoryList);
