@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.entity.Users;
 import jp.co.group_c.homeDao.HomeDao;
 import jp.co.group_c.homeService.HomeService;
 
@@ -31,14 +32,20 @@ public class HomeServiceImpl implements HomeService{
 
 	//ユーザー情報取得メソッド
 	@Override
-	public List<Store> user(){
-		return homeDao.user();
+	public List<Users> users(){
+		return homeDao.users();
 	}
 
 	//おすすめ表示メソッド
 	@Override
 	public List<Store> recommend(int userId) {
 		return homeDao.recommend(userId);
+	}
+
+	//新しい提案メソッド
+	@Override
+	public List<Store> plan(int userId) {
+		return homeDao.plan(userId);
 	}
 
 }

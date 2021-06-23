@@ -4,29 +4,29 @@
 
 <div class="scroll"><table class="store_table">
 	<tbody>
-	<c:if test="${not empty storeList}">
-		<c:forEach items="${storeList}" var="store" >
+		<c:forEach begin="0" end="2" step="1" varStatus="status" >
+			<c:if test="${not empty recommendList[status.index].storeId}">
 			<tr class="top">
-				<td class="image" rowspan="3"  valign="middle"><img class="storeimg" src="CSS/image/no_image1.png"></td>
-				<td class="cities" colspan="3" align="left" valign="bottom">${store.citiesName}</td>
+				<td class="image" rowspan="3"  valign="middle"><img class="storeimg" src="CSS/image/no_image1.png">
+				</td>
+				<td class="cities" colspan="3" align="left" valign="bottom">${recommendList[status.index].citiesName}</td>
 			</tr><tr>
-				<td class="name" colspan="2" align="left"><a href="details">${fn:escapeXml(store.storeName)}</a></td>
-				<td class="star2" id="star2-${store.storeId}" data-star2="${store.hyouka}"></td>
+				<td class="name" colspan="2" align="left"><a href="details">${fn:escapeXml(recommendList[status.index].storeName)}</a></td>
+				<td class="star2" id="star2-${recommendList[status.index].storeId}" data-star2="${recommendList[status.index].hyouka}"></td>
 			</tr>
 			<tr class="bottom">
 			<c:forEach var="main" items="${mainCategoryList}">
-				<c:if test="${store.storeId eq main.storeId }">
+				<c:if test="${recommendList[status.index].storeId eq main.storeId }">
 				<td valign="top">${main.categoryName}</td>
 				</c:if>
 			</c:forEach></tr>
-
-		</c:forEach>
 		</c:if>
+		</c:forEach>
 		<c:if test="${not empty notList}">
 			<p>検索した内容が見つかりません</p>
 			<p>店舗を登録したい場合は<br>
-				<a href="input">こちらをクリック</a
-			></p>
+				<a href="input">こちらをクリック</a>
+			</p>
 		</c:if>
 	</tbody>
 </table></div>
