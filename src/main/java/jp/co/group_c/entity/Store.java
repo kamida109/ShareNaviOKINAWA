@@ -14,7 +14,7 @@ public class Store {
 	private Date insertDay;
 //	private String insertDay;
 	private Integer categoryId;
-	private String categoryDay;
+	private String categoryName;
 	private Integer mainCategory;
 	private Integer imgId;
 	private String paths;
@@ -92,11 +92,11 @@ public class Store {
 		this.categoryId = categoryId;
 	}
 
-	public String getCategoryDay() {
-		return categoryDay;
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setCategoryDay(String categoryDay) {
-		this.categoryDay = categoryDay;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public Integer getMainCategory() {

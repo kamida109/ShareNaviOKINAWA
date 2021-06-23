@@ -34,10 +34,16 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.subCategory(mainId);
 	}
 
+	// 店舗のカテゴリを取得
+	@Override
+	public List<Store> storeCategory() {
+		return searchDao.storeCategory();
+	}
+
 	// 店舗検索
 	@Override
-	public List<Store> storeSearch(String storeName, Integer categoryId, Integer cityId, boolean hyouka) {
-		return searchDao.storeSearch(storeName, categoryId, cityId, hyouka);
+	public List<Store> storeSearch(String storeName, Integer subCategiry, Integer cityId, boolean hyouka) {
+		return searchDao.storeSearch(storeName, subCategiry, cityId, hyouka);
 	}
 
 	// あいまい検索

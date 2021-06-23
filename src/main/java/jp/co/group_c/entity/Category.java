@@ -10,6 +10,12 @@ public class Category {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
+	public Category(Integer categoryId, String categoryName, Integer mainCategory) {
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+		this.mainCategory = mainCategory;
+	}
+
 	public Integer getCategoryId() {
 		return categoryId;
 	}
