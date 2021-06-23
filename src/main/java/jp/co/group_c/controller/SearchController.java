@@ -105,8 +105,6 @@ public class SearchController {
 	@ResponseBody
 	public String selectCategory(@PathVariable("value")String value, @PathVariable("number")String number) {
 
-		System.out.print("selectedIn");
-
 		Integer val = Integer.parseInt(value);
 		String str = "";
 		List<Category> subCategoryList = searchService.subCategory(val);
