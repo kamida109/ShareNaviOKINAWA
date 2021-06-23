@@ -65,13 +65,26 @@ public class MyPageController {
 		form.setCategoryId1(list.get(0).getCategoryId());
 		form.setCategoryId2(list.get(1).getCategoryId());
 		form.setCategoryId3(list.get(2).getCategoryId());
-
 		return "user_info_update";
+	}
+
+	// 登録情報変更画面
+	@RequestMapping(value = "/setValue")
+	public String UserInfoSetValue(@ModelAttribute("userInfo") UserInfoForm form, Model model) {
+
+		List<FavoriteCategory> list = (List<FavoriteCategory>)session.getAttribute("favoriteCategory");
+		form.setCategoryId1(list.get(0).getCategoryId());
+		form.setCategoryId2(list.get(1).getCategoryId());
+		form.setCategoryId3(list.get(2).getCategoryId());
+
+		return null;
 	}
 
 	// 登録情報変更処理
 	@RequestMapping(value = "/user_info", params = "update", method = RequestMethod.POST)
 	public String updateUserInfo(@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model) {
+
+		System.out.print(bindingResult.getFieldError());
 
 		// 入力チェック
 		if (bindingResult.hasErrors()) {
@@ -91,6 +104,7 @@ public class MyPageController {
 
 		model.addAttribute("msg", "登録内容を変更しました");
 		return "/user_info";
+
 	}
 
 }

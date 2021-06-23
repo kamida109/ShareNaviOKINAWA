@@ -21,29 +21,6 @@ public class UserInfoForm {
 	private Integer mainCategoryId2;
 	private Integer mainCategoryId3;
 
-	public UserInfoForm() {}
-
-	public UserInfoForm(String loginId, String userName, Integer citiesId, Integer categoryId1, Integer categoryId2, Integer categoryId3) {
-		this.loginId = loginId;
-		this.userName = userName;
-		this.citiesId = citiesId;
-		this.categoryId1 = categoryId1;
-		this.categoryId2 = categoryId2;
-		this.categoryId3 = categoryId3;
-	}
-
-	public UserInfoForm(String loginId, String userName, Integer citiesId, Integer categoryId1, Integer categoryId2, Integer categoryId3, Integer mainCategoryId1, Integer mainCategoryId2, Integer mainCategoryId3) {
-
-		this.loginId = loginId;
-		this.userName = userName;
-		this.citiesId = citiesId;
-		this.categoryId1 = categoryId1;
-		this.categoryId2 = categoryId2;
-		this.categoryId3 = categoryId3;
-		this.mainCategoryId1 = mainCategoryId1;
-		this.mainCategoryId2 = mainCategoryId2;
-		this.mainCategoryId3 = mainCategoryId3;
-	}
 
 	public String getLoginId() {
 		return loginId;

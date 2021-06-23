@@ -68,14 +68,32 @@
 
 				<script>
 					$(function(){
-						// 子カテゴリをはじめは非表示
-						$("#subCategory1").hide();
+						// valueに選択された内容を入れる
+						var value1 = $("#mainCategory1").val();
+						var value2 = $("#mainCategory2").val();
+						var value3 = $("#mainCategory3").val();
+						// コントローラに送信
+						$.get("pulldown/"+value1/+1, function(data){
+							console.log(data);
+							var obj = data;
+							$("#subCategory1").html(data);
+						})
+						$.get("pulldown/"+value2/+2, function(data){
+							console.log(data);
+							var obj = data;
+							$("#subCategory2").html(data);
+						})
+						$.get("pulldown/"+value3/+3, function(data){
+							console.log(data);
+							var obj = data;
+							$("#subCategory3").html(data);
+						})
+					})
+					$(function(){
 						// 親カテゴリを変更したときの処理
 						$("#mainCategory1").change(function(){
 							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
 							var value = $("#mainCategory1").val();
-							// 子カテゴリ表示
-							$("#subCategory1").show();
 							// コントローラに送信
 							$.get("pulldown/"+value, function(data){
 								console.log(data);
@@ -85,10 +103,8 @@
 						})
 					})
 					$(function(){
-						$("#subCategory2").hide();
 						$("#mainCategory2").change(function(){
 							var value = $("#mainCategory2").val();
-							$("#subCategory2").show();
 							$.get("pulldown/"+value, function(data){
 								console.log(data);
 								var obj = data;
@@ -97,10 +113,8 @@
 						})
 					})
 					$(function(){
-						$("#subCategory3").hide();
 						$("#mainCategory3").change(function(){
 							var value = $("#mainCategory3").val();
-							$("#subCategory3").show();
 							$.get("pulldown/"+value, function(data){
 								console.log(data);
 								var obj = data;
