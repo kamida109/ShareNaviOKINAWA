@@ -21,6 +21,7 @@
 <%-- <form:form action="contact" method="post" modelAttribute="contact"> --%>
 	<table border="1">
 		<caption>問い合わせ</caption>
+
 		<thead>
 		<tr>
 			<th>ID</th>
@@ -32,10 +33,33 @@
 
 	<c:forEach var="result" items= "${selectResult}">
 		<tr>
-			<td>${fn:escapeXml(result.contactId)}</td>
+			<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td>
 			<td>${fn:escapeXml(result.userName)}</td>
-			<td>${fn:escapeXml(result.contactCategoryId)}</td>
-			<td>${fn:escapeXml(result.flag)}</td>
+
+			<td>
+				<c:choose>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
+					<span>通報</span>
+				</c:when>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
+					<span>問い合わせ</span>
+				</c:when>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
+					<span>要望</span>
+				</c:when>
+				</c:choose>
+			</td>
+
+			<td>
+			<c:choose>
+				<c:when test="${fn:escapeXml(result.flag eq 'true')}">
+					<span>解決</span>
+				</c:when>
+				<c:otherwise>
+					<span>未解決</span>
+				</c:otherwise>
+			</c:choose>
+			</td>
 		</tr>
 	</c:forEach>
 </table>
@@ -46,25 +70,25 @@
 
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
-<%-- 	  <h3>問い合わせ内容</h3>
-	<form:form action="contact_result" method="post" modelAttribute="contact">
+ 	  <h3>問い合わせ内容</h3>
+<form:form action="contact" method="post" modelAttribute="contact_management">
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
-	<form:select path="userName" readonly="true"/>
+	<form:input path="userName" readonly="true"/>
 	</label>
 
-	<label>目的<br>
-	<form:select path="contactCategoryId" readonly="true"/>
+	<br><label>目的<br>
+	<form:input path="contactCategoryId" readonly="true"/>
 	</label>
 
-	<label>本文<br>
+	<br><label>本文<br>
 	<form:textarea path="contents" readonly="true"/>
 	</label>
 	<form:button type="submit" name="update">解決</form:button>
 
 
-	</form:form>
- --%>
+ </form:form>
+
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
 	<a href="/user_management">ユーザー管理</a>
 

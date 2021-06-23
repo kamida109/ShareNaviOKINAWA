@@ -1,6 +1,7 @@
 package jp.co.group_c.contact;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 public class ContactForm {
 
@@ -13,6 +14,11 @@ public class ContactForm {
 	@NotBlank(message="本文を入力してください。")
 	private String contents;
 	private boolean flag;
+
+	//チェックボックス用
+	//チェックされたら"checked"という文字列を返すようにする
+	@Pattern(regexp="checked")
+	private String inputCheck;
 
 	//ゲッターセッター
 	public Integer getContactId() {
@@ -55,6 +61,12 @@ public class ContactForm {
 	}
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+	public String getInputCheck() {
+		return inputCheck;
+	}
+	public void setInputCheck(String inputCheck) {
+		this.inputCheck = inputCheck;
 	}
 
 

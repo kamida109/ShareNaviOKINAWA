@@ -30,6 +30,11 @@ public class PgContactDao implements ContactDao{
 			+ " INNER JOIN users ON users.user_id = contact.user_id"
 			+ " WHERE contact_id = :contactId";
 
+	//解決ボタンおしたとき、flagがtrueになるようにアップデート
+//	private static final String FLAG_UPDATE = "UPDATE contact SET flag = true"
+//			+ " WHERE contact_id = :contactId";
+
+
 	//IDと名前検索時（全件取得）
 	private static final String SELECT_FIND_ALL = "SELECT user_id, user_name, login_id"
 			+ " FROM users ORDER BY user_id ASC";
@@ -73,7 +78,7 @@ public class PgContactDao implements ContactDao{
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("contactId", contactId);
 
-		Contact contactDetails = (Contact) jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<Contact>());
+		Contact contactDetails = (Contact) jdbcTemplate.queryForObject(sql, param, new BeanPropertyRowMapper<Contact>(Contact.class));
 
 		return contactDetails;
 

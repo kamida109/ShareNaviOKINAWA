@@ -27,7 +27,8 @@ public class ContactController {
 
 	// 問い合わせ画面に飛ぶ
 	@RequestMapping(value = "/contact")
-	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model) {
+	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model,
+								@ModelAttribute("contact_management") ContactForm contactForm) {
 
 		// sessionからログインユーザの情報を取得して
 		// ログインユーザが管理者なら
@@ -37,8 +38,12 @@ public class ContactController {
 		 List<Contact> list = contactService.findAll();
 		 model.addAttribute("selectResult", list);
 
+
 		return "contact";
 	}
+
+
+
 
 	// 問い合わせ送信処理
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
@@ -57,10 +62,26 @@ public class ContactController {
 		return "contact_result";
 	}
 
+	// 問い合わせ内容詳細表示
+	@RequestMapping(value = "/contact/{id}")
+	public String detaileContact(@ModelAttribute("id") Integer id,
+									@ModelAttribute("contact_management") ContactForm form, Model model,
+									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-	// 問い合わせ内容の詳細を表示させる
+		Contact detailInfo = contactService.find(id);
+		model.addAttribute("detailInfo", detailInfo);
+
+		form.setContactId(detailInfo.getContactId());
+		form.setUserName(detailInfo.getUserName());
+		form.setContactCategoryId(detailInfo.getContactCategoryId());
+		form.setContents(detailInfo.getContents());
+
+		return "contact";
+	}
+
+	// 問い合わせ内容詳細表示。解決ボタン押したとき
 	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
-	public String updateContact(@Validated @ModelAttribute("contactInfo") ContactForm form, BindingResult bindingResult, Model model) {
+	public String updateContact(@Validated @ModelAttribute("contact_management") ContactForm form, BindingResult bindingResult, Model model) {
 
 
 		//Integer contactId = (form.getContactId());
