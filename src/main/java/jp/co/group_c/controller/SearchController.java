@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.group_c.controller.form.SearchForm;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
+import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.service.search.SearchService;
 
@@ -98,6 +99,31 @@ public class SearchController {
 		return str;
 
 	}
+
+	// セレクトタグを非同期で切替
+	@RequestMapping(value="/pulldown/{value}/{num}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectCategory(@PathVariable("value")String value, @PathVariable("number")String number) {
+
+		Integer val = Integer.parseInt(value);
+		String str = "";
+		List<Category> subCategoryList = searchService.subCategory(val);
+
+		Integer num = Integer.parseInt(number);
+		List<FavoriteCategory> list = (List<FavoriteCategory>)session.getAttribute("favoriteCategory");
+
+		for(Category c : subCategoryList) {
+			if(c.getCategoryId() == list.get(num).getCategoryId()){
+				str += "<option value=\"" + c.getCategoryId() +"\"" + "label=\""+ c.getCategoryName() + "\" selected>" +  c.getCategoryName() + "</option>";
+			}else{
+				str += "<option value=\"" + c.getCategoryId() +"\"" + "label=\""+ c.getCategoryName() + "\">" +  c.getCategoryName() + "</option>";
+			}
+		}
+
+		return str;
+
+	}
+
 
 	// 検索を非同期
 	@RequestMapping(value="/result/{keyWord}/{subCategory}/{prace}/{check}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
