@@ -101,9 +101,11 @@ public class SearchController {
 	}
 
 	// セレクトタグを非同期で切替
-	@RequestMapping(value="/pulldown/{value}/{num}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/selected/{value}/{number}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String selectCategory(@PathVariable("value")String value, @PathVariable("number")String number) {
+
+		System.out.print("selectedIn");
 
 		Integer val = Integer.parseInt(value);
 		String str = "";

@@ -37,7 +37,7 @@
 					</div>
 				</div>
 
-				<p><button class="btn" type="button" onclick="location.href='user_info_update'">登録情報変更</button></p>
+				<p><button class="btn" id="select" type="button" onclick="location.href='user_info_update'">登録情報変更</button></p>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
