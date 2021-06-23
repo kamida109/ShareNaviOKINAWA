@@ -73,54 +73,54 @@ public class SearchDaoImpl implements SearchDao{
 
 	// 店舗検索
 	@Override
-	public List<Store> storeSearch(String storeName, String subCategory, Integer cityId, boolean hyouka) {
+	public List<Store> storeSearch(String storeName, Integer subCategory, Integer cityId, boolean hyouka) {
 		String storeSearch = SQL_SEARCH;
 
 		List<Store> storeList = new ArrayList<Store>();
 
 		// 全入力
-		if(!storeName.isEmpty() && !subCategory.isEmpty() && cityId!=null) {
-			storeSearch += " AND store_name = :storeName AND c.category_name = :categoryName AND city.cities_id = :city\n";
+		if(!storeName.isEmpty() && subCategory!=null && cityId!=null) {
+			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
-			param.addValue("categoryName", subCategory);
+			param.addValue("subCategory", subCategory);
 			param.addValue("city", cityId);
 		}
 
 		// 店舗名+カテゴリ
-		if(!storeName.isEmpty() && !subCategory.isEmpty() && cityId==null) {
-			storeSearch += " AND store_name = :storeName AND c.category_name = :categoryName\n";
+		if(!storeName.isEmpty() && subCategory!=null && cityId==null) {
+			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory\n";
 			param.addValue("storeName", storeName);
-			param.addValue("categoryName", subCategory);
+			param.addValue("subCategory", subCategory);
 		}
 
 		// 店舗名+市町村
-		if(!storeName.isEmpty() && subCategory.isEmpty() && cityId!=null) {
+		if(!storeName.isEmpty() && subCategory==null && cityId!=null) {
 			storeSearch += " AND store_name = :storeName AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
 			param.addValue("city", cityId);
 		}
 
 		// カテゴリ+市町村
-		if(storeName.isEmpty() && !subCategory.isEmpty() && cityId!=null) {
-			storeSearch += " AND c.category_name = :categoryName AND city.cities_id = :city\n";
-			param.addValue("categoryName", subCategory);
+		if(storeName.isEmpty() && subCategory!=null && cityId!=null) {
+			storeSearch += " AND c.category_id = :subCategory AND city.cities_id = :city\n";
+			param.addValue("subCategory", subCategory);
 			param.addValue("city", cityId);
 		}
 
 		// 店舗名のみ
-		if(!storeName.isEmpty() && subCategory.isEmpty() && cityId==null) {
+		if(!storeName.isEmpty() && subCategory==null && cityId==null) {
 			storeSearch += " AND store_name = :storeName\n";
 			param.addValue("storeName", storeName);
 		}
 
 		// カテゴリのみ
-		if(storeName.isEmpty() && !subCategory.isEmpty() && cityId==null) {
-			storeSearch += " AND c.category_name = :categoryName\n";
-			param.addValue("categoryName", subCategory);
+		if(storeName.isEmpty() && subCategory!=null && cityId==null) {
+			storeSearch += " AND c.category_id = :subCategory\n";
+			param.addValue("subCategory", subCategory);
 		}
 
 		// 市町村のみ
-		if(storeName.isEmpty() && subCategory.isEmpty() && cityId!=null) {
+		if(storeName.isEmpty() && subCategory==null && cityId!=null) {
 			storeSearch += " AND city.cities_Id = :city\n";
 			param.addValue("city", cityId);
 		}

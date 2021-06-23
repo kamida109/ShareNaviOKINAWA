@@ -113,10 +113,11 @@ public class SearchController {
 			return "redirect:search";
 		}
 
+		Integer intSubCategory = Integer.parseInt(subCategory);
 		Integer intPrace = Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
-		List<Store> storeList = searchService.storeSearch(keyWord, subCategory, intPrace, boolCheck);
+		List<Store> storeList = searchService.storeSearch(keyWord, intSubCategory, intPrace, boolCheck);
 
 		for(Store s : storeList) {
 			System.out.println(s.getStoreName());
