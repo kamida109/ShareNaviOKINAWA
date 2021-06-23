@@ -16,8 +16,10 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-					<h3>新着</h3>
-				<jsp:include page="/COMMON/table_store.jsp"/>
+				<details open>
+				<summary>新着</summary>
+					<jsp:include page="/COMMON/table_store.jsp"/>
+				</details>
 
 			<!-- ---------- ここまで本体 ---------- -->
 

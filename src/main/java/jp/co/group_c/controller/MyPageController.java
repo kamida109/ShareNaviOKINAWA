@@ -2,23 +2,32 @@ package jp.co.group_c.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Users;
+import jp.co.group_c.mypage.service.MyPageService;
 
 @Controller
 public class MyPageController {
 
     @Autowired
     HttpSession session;
+
+    @Autowired
+	private MyPageService myPageService;
 
 	// マイページ画面
 	@RequestMapping(value = "/my_page")
@@ -29,9 +38,8 @@ public class MyPageController {
 	// 登録情報画面に飛ぶ
 	@RequestMapping(value = "/user_info")
 	public String jumpUserInfo() {
-
 		// テスト用
-		Users signInUser = new Users(1, "groupC", 24, "groupC");
+		Users signInUser = new Users(1, "groupC", 24, "南風原町", 1, "groupC", null);
 		session.setAttribute("signInUser", signInUser);
 		List<FavoriteCategory> favoriteList = new ArrayList<FavoriteCategory>();
 		favoriteList.add(new FavoriteCategory(1, 6, "カレー", 1));
@@ -44,24 +52,59 @@ public class MyPageController {
 
 	// 登録情報変更画面
 	@RequestMapping(value = "/user_info_update")
-	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form) {
+	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form, Model model) {
+		Users signInUser = (Users)session.getAttribute("signInUser");
+		form.setLoginId(signInUser.getLoginId());
+		form.setUserName(signInUser.getUserName());
+		form.setCitiesId(signInUser.getCitiesId());
 
-		//form.set(session.getAttribute("favoriteCategory"));
-
-		return "/user_info_update";
+		List<FavoriteCategory> list = (List<FavoriteCategory>)session.getAttribute("favoriteCategory");
+		form.setMainCategoryId1(list.get(0).getMainCategoryId());
+		form.setMainCategoryId2(list.get(1).getMainCategoryId());
+		form.setMainCategoryId3(list.get(2).getMainCategoryId());
+		form.setCategoryId1(list.get(0).getCategoryId());
+		form.setCategoryId2(list.get(1).getCategoryId());
+		form.setCategoryId3(list.get(2).getCategoryId());
+		return "user_info_update";
 	}
 
-	// 登録情報変更確認
-	@RequestMapping(value = "/user_info_check", params = "check"/*, method = RequestMethod.POST*/)
-	public String updateUserInfoCheck(/*@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model*/) {
-		return "/user_info_check";
+	// 登録情報変更画面
+	@RequestMapping(value = "/setValue")
+	public String UserInfoSetValue(@ModelAttribute("userInfo") UserInfoForm form, Model model) {
+
+		List<FavoriteCategory> list = (List<FavoriteCategory>)session.getAttribute("favoriteCategory");
+		form.setCategoryId1(list.get(0).getCategoryId());
+		form.setCategoryId2(list.get(1).getCategoryId());
+		form.setCategoryId3(list.get(2).getCategoryId());
+
+		return null;
 	}
 
 	// 登録情報変更処理
-	@RequestMapping(value = "/user_info", params = "update"/*, method = RequestMethod.POST*/)
-	public String updateUserInfo(/*@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model*/) {
-		// 遷移先はuser_infoでリザルトはアラートのみでいいかしら
+	@RequestMapping(value = "/user_info", params = "update", method = RequestMethod.POST)
+	public String updateUserInfo(@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model) {
+
+		System.out.print(bindingResult.getFieldError());
+
+		// 入力チェック
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("msg", "未入力や不正な入力があります");
+			return "/user_info_update";
+		}
+
+		// セッションからログインユーザの情報を取得
+		Users signInUser = (Users)session.getAttribute("signInUser");
+
+		// loginId重複チェック
+		Users userInfo = myPageService.checkLoginId(form.getLoginId());
+		if (!Objects.isNull(userInfo) && !(form.getLoginId().equals(signInUser.getLoginId()))) {
+			model.addAttribute("msg", "既に使用されているIDです");
+			return "/user_info_update";
+		}
+
+		model.addAttribute("msg", "登録内容を変更しました");
 		return "/user_info";
+
 	}
 
 }

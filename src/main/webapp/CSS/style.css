@@ -19,8 +19,9 @@
 .input_form {
 	display: inline-block;
 	margin-top: 20px;
-	width: auto;
-	padding: 10px 300px 10px 300px;
+	width: 700px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	text-align: center;
 	background-color: #d0ddff88;
 }
@@ -33,7 +34,8 @@
 /* 入力フォームのインナーフレーム */
 .input_form_inner {
 	top: 0;
-	width: auto;
+	margin: 0 auto 0 auto;
+	width: max-content;
 	height: auto;
 	text-align: right;
 	border: 0px;
