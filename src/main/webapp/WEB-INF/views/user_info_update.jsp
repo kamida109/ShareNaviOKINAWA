@@ -15,8 +15,9 @@
 				<!-- ---------- ここから本体 ---------- -->
 
 				<h2>登録情報変更</h2>
+				<p class="error">${msg}</p>
 
-				<form:form action="user_info_check" method="post" modelAttribute="userInfo">
+				<form:form action="user_info" method="post" modelAttribute="userInfo">
 					<div class="out_frame">
 						<div class="inner_frame_hidden">
 							<div class="inner_frame_left">

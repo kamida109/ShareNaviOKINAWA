@@ -2,6 +2,7 @@ package jp.co.group_c.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Users;
+import jp.co.group_c.mypage.service.MyPageService;
 
 @Controller
 public class MyPageController {
 
     @Autowired
     HttpSession session;
+
+    @Autowired
+	private MyPageService myPageService;
 
 	// マイページ画面
 	@RequestMapping(value = "/my_page")
@@ -47,7 +52,7 @@ public class MyPageController {
 
 	// 登録情報変更画面
 	@RequestMapping(value = "/user_info_update")
-	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form) {
+	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form, Model model) {
 		Users signInUser = (Users)session.getAttribute("signInUser");
 		form.setLoginId(signInUser.getLoginId());
 		form.setUserName(signInUser.getUserName());
@@ -61,15 +66,30 @@ public class MyPageController {
 		form.setCategoryId2(list.get(1).getCategoryId());
 		form.setCategoryId3(list.get(2).getCategoryId());
 
-		//form.setMainCategoryId1(((List<FavoriteCategory>)session.getAttribute("favoriteList"))[0].getMainCategoryId());
-
-		return "/user_info_update";
+		return "user_info_update";
 	}
 
 	// 登録情報変更処理
 	@RequestMapping(value = "/user_info", params = "update", method = RequestMethod.POST)
 	public String updateUserInfo(@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model) {
-		// 遷移先はuser_infoでリザルトはなしでいいかしら
+
+		// 入力チェック
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("msg", "未入力や不正な入力があります");
+			return "/user_info_update";
+		}
+
+		// セッションからログインユーザの情報を取得
+		Users signInUser = (Users)session.getAttribute("signInUser");
+
+		// loginId重複チェック
+		Users userInfo = myPageService.checkLoginId(form.getLoginId());
+		if (!Objects.isNull(userInfo) && !(form.getLoginId().equals(signInUser.getLoginId()))) {
+			model.addAttribute("msg", "既に使用されているIDです");
+			return "/user_info_update";
+		}
+
+		model.addAttribute("msg", "登録内容を変更しました");
 		return "/user_info";
 	}
 

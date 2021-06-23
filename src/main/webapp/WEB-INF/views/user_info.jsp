@@ -14,6 +14,7 @@
 				<!-- ---------- ここから本体 ---------- -->
 
 				<h2>登録情報</h2>
+				<p class="error">${msg}</p>
 
 				<div class="out_frame">
 					<div class="inner_frame_hidden">

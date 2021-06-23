@@ -1,9 +1,17 @@
 package jp.co.group_c.controller.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class UserInfoForm {
 
+	@NotBlank
+	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String loginId;
+
+	@NotBlank
 	private String userName;
+
 	private Integer citiesId;
 	private String citiesName;
 	private Integer categoryId1;
