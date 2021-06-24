@@ -40,19 +40,21 @@ public class SearchDaoImpl implements SearchDao{
 												+ "JOIN review AS r ON s.store_id = r.store_id\n"
 												+ "WHERE 1=1";
 
-	public static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
+	private static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
 
-	public static final String STORE_DITAILS = "SELECT * \n"
+	private static final String STORE_DITAILS = "SELECT * \n"
 													+ "FROM store AS s\n"
 													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
 													+ "JOIN review AS r ON s.store_id = r.store_id\n"
 													+ "WHERE s.store_id = :storeId";
 
-	public static final String NEW_REVIEW ="UPDATE review\n"
+	private static final String NEW_REVIEW ="UPDATE review\n"
 												+ "SET review = :review\n"
 												+ "WHERE store_id = :storeId";
+
+	private static final String STORE_DELETE = "DELETE FROM store WHERE store_id = :storeId";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -174,8 +176,9 @@ public class SearchDaoImpl implements SearchDao{
 	// 店舗詳細用の検索メソッド
 	@Override
 	public List<Store> storeDitails(Integer id) {
+		String ditails = STORE_DITAILS;
 		param.addValue("storeId", id);
-		List<Store> storeDitails = jdbcTemplate.query(STORE_DITAILS, param, new BeanPropertyRowMapper<Store>(Store.class));
+		List<Store> storeDitails = jdbcTemplate.query(ditails, param, new BeanPropertyRowMapper<Store>(Store.class));
 
 		return storeDitails;
 	}
@@ -183,10 +186,30 @@ public class SearchDaoImpl implements SearchDao{
 	// レビューの追加、編集
 	@Override
 	public void reviewUpdate(Integer id, String review) {
+		String strReview = NEW_REVIEW;
+
 		param.addValue("storeId", id);
 		param.addValue("review", review);
 
-		jdbcTemplate.update(NEW_REVIEW, param);
+		jdbcTemplate.update(strReview, param);
+	}
+
+	// レビュー削除
+	@Override
+	public void reviewDelete(Integer id) {
+		String reviewDel = "UPDATE review  SET review = null WHERE review_id = :reviewId";
+		param.addValue("reviewId", id);
+
+		jdbcTemplate.update(reviewDel, param);
+	}
+
+	// 店舗の削除
+	@Override
+	public void storeDelete(Integer id) {
+		String delete = STORE_DELETE;
+		param.addValue("storeId", id);
+
+		jdbcTemplate.update(delete, param);
 	}
 
 }

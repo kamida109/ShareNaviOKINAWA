@@ -13,11 +13,18 @@
 			<!-- 共通部品_header -->
 			<jsp:include page="/COMMON/header.jsp"/>
 			<div class="frame">
-
 				<div class="input_form">
 					<div class="input_form_inner">
+
+					<span>
+						<button type="button" id="storeUpdate">編集</button>
+						<button type="button" id="storeDelete">削除</button>
+					</span>
+
 					<c:forEach var="main" items="${storeDitails}">
 						<input type="hidden" id="storeId" value="${main.storeId}">
+						<input type="hidden" id="storeName" value="${main.storeName}">
+						<input type="hidden" id="reviewId" value="${main.reviewId}">
 						<p>
 							店舗名：${main.storeName}
 							評価<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
@@ -30,7 +37,7 @@
 
 						<div class="modal_window">
 							<p>レビュー <a id="review" href="">レビューを追加する</a></p>
-							<textarea rows="5" cols="50">${main.review}</textarea>
+							<textarea id="review" rows="5" cols="50">${main.review}</textarea>
 						</div>
 					</c:forEach>
 
@@ -50,9 +57,11 @@
 		<div class="modal modal_output">
 			<div class="modal_bg modal_close"></div>
 			<div class="model_contents">
-				<p>レビューの追加・編集</p>
-				<textarea id="newReview" rows="10" cols="90" placeholder="追加・変更内容を入力してください"></textarea>
-				<p><button type="button" id="comit">適応</button>
+				<p>レビューの編集</p>
+				<p id="errMsg"></p>
+				<textarea id="newReview" rows="10" cols="90" placeholder="編集内容を入力してください"></textarea>
+				<p><button type="button" id="comit">確定</button>
+				<button type="button" id="reviewDel">削除</button>
 				<button type="button" class="modal_close" id="return">戻る</button></p>
 			</div>
 		</div>

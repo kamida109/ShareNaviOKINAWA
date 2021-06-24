@@ -183,3 +183,8 @@ summary {
 	width: 50%;
 	text-align: center;
 }
+
+#errMsg {
+	font-size : 15px;
+	color : red;
+}

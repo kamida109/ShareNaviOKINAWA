@@ -147,8 +147,6 @@ public class SearchController {
 	public String details(@RequestParam("storeId") Integer id, Model model) {
 
 		List<Store> storeDitails = searchService.storeDitails(id);
-
-
 		model.addAttribute("storeDitails", storeDitails);
 
 		return "details";
@@ -157,10 +155,28 @@ public class SearchController {
 	// レビューを非同期で変更
 	@RequestMapping(value="/inputReview/{storeId}/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String newReview(@PathVariable("storeId") Integer id, @PathVariable("newReview") String review) {
+	public void newReview(@PathVariable("storeId") Integer id, @PathVariable("newReview") String review) {
 
 		searchService.reviewUpdate(id, review);
 
-		return null;
 	}
+
+	// レビュー削除
+	@RequestMapping(value="/reviewDel/{storeId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void reviewDel(@PathVariable("storeId") Integer id) {
+
+		searchService.reviewDelete(id);
+
+	}
+
+
+	// 店舗削除を非同期で実装
+	@RequestMapping(value="/storeDelete/{storeId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void storeDelete(@PathVariable("storeId") Integer id) {
+
+		searchService.storeDelete(id);
+	}
+
 }

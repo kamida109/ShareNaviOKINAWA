@@ -32,4 +32,10 @@ public interface SearchDao {
 	// レビューの変更
 	public void reviewUpdate(Integer id, String review);
 
+	// レビュー削除
+	public void reviewDelete(Integer id);
+
+	// 店舗削除
+	public void storeDelete(Integer id);
+
 }

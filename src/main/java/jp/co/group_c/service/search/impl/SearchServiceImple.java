@@ -64,4 +64,16 @@ public class SearchServiceImple implements SearchService{
 		searchDao.reviewUpdate(id, review);
 	}
 
+	// レビュー削除
+	@Override
+	public void reviewDelete(Integer id) {
+		searchDao.reviewDelete(id);
+	}
+
+	// 店舗削除
+	@Override
+	public void storeDelete(Integer id) {
+		searchDao.storeDelete(id);
+	}
+
 }

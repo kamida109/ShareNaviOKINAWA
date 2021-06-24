@@ -29,7 +29,13 @@ public interface SearchService {
 	// 店舗詳細用の検索メソッド
 	public List<Store> storeDitails(Integer id);
 
+	// レビュー削除
+	public void reviewDelete(Integer id);
+
 	// レビューの変更
 	public void reviewUpdate(Integer id, String review);
+
+	// 店舗削除
+	public void storeDelete(Integer id);
 
 }
