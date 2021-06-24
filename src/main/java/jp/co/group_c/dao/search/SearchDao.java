@@ -29,4 +29,7 @@ public interface SearchDao {
 	// 店舗詳細用の検索メソッド
 	public List<Store> storeDitails(Integer id);
 
+	// レビューの変更
+	public void reviewUpdate(Integer id, String review);
+
 }

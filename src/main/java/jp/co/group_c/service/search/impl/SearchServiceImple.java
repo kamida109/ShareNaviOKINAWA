@@ -58,4 +58,10 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.storeDitails(id);
 	}
 
+	// レビュー上書き
+	@Override
+	public void reviewUpdate(Integer id, String review) {
+		searchDao.reviewUpdate(id, review);
+	}
+
 }

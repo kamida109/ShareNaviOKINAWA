@@ -11,10 +11,10 @@ $(function(){
 	});
 
 	$('#comit').click(function(){
-
+		let storeId = $('#storeId').val();
 		let newReview = $("#newReview").val();
 
-		$.get("inputReview/"+newReview, function(){
+		$.get("inputReview/"+storeId+'/'+newReview, function(){
 			location.reload();
 		})
 

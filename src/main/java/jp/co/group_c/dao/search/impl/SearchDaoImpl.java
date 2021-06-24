@@ -50,6 +50,10 @@ public class SearchDaoImpl implements SearchDao{
 													+ "JOIN review AS r ON s.store_id = r.store_id\n"
 													+ "WHERE s.store_id = :storeId";
 
+	public static final String NEW_REVIEW ="UPDATE review\n"
+												+ "SET review = :review\n"
+												+ "WHERE store_id = :storeId";
+
 	// 市町村テーブル全件取得
 	@Override
 	public List<Cities> cities() {
@@ -174,6 +178,15 @@ public class SearchDaoImpl implements SearchDao{
 		List<Store> storeDitails = jdbcTemplate.query(STORE_DITAILS, param, new BeanPropertyRowMapper<Store>(Store.class));
 
 		return storeDitails;
+	}
+
+	// レビューの追加、編集
+	@Override
+	public void reviewUpdate(Integer id, String review) {
+		param.addValue("storeId", id);
+		param.addValue("review", review);
+
+		jdbcTemplate.update(NEW_REVIEW, param);
 	}
 
 }

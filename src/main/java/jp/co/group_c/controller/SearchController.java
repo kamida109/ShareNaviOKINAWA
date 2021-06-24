@@ -148,16 +148,18 @@ public class SearchController {
 
 		List<Store> storeDitails = searchService.storeDitails(id);
 
+
 		model.addAttribute("storeDitails", storeDitails);
 
 		return "details";
 	}
 
 	// レビューを非同期で変更
-	@RequestMapping(value="/inputReview/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/inputReview/{storeId}/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String newReview(@PathVariable("newReview") String review) {
+	public String newReview(@PathVariable("storeId") Integer id, @PathVariable("newReview") String review) {
 
+		searchService.reviewUpdate(id, review);
 
 		return null;
 	}

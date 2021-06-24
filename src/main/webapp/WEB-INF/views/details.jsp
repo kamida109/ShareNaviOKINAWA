@@ -17,6 +17,7 @@
 				<div class="input_form">
 					<div class="input_form_inner">
 					<c:forEach var="main" items="${storeDitails}">
+						<input type="hidden" id="storeId" value="${main.storeId}">
 						<p>
 							店舗名：${main.storeName}
 							評価<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
