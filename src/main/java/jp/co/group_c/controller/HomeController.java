@@ -38,11 +38,26 @@ public class HomeController {
 		//新着表示
 		List<Store> newArrivalList = homeService.newArrival();
 
+		//DBが空の時の対処
+		if(newArrivalList == null) {
+			model.addAttribute("notList", "undefinde");
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
+			return "home";
+		}
+
 		//カテゴリ表示
 		List<Store> mainCategoryList = homeService.mainCategory(newArrivalList.get(0).getStoreName());
 
 		//ユーザー情報の取得
 		List<Users> userList = homeService.users();
+
+		//DBが空の時の対処
+		if(userList == null) {
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
+			return "home";
+		}
 
 		//おすすめ表示
 		List<Store> recommendList = homeService.recommend(userList.get(0).getUserId());
@@ -52,19 +67,11 @@ public class HomeController {
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
 		Collections.shuffle(planList);
 
-		System.out.println(newArrivalList.get(0).getHyouka());
-
 		//DBが何もない時の対策
-		if(!newArrivalList.isEmpty()) {
 			model.addAttribute("storeList", newArrivalList);
 			model.addAttribute("mainCategoryList", mainCategoryList);
 			model.addAttribute("recommendList", recommendList);
 			model.addAttribute("planList", planList);
-		}else {
-			model.addAttribute("notList", "undefinde");
-			model.addAttribute("notRecommendList", "undefinde");
-			model.addAttribute("notPlanList", "undefinde");
-		}
 
 		return "home";
 	}
