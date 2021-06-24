@@ -44,4 +44,10 @@ public class ContactServiceImpl implements ContactService{
 	public String managementDelete(Integer userId) {
 		return contactDao.managementDelete(userId);
 	}
+
+	@Override
+	public List<Contact> findUnsolved() {
+		// TODO 自動生成されたメソッド・スタブ
+		return contactDao.findUnsolved();
+	}
 }

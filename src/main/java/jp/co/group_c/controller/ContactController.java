@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.contact.ContactForm;
 import jp.co.group_c.contact.UserDeleteForm;
@@ -145,6 +146,20 @@ public class ContactController {
 
 		return "user_management";
 	}
+
+
+	// 未解決のみ表示
+	@RequestMapping(value="/check/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checked(Model model) {
+
+		List<Contact> list = contactService.findUnsolved();
+
+		model.addAttribute("selectResult", list);
+
+		return null;
+	}
+
 }
 
 

@@ -18,10 +18,16 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
+	<input type="checkbox" id="check">未解決のみ表示する
 
-	<table border="1">
+
+
+	<table border="1" id="checked_list">
 		<caption>問い合わせ</caption>
+<form:form action="/contact" method="post" modelAttribute="contact_management">
 
+
+ </form:form>
 		<thead>
 		<tr>
 			<th>ID</th>
@@ -62,8 +68,8 @@
 			</td>
 		</tr>
 	</c:forEach>
-</table>
 
+</table>
 
 
 
@@ -133,6 +139,9 @@
 			</div>
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
+
+
 		</div>
+		<script type="text/javascript" src="js/checked.js"></script>
 	</body>
 </html>

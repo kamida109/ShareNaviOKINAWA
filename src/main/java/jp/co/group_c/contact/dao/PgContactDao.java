@@ -161,5 +161,14 @@ public class PgContactDao implements ContactDao{
 		return getName;
 	}
 
+	@Override
+	public List<Contact> findUnsolved() {
+		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
+					+ "INNER JOIN users ON users.user_id = contact.user_id "
+					+ "WHERE flag=false ORDER BY flag ASC";
+
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
+	}
+
 
 }

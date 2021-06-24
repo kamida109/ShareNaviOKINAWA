@@ -12,6 +12,9 @@ public interface ContactDao {
 	//問い合わせ内容一覧表示
 	public List<Contact> findAll();
 
+	//未解決飲み取得
+	public List<Contact> findUnsolved();
+
 	//問い合わせ内容詳細の取得
 	public Contact find(Integer contactId);
 
