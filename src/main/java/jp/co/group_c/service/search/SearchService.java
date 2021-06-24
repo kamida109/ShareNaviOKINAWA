@@ -26,4 +26,8 @@ public interface SearchService {
 	// あいまい検索
 	public List<Store> partStoreSearch(String storeName, boolean hyouka);
 
+	// 店舗詳細用の検索メソッド
+	public List<Store> storeDitails(Integer id);
+
+
 }

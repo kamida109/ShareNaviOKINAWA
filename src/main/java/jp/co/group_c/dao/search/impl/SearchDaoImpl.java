@@ -169,8 +169,10 @@ public class SearchDaoImpl implements SearchDao{
 	// 店舗詳細用の検索メソッド
 	@Override
 	public List<Store> storeDitails(Integer id) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		param.addValue("storeId", id);
+		List<Store> storeDitails = jdbcTemplate.query(STORE_DITAILS, param, new BeanPropertyRowMapper<Store>(Store.class));
+
+		return storeDitails;
 	}
 
 }

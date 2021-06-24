@@ -52,4 +52,10 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.partStoreSearch(storeName, hyouka);
 	}
 
+	// 店舗詳細用の検索メソッド
+	@Override
+	public List<Store> storeDitails(Integer id) {
+		return searchDao.storeDitails(id);
+	}
+
 }
