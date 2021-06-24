@@ -28,6 +28,13 @@ public class Contact {
 	public Contact(Integer userId) {
 		this.userId = userId;
 	}
+	//問い合わせ内容詳細表示→contactCategoryIdを日本語表示にしたい
+//	public Contact(Integer userId, String contactCategoryId, String contents, boolean flag) {
+//		this.userId = userId;
+//		this.contactCategoryId =contactCategoryId;
+//		this.contents = contents;
+//		this.flag = flag;
+//	}
 
 
 

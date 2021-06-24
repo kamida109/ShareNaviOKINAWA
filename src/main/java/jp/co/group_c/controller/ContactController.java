@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.group_c.contact.ContactForm;
+import jp.co.group_c.contact.UserDeleteForm;
 import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
@@ -79,6 +80,17 @@ public class ContactController {
 		form.setContactCategoryId(detailInfo.getContactCategoryId());
 		form.setContents(detailInfo.getContents());
 
+		//contactCategoryIdを判定
+		Integer contactCategoryId = detailInfo.getContactCategoryId();
+
+		if(contactCategoryId == 1) {
+			model.addAttribute("contactCategoryId", "通報");
+		}else if(contactCategoryId == 2) {
+			model.addAttribute("contactCategoryId", "問い合わせ");
+		}else if(contactCategoryId == 3) {
+			model.addAttribute("contactCategoryId", "要望");
+		}
+
 		return "contact";
 	}
 
@@ -118,19 +130,19 @@ public class ContactController {
 
 	//確定ボタン押されたとき、この画面に戻る（削除）
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
-	public String managementDelete (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
+	public String managementDelete (@Validated @ModelAttribute("userManagement") UserDeleteForm userDeleteForm, BindingResult bindingResult, Model model) {
 
 
 		//削除するIDが存在しない場合
-//		Integer userId = form.getUserId();
-//
-//				if(userId == null) {
-//					model.addAttribute("errMsg", "入力されたIDのユーザーは存在しません。");
-//					return "user_management";
-//				}
+		String getUserName = contactService.managementDelete(userDeleteForm.getUserId());
 
-		String getName = contactService.managementDelete(form.getUserId());
-		model.addAttribute("msg", "ユーザー" + (getName) + "さんを削除しました。");
+				if(getUserName == null) {
+					model.addAttribute("errMsg", "入力されたIDのユーザーは存在しません。");
+					return "user_management";
+				}
+
+		//String getUserName = contactService.managementDelete(userDeleteForm.getUserId());
+		model.addAttribute("msg", "ユーザー" + (getUserName) + "さんを削除しました。");
 
 		return "user_management";
 	}
