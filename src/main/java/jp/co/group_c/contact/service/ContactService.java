@@ -17,6 +17,9 @@ public interface ContactService {
 	//未解決飲み取得
 	public List<Contact> findUnsolved();
 
+	//解決のみ取得
+	public List<Contact> findSolved();
+
 	//問い合わせ内容詳細の取得.引数は検索する条件を入れる。WHERE句
 	public Contact find (Integer contactId);
 

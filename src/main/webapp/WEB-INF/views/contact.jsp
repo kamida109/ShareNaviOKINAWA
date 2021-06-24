@@ -18,14 +18,13 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
-	<input type="checkbox" id="check">未解決のみ表示する
-
-
-
 	<table border="1" id="checked_list">
 		<caption>問い合わせ</caption>
 <form:form action="/contact" method="post" modelAttribute="contact_management">
 
+<input type="radio" name="sample" id="solved">解決のみ表示
+<input type="radio" name="sample" id="unsolved">未解決のみ表示
+<input type="radio" name="sample" id="all">全件表示
 
  </form:form>
 		<thead>
@@ -94,9 +93,7 @@
 
 	<br><label>本文<br>
 
-	<%--  form:textarea path="contents" readonly="true"/>--%>
-
-	<form:textarea path="contents"/>
+	<form:textarea path="contents" readonly="true"/>
 	</label>
 
 

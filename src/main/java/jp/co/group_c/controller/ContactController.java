@@ -2,6 +2,8 @@ package jp.co.group_c.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,11 @@ public class ContactController {
 	//ContactServiceのインスタンス生成
 	@Autowired
 	ContactService contactService;
+
+	@Autowired
+	HttpSession session;
+
+	int flag = 0;
 
 	 // 問い合わせ送信処理（一般ユーザー用）
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
@@ -53,8 +60,12 @@ public class ContactController {
 		// 問い合わせ情報を全件取得(あとあと全件じゃなくなるかも)
 		// ORDER BY でcontactcategoryの昇順に取得してください
 
-		 List<Contact> list = contactService.findAll();
-		 model.addAttribute("selectResult", list);
+		if(flag == 0) {
+			List<Contact> list = contactService.findAll();
+			model.addAttribute("selectResult", list);
+			flag++;
+		}
+
 
 		return "contact";
 	}
@@ -149,16 +160,41 @@ public class ContactController {
 
 
 	// 未解決のみ表示
-	@RequestMapping(value="/check/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/checkSolved/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String checked(Model model) {
+	public String checkSolved(Model model) {
 
 		List<Contact> list = contactService.findUnsolved();
 
-		model.addAttribute("selectResult", list);
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
+		return null;
+	}
+
+	@RequestMapping(value="/checkUnSolved/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checkUnSolved(Model model) {
+
+		List<Contact> list = contactService.findSolved();
+
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
 
 		return null;
 	}
+
+	@RequestMapping(value="/checkAll/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checkAll(Model model) {
+
+		List<Contact> list = contactService.findAll();
+
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
+		return null;
+	}
+
+
 
 }
 

@@ -2,14 +2,22 @@
 $(function(){
 	$("#check").prop("checked");
 
-	let bool = $("#check").prop("checked");
+	$('[name="sample"]:radio').change(function(){
 
-	console.log(bool);
+		if($("#solved").prop("checked") == true) {
+			$.get("checkSolved/", function(){
+				location.reload();
+			});
+		} else if($("#unsolved").prop("checked") == true){
+			$.get("checkUnSolved/", function(){
+				location.reload()
+			});
+		} else {
+			$.get("checkAll/", function(){
+				location.reload()
+			});
+		}
 
-	if($("#check").prop("checked") == true) {
-		$.get("pulldown/"+value, function(){
-			location.reload()
-		})
-	}
+	})
 
 });

@@ -161,6 +161,7 @@ public class PgContactDao implements ContactDao{
 		return getName;
 	}
 
+	// 未解決のみ表示
 	@Override
 	public List<Contact> findUnsolved() {
 		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
@@ -168,6 +169,17 @@ public class PgContactDao implements ContactDao{
 					+ "WHERE flag=false ORDER BY flag ASC";
 
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
+	}
+
+	// 解決のみ表示
+	@Override
+	public List<Contact> findSolved() {
+		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
+				+ "INNER JOIN users ON users.user_id = contact.user_id "
+				+ "WHERE flag=true ORDER BY flag ASC";
+
+	return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
+
 	}
 
 
