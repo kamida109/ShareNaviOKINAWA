@@ -1,10 +1,8 @@
 package jp.co.group_c.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.entity.FavoriteCategory;
+import jp.co.group_c.entity.Store;
 import jp.co.group_c.entity.Users;
+import jp.co.group_c.homeService.HomeService;
 import jp.co.group_c.mypage.service.MyPageService;
 
 @Controller
@@ -27,29 +27,82 @@ public class MyPageController {
     @Autowired
     HttpSession session;
 
-    @Autowired
-    HttpServletRequest request;
+    //@Autowired
+    //HttpServletRequest request;
 
     @Autowired
 	private MyPageService myPageService;
 
+    @Autowired
+	private HomeService homeService;
+
 	// マイページ画面
 	@RequestMapping(value = "/my_page")
-	public String jumpMyPage() {
+	public String jumpMyPage(Model model) {
+
+		//session破棄
+		session.removeAttribute("storeList");
+		session.removeAttribute("notList");
+		session.removeAttribute("mainCategoryList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notPlanList");
+		session.removeAttribute("setImages");
+
+		Users signInUser = (Users)session.getAttribute("signInUser");
+
+		//お気に入り表示
+		List<Store> favoriteList = myPageService.favoriteStore(signInUser.getUserId());
+
+		//DBが空の時の対処
+		if(favoriteList == null) {
+			model.addAttribute("notList", "undefinde");
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
+			return "my_page";
+		}
+
+		//レビュー履歴表示
+		List<Store> reviewList = myPageService.reviewStore(signInUser.getUserId());
+
+		//DBが空の時の対処
+		if(reviewList == null) {
+			model.addAttribute("notList", "undefinde");
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
+			return "my_page";
+		}
+
+		//カテゴリ表示
+		List<Store> mainCategoryList = homeService.mainCategory(favoriteList.get(0).getStoreName());
+
+		//お店リスト送信
+		model.addAttribute("storeList", favoriteList);
+		model.addAttribute("recommendList", reviewList);
+		model.addAttribute("mainCategoryList", mainCategoryList);
+
+
+
 		return "my_page";
 	}
 
 	// 登録情報画面に飛ぶ
 	@RequestMapping(value = "/user_info")
 	public String jumpUserInfo() {
-		// テスト用
-		Users signInUser = new Users(1, "groupC", 24, "南風原町", 1, "groupC", null);
+
+		// ユーザ情報の更新とログインユーザのセッション更新
+		Users signInUser = myPageService.checkLoginId("groupC");
 		session.setAttribute("signInUser", signInUser);
-		List<FavoriteCategory> favoriteList = new ArrayList<FavoriteCategory>();
-		favoriteList.add(new FavoriteCategory(1, 6, "カレー", 1));
-		favoriteList.add(new FavoriteCategory(1, 7, "ラーメン", 1));
-		favoriteList.add(new FavoriteCategory(1, 10, "メンズ", 5));
+		signInUser.setPassword(null);	//念のためpasswordはnullに
+		List<FavoriteCategory> favoriteList = myPageService.findFavoriteCategory(signInUser.getUserId());
 		session.setAttribute("favoriteCategory", favoriteList);
+
+		//session破棄
+		session.removeAttribute("storeList");
+		session.removeAttribute("notList");
+		session.removeAttribute("mainCategoryList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notPlanList");
+		session.removeAttribute("setImages");
 
 		return "user_info";
 	}
@@ -63,9 +116,9 @@ public class MyPageController {
 		form.setCitiesId(signInUser.getCitiesId());
 
 		List<FavoriteCategory> list = (List<FavoriteCategory>)session.getAttribute("favoriteCategory");
-		form.setMainCategoryId1(list.get(0).getMainCategoryId());
-		form.setMainCategoryId2(list.get(1).getMainCategoryId());
-		form.setMainCategoryId3(list.get(2).getMainCategoryId());
+		form.setMainCategoryId1(list.get(0).getMainCategory());
+		form.setMainCategoryId2(list.get(1).getMainCategory());
+		form.setMainCategoryId3(list.get(2).getMainCategory());
 
 		return "user_info_update";
 	}
@@ -91,7 +144,9 @@ public class MyPageController {
 			model.addAttribute("msg", "既に使用されているIDです");
 			return "/user_info_update";
 		}
+
 		/*
+		// scriptで表示したoptionがformで取得できなかった場合
 		Integer categoryId1 = Integer.parseInt(request.getParameter("categoryId1"));
 		Integer categoryId2 = Integer.parseInt(request.getParameter("categoryId2"));
 		Integer categoryId3 = Integer.parseInt(request.getParameter("categoryId3"));
@@ -100,17 +155,12 @@ public class MyPageController {
 		form.setCategoryId3(categoryId3);
 		*/
 
-		myPageService.updateUserInfo(signInUser.getUserId(), form);
-
-		/*
-		Users signInUser = new Users(1, "groupC", 24, "南風原町", 1, "groupC", null);
+		// ユーザ情報の更新とログインユーザのセッション更新
+		signInUser = myPageService.updateUserInfo(signInUser.getUserId(), form);
 		session.setAttribute("signInUser", signInUser);
-		List<FavoriteCategory> favoriteList = new ArrayList<FavoriteCategory>();
-		favoriteList.add(new FavoriteCategory(1, 6, "カレー", 1));
-		favoriteList.add(new FavoriteCategory(1, 7, "ラーメン", 1));
-		favoriteList.add(new FavoriteCategory(1, 10, "メンズ", 5));
+		signInUser.setPassword(null);	//念のためpasswordはnullに
+		List<FavoriteCategory> favoriteList = myPageService.findFavoriteCategory(signInUser.getUserId());
 		session.setAttribute("favoriteCategory", favoriteList);
-		*/
 
 		model.addAttribute("msg", "登録内容を変更しました");
 		return "/user_info";

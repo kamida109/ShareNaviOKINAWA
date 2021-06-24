@@ -20,7 +20,7 @@
 
 				<details open>
 				<summary>レビュー履歴</summary>
-					<jsp:include page="/COMMON/table_store.jsp"/>
+					<jsp:include page="/COMMON/table_store2.jsp"/>
 				</details>
 
 				<!-- ---------- ここまで本体 ---------- -->

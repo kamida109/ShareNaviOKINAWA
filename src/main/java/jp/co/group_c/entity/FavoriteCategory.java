@@ -5,15 +5,15 @@ public class FavoriteCategory {
 	private Integer userId;
 	private Integer categoryId;
 	private String categoryName;
-	private Integer mainCategoryId;
+	private Integer mainCategory;
 
 	public FavoriteCategory() {	}
 
-	public FavoriteCategory(Integer userId, Integer categoryId, String categoryName, Integer mainCategoryId) {
+	public FavoriteCategory(Integer userId, Integer categoryId, String categoryName, Integer mainCategory) {
 		this.userId = userId;
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
-		this.mainCategoryId = mainCategoryId;
+		this.mainCategory = mainCategory;
 	}
 
 	public Integer getUserId() {
@@ -37,11 +37,11 @@ public class FavoriteCategory {
 		this.categoryName = categoryName;
 	}
 
-	public Integer getMainCategoryId() {
-		return mainCategoryId;
+	public Integer getMainCategory() {
+		return mainCategory;
 	}
-	public void setMainCategoryId(Integer mainCategoryId) {
-		this.mainCategoryId = mainCategoryId;
+	public void setMainCategory(Integer mainCategory) {
+		this.mainCategory = mainCategory;
 	}
 
 }
