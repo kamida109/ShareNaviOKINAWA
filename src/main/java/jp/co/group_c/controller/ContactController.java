@@ -2,6 +2,8 @@ package jp.co.group_c.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.contact.ContactForm;
 import jp.co.group_c.contact.UserDeleteForm;
@@ -25,8 +28,29 @@ public class ContactController {
 	@Autowired
 	ContactService contactService;
 
+	@Autowired
+	HttpSession session;
 
-	// 問い合わせ画面に飛ぶ
+	int flag = 0;
+
+	 // 問い合わせ送信処理（一般ユーザー用）
+	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
+	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
+
+		//バリデーションの結果で処理分岐
+		if(bindingResult.hasErrors()) {
+			return "contact";
+		}
+
+		//引数の中はContactFormのフィールドにつながる
+		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
+		contactService.contactInsert(contact);
+
+		return "contact_result";
+	}
+
+
+	// 問い合わせ画面に飛ぶ（管理者でログインしたとき）
 	@RequestMapping(value = "/contact")
 	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model,
 								@ModelAttribute("contact_management") ContactForm contactForm) {
@@ -36,30 +60,18 @@ public class ContactController {
 		// 問い合わせ情報を全件取得(あとあと全件じゃなくなるかも)
 		// ORDER BY でcontactcategoryの昇順に取得してください
 
-		 List<Contact> list = contactService.findAll();
-		 model.addAttribute("selectResult", list);
+		if(flag == 0) {
+			List<Contact> list = contactService.findAll();
+			model.addAttribute("selectResult", list);
+			flag++;
+		}
 
 
 		return "contact";
 	}
 
 
-	// 問い合わせ送信処理
-	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
 
-		//バリデーションの結果で処理分岐
-		if(bindingResult.hasErrors()) {
-			return "contact";
-		}
-
-		//入力内容をもとにContactインスタンス生成→サービスのメソッドに引き継いでデータ登録
-		//引数の中はContactFormのフィールドにつながる
-		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
-		contactService.contactInsert(contact);
-
-		return "contact_result";
-	}
 
 	// 問い合わせ内容詳細表示
 	@RequestMapping(value = "/contact/{id}")
@@ -95,16 +107,15 @@ public class ContactController {
 	}
 
 	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
-	@RequestMapping(value = "/contacts" , /*params = "update",*/ method = RequestMethod.POST)
-	public String updateContact(@ModelAttribute("contact_management") ContactForm form,
+	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
+	public String updateContact(@ModelAttribute("contact_management") ContactForm form, Model model,
 									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-		//Contact contactId = new Contact(form.getContactId());
-		System.out.println(form.getContactId());
-
-		System.out.println("action");
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
 
 		contactService.flagUpdate(form.getContactId());
+		model.addAttribute("updateMsg", "問い合わせ内容を解決しました。");
 
 		return "contact";
 	}
@@ -146,6 +157,45 @@ public class ContactController {
 
 		return "user_management";
 	}
+
+
+	// 未解決のみ表示
+	@RequestMapping(value="/checkSolved/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checkSolved(Model model) {
+
+		List<Contact> list = contactService.findUnsolved();
+
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
+		return null;
+	}
+
+	@RequestMapping(value="/checkUnSolved/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checkUnSolved(Model model) {
+
+		List<Contact> list = contactService.findSolved();
+
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
+
+		return null;
+	}
+
+	@RequestMapping(value="/checkAll/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String checkAll(Model model) {
+
+		List<Contact> list = contactService.findAll();
+
+//		model.addAttribute("selectResult", list);
+		session.setAttribute("selectResult", list);
+		return null;
+	}
+
+
+
 }
 
 
