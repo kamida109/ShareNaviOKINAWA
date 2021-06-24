@@ -142,15 +142,23 @@ public class SearchController {
 		return null;
 	}
 
-
 	// 店舗詳細画面
 	@RequestMapping(value = "/details")
-	public String details(@RequestParam("storeId") Integer id) {
-		System.out.println("storeId: " + id);
+	public String details(@RequestParam("storeId") Integer id, Model model) {
 
+		List<Store> storeDitails = searchService.storeDitails(id);
 
+		model.addAttribute("storeDitails", storeDitails);
 
 		return "details";
 	}
 
+	// レビューを非同期で変更
+	@RequestMapping(value="/inputReview/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String newReview(@PathVariable("newReview") String review) {
+
+
+		return null;
+	}
 }

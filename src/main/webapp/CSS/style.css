@@ -151,3 +151,35 @@ summary {
 .other_table td {
 	text-align: center;
 }
+
+.modal {
+	display: none;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.modal_bg {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	background: rgba(0,0,0,0.8);
+
+	/*background: rgba(0,0,0,0.8);
+	height: 100vh;
+    position: absolute;
+    width: 100%;*/
+}
+
+.model_contents {
+	background: #fff;
+	left: 50%;
+	margin: auto;
+	padding: 40px;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 50%;
+	text-align: center;
+}
