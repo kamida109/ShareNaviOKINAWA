@@ -20,7 +20,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
-import jp.co.group_c.service.search.SearchService;
+import jp.co.group_c.search.service.SearchService;
 
 @Controller
 public class SearchController {
@@ -162,9 +162,9 @@ public class SearchController {
 	}
 
 	// レビュー削除
-	@RequestMapping(value="/reviewDel/{storeId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/reviewDel/{reviewId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public void reviewDel(@PathVariable("storeId") Integer id) {
+	public void reviewDel(@PathVariable("reviewId") Integer id) {
 
 		searchService.reviewDelete(id);
 

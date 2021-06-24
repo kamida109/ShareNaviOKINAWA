@@ -1,4 +1,4 @@
-package jp.co.group_c.service.search;
+package jp.co.group_c.search.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 
-public interface SearchService {
+public interface SearchDao {
 
 	// 市町村テーブルの取得
 	public List<Cities> cities();
@@ -15,10 +15,10 @@ public interface SearchService {
 	public List<Category> mainCategory();
 
 	// カテゴリテーブルのサブカテゴリを取得
-	public List<Category> subCategory(Integer mainId);
+	public List<Category> subCategory(Integer mianId);
 
 	// 店舗検索
-	public List<Store> storeSearch(String storeName, Integer subCategory, Integer cityid, boolean hyouka);
+	public List<Store> storeSearch(String storeName, Integer subCategory, Integer cityId, boolean hyouka);
 
 	// 店舗のカテゴリを取得
 	public List<Store> storeCategory();
@@ -29,11 +29,11 @@ public interface SearchService {
 	// 店舗詳細用の検索メソッド
 	public List<Store> storeDitails(Integer id);
 
-	// レビュー削除
-	public void reviewDelete(Integer id);
-
 	// レビューの変更
 	public void reviewUpdate(Integer id, String review);
+
+	// レビュー削除
+	public void reviewDelete(Integer id);
 
 	// 店舗削除
 	public void storeDelete(Integer id);

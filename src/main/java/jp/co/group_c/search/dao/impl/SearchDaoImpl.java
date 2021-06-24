@@ -1,4 +1,4 @@
-package jp.co.group_c.dao.search.impl;
+package jp.co.group_c.search.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.search.dao.SearchDao;
 
 @Repository
 public class SearchDaoImpl implements SearchDao{
@@ -52,7 +52,7 @@ public class SearchDaoImpl implements SearchDao{
 
 	private static final String NEW_REVIEW ="UPDATE review\n"
 												+ "SET review = :review\n"
-												+ "WHERE store_id = :storeId";
+												+ "WHERE review_id = :reviewId";
 
 	private static final String STORE_DELETE = "DELETE FROM store WHERE store_id = :storeId";
 
@@ -188,7 +188,7 @@ public class SearchDaoImpl implements SearchDao{
 	public void reviewUpdate(Integer id, String review) {
 		String strReview = NEW_REVIEW;
 
-		param.addValue("storeId", id);
+		param.addValue("reviewId", id);
 		param.addValue("review", review);
 
 		jdbcTemplate.update(strReview, param);

@@ -11,13 +11,13 @@ $(function(){
 	});
 
 	$('#comit').click(function(){
-		let storeId = $('#storeId').val();
+		let reviewId = $('#reviewId').val();
 		let newReview = $("#newReview").val();
 
 		if(newReview[0]===undefined){
 			$("#errMsg").html('レビュー内容を入力してください');
 		} else {
-			$.get("inputReview/"+storeId+'/'+newReview, function(){
+			$.get("inputReview/"+reviewId+'/'+newReview, function(){
 				location.reload();
 			})
 		}
@@ -30,8 +30,6 @@ $(function(){
 			location.reload();
 		})
 	})
-
-
 });
 
 $('#storeDelete').click(function() {
@@ -39,11 +37,11 @@ $('#storeDelete').click(function() {
 	let storeId = $('#storeId').val();
 	let storeName = $('#storeName').val();
 
-	if(window.confirm('「' + storeName + '」の情報を削除しますか?\nOKを押した場合、HOME画面に遷移します')){
+	if(window.confirm('「' + storeName + '」の情報を削除しますか?\nOKを押した場合、検索画面に遷移します')){
 		$.get("storeDelete/"+storeId, function(){
 			console.log('削除完了');
 		})
-		location.href = "http://localhost:8080/home";
+		location.href = "http://localhost:8080/search";
 	}
 
 	return false;
