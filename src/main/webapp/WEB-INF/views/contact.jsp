@@ -22,8 +22,8 @@
 		<caption>問い合わせ</caption>
 <form:form action="/contact" method="post" modelAttribute="contact_management">
 
-<input type="radio" name="sample" id="solved">解決のみ表示
-<input type="radio" name="sample" id="unsolved">未解決のみ表示
+<input type="radio" name="sample" id="solved">未解決のみ表示
+<input type="radio" name="sample" id="unsolved">解決のみ表示
 <input type="radio" name="sample" id="all">全件表示
 
  </form:form>
@@ -102,7 +102,7 @@
  </form:form>
 
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-	<a href="/user_management">ユーザー管理</a>
+	<br><a href="/user_management">ユーザー管理</a>
 
  <%-- </c:if> --%>
 

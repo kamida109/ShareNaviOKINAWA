@@ -18,6 +18,15 @@
 
 		<h3>ユーザー管理</h3>
 		<form:form action="user_management" method="post" modelAttribute="userManagement">
+
+		<c:if test="${not empty msg}">
+		<p class="error">${msg}</p>
+		</c:if>
+
+		<c:if test="${not empty checkMsg}">
+		<p class="error">${checkMsg}</p>
+		</c:if>
+
 			<label>ID:
 			<form:input path="userId" /></label>
 
@@ -51,15 +60,13 @@
 		<h3>ユーザーの削除</h3>
 		<form:form action="user_management" method="post" modelAttribute="userManagement">
 
-		<c:if test="${not empty msg}">
-		<p class="error">${msg}</p>
-		</c:if>
-
 		<c:if test="${not empty errMsg}">
 		<p class="error">${errMsg}</p>
 		</c:if>
 
-		<label>削除するユーザーID:
+		<form:errors path="userId" cssStyle="color: red"/>
+
+		<br><label>削除するユーザーID:
 		<form:input path="userId" /></label>
 
 		<form:button type= "submit" name= "delete">確定</form:button>

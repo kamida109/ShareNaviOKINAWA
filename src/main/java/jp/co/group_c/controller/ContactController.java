@@ -134,6 +134,15 @@ public class ContactController {
 
 		UserManagement userManagement = new UserManagement(form.getUserId(), form.getUserName());
 		List<UserManagement> list = contactService.managementFind(userManagement);
+
+		//IDか名前での検索結果がないとき
+		if(list.size() == 0) {
+			model.addAttribute("checkMsg", "対象のユーザーは存在しません。");
+			return "user_management";
+		}
+
+
+
 		model.addAttribute("userManagementList", list);
 
 		return "user_management";
@@ -143,12 +152,17 @@ public class ContactController {
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
 	public String managementDelete (@Validated @ModelAttribute("userManagement") UserDeleteForm userDeleteForm, BindingResult bindingResult, Model model) {
 
+		//ユーザーID未入力のとき
+		if(bindingResult.hasErrors()) {
+			return "user_management";
+		}
+
 
 		//削除するIDが存在しない場合
 		String getUserName = contactService.managementDelete(userDeleteForm.getUserId());
 
 				if(getUserName == null) {
-					model.addAttribute("errMsg", "入力されたIDのユーザーは存在しません。");
+					model.addAttribute("errMsg", "対象のユーザーは存在しません。");
 					return "user_management";
 				}
 
