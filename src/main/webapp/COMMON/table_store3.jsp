@@ -9,7 +9,7 @@
 				<td class="image" rowspan="3"  valign="middle"><img class="storeimg" src="CSS/image/no_image1.png"></td>
 				<td class="cities" colspan="3" align="left" valign="bottom">${plan.citiesName}</td>
 			</tr><tr>
-				<td class="name" colspan="2" align="left"><a href="details">${fn:escapeXml(plan.storeName)}</a></td>
+				<td class="name" colspan="2" align="left"><a href="/details?storeName=${plan.storeName}">${fn:escapeXml(plan.storeName)}</a></td>
 				<td class="star3" id="star3-${plan.storeId}" data-star3="${plan.hyouka}"></td>
 			</tr>
 			<tr class="bottom">

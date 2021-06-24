@@ -32,18 +32,22 @@ public class SearchDaoImpl implements SearchDao{
 
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
-	private static final String SQL_SEARCH = "SELECT DISTINCT s.store_id, store_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '') AS paths\n"
+	private static final String SQL_SEARCH = "SELECT DISTINCT s.store_id, store_name, cities_name, avg(hyouka) AS hyouka\n"
 												+ "FROM store AS s\n"
 												+ "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
 												+ "JOIN category AS c ON sc.category_id = c.category_id\n"
 												+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
 												+ "JOIN review AS r ON s.store_id = r.store_id\n"
-												+ "JOIN images AS i ON s.store_id = i.store_id\n"
 												+ "WHERE 1=1";
 
 	public static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
+
+	public static final String STORE_DITAILS = "SELECT * \n"
+													+ "FROM store AS s\n"
+													+ "JOIN review AS r ON s.store_id = r.store_id\n"
+													+ "WHERE s.store_id = :storeId";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -125,7 +129,7 @@ public class SearchDaoImpl implements SearchDao{
 			param.addValue("city", cityId);
 		}
 
-		storeSearch += "GROUP BY s.store_id, store_name, cities_name, hyouka, paths";
+		storeSearch += "GROUP BY s.store_id, store_name, cities_name, hyouka";
 
 		// 評価3以上
 		if(hyouka) {
@@ -160,6 +164,13 @@ public class SearchDaoImpl implements SearchDao{
 		List<Store> partStore = jdbcTemplate.query(partSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
 
 		return partStore;
+	}
+
+	// 店舗詳細用の検索メソッド
+	@Override
+	public List<Store> storeDitails(Integer id) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 }

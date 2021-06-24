@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.controller.form.SearchForm;
@@ -37,6 +38,8 @@ public class SearchController {
 	// 店舗検索画面
 	@RequestMapping(value = "/search")
 	public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
+
+		session.removeAttribute("setImages");
 
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
@@ -141,8 +144,12 @@ public class SearchController {
 
 
 	// 店舗詳細画面
-	@RequestMapping(value = "/details"/*"/details/{id}"*/)
-	public String details() {
+	@RequestMapping(value = "/details")
+	public String details(@RequestParam("storeId") Integer id) {
+		System.out.println("storeId: " + id);
+
+
+
 		return "details";
 	}
 

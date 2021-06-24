@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 
 <!DOCTYPE html>
 <html lang="jp">
@@ -12,6 +15,10 @@
 			<div class="frame">
 
 				<!-- ---------- ここから本体 ---------- -->
+
+				<c:forEach var="main" items="${mainCategoryList}">
+					${main.storeName}
+				</c:forEach>
 
 
 
