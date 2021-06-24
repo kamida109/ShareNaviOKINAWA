@@ -66,7 +66,7 @@ public class HomeDaoImpl implements HomeDao{
 	public List<Store> newArrival() {
 		String newArrival = NEW_ARRIVAL;
 		List<Store> newArrivalList = jdbcTemplate.query(newArrival, new BeanPropertyRowMapper<Store>(Store.class));
-		return newArrivalList;
+		return newArrivalList.isEmpty() ? null : newArrivalList;
 	}
 
 	//カテゴリ表示メソッド
@@ -82,7 +82,7 @@ public class HomeDaoImpl implements HomeDao{
 	public List<Users> users(){
 		String users = USERS;
 		List<Users> usersList = jdbcTemplate.query(users, new BeanPropertyRowMapper<Users>(Users.class));
-		return usersList;
+		return usersList.isEmpty() ? null : usersList;
 	}
 
 	//おすすめ表示メソッド
