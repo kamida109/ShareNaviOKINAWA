@@ -71,22 +71,29 @@
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
  	  <h3>問い合わせ内容</h3>
-<form:form action="contacts" method="post" modelAttribute="contact_management">
+ 	  <c:if test="${not empty updateMsg}">
+			<p class="error">${updateMsg}</p>
+	  </c:if>
+
+<form:form action="/contact" method="post" modelAttribute="contact_management">
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
 	<form:input path="userName" readonly="true"/>
 	</label>
 
-	<br><label>目的<br>
+	<br><label>種類<br>
 	<form:hidden path="contactCategoryId" readonly="true"/>
 	<input type="text" value="${contactCategoryId}" readonly/>
 	</label>
 
 	<br><label>本文<br>
+
 	<%--  form:textarea path="contents" readonly="true"/>--%>
 
 	<form:textarea path="contents"/>
 	</label>
+
+
 	<form:button  name="update">解決</form:button>
 
  </form:form>
@@ -100,23 +107,23 @@
 
 <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
 
-<!--   <h3>問い合わせ</h3> -->
-<%-- <form:form action="contact_result" method="post" modelAttribute="contactInfo"> --%>
+  <h3>問い合わせ</h3>
+<form:form action="contact_result" method="post" modelAttribute="contactInfo">
 
-<!--  <label>目的<br> -->
-<%--  <form:select path="contactCategoryId"> --%>
-<%-- 	<form:option value="1">通報</form:option> --%>
-<%-- 	<form:option value="2">問い合わせ</form:option> --%>
-<%-- 	<form:option value="3">要望</form:option> --%>
-<%--  </form:select> --%>
-<!--  </label> -->
+ <label>目的<br>
+ <form:select path="contactCategoryId">
+	<form:option value="1">通報</form:option>
+	<form:option value="2">問い合わせ</form:option>
+	<form:option value="3">要望</form:option>
+ </form:select>
+ </label>
 
-<!--  <br><label>本文<br> -->
-<%--  <form:textarea path="contents"/> </label> --%>
-<%--  <br><form:errors path="contents" cssStyle="color: red"/><br> --%>
+ <br><label>本文<br>
+ <form:textarea path="contents"/> </label>
+ <br><form:errors path="contents" cssStyle="color: red"/><br>
 
-<%--  <form:button type= "submit" name= "insert">送信</form:button> --%>
-<%--  </form:form> --%>
+ <form:button type= "submit" name= "insert">送信</form:button>
+ </form:form>
 
  <%--  </c:if> --%>
 

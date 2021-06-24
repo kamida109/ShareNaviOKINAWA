@@ -25,8 +25,24 @@ public class ContactController {
 	@Autowired
 	ContactService contactService;
 
+	 // 問い合わせ送信処理（一般ユーザー用）
+	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
+	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
 
-	// 問い合わせ画面に飛ぶ
+		//バリデーションの結果で処理分岐
+		if(bindingResult.hasErrors()) {
+			return "contact";
+		}
+
+		//引数の中はContactFormのフィールドにつながる
+		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
+		contactService.contactInsert(contact);
+
+		return "contact_result";
+	}
+
+
+	// 問い合わせ画面に飛ぶ（管理者でログインしたとき）
 	@RequestMapping(value = "/contact")
 	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model,
 								@ModelAttribute("contact_management") ContactForm contactForm) {
@@ -39,27 +55,11 @@ public class ContactController {
 		 List<Contact> list = contactService.findAll();
 		 model.addAttribute("selectResult", list);
 
-
 		return "contact";
 	}
 
 
-	// 問い合わせ送信処理
-	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
 
-		//バリデーションの結果で処理分岐
-		if(bindingResult.hasErrors()) {
-			return "contact";
-		}
-
-		//入力内容をもとにContactインスタンス生成→サービスのメソッドに引き継いでデータ登録
-		//引数の中はContactFormのフィールドにつながる
-		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
-		contactService.contactInsert(contact);
-
-		return "contact_result";
-	}
 
 	// 問い合わせ内容詳細表示
 	@RequestMapping(value = "/contact/{id}")
@@ -95,16 +95,15 @@ public class ContactController {
 	}
 
 	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
-	@RequestMapping(value = "/contacts" , /*params = "update",*/ method = RequestMethod.POST)
-	public String updateContact(@ModelAttribute("contact_management") ContactForm form,
+	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
+	public String updateContact(@ModelAttribute("contact_management") ContactForm form, Model model,
 									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-		//Contact contactId = new Contact(form.getContactId());
-		System.out.println(form.getContactId());
-
-		System.out.println("action");
+		 List<Contact> list = contactService.findAll();
+		 model.addAttribute("selectResult", list);
 
 		contactService.flagUpdate(form.getContactId());
+		model.addAttribute("updateMsg", "問い合わせ内容を解決しました。");
 
 		return "contact";
 	}
