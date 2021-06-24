@@ -148,8 +148,15 @@ public class PgContactDao implements ContactDao{
 		param.addValue("userName", userId);
 		param.addValue("userId", userId);
 
-		String getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
-		jdbcTemplate.update(deleteSql, param);
+		//もしデータがない場合はnullを返すという処理。
+		String getName = null;
+
+		try{
+			getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
+			jdbcTemplate.update(deleteSql, param);
+		}catch(Exception e){
+			getName=null;
+		}
 
 		return getName;
 	}
