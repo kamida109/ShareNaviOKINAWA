@@ -13,6 +13,7 @@ public class ContactForm {
 
 	@NotBlank(message="本文を入力してください。")
 	private String contents;
+
 	private boolean flag;
 
 	//チェックボックス用

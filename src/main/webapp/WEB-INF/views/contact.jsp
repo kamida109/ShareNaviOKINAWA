@@ -18,52 +18,62 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
+	<table border="1" id="checked_list">
+		<caption>問い合わせ</caption>
+<form:form action="/contact" method="post" modelAttribute="contact_management">
 
-<!-- 	<table border="1"> -->
-<%-- 		<caption>問い合わせ</caption> --%>
+	<table border="1">
+		<caption>問い合わせ</caption>
+<input type="radio" name="sample" id="solved">解決のみ表示
+<input type="radio" name="sample" id="unsolved">未解決のみ表示
+<input type="radio" name="sample" id="all">全件表示
 
-<!-- 		<thead> -->
-<!-- 		<tr> -->
-<!-- 			<th>ID</th> -->
-<!-- 			<th>ユーザー名</th> -->
-<!-- 			<th>種類</th> -->
-<!-- 			<th>状況</th> -->
-<!-- 		</tr> -->
-<!-- 		</thead> -->
+ </form:form>
 
-<%-- 	<c:forEach var="result" items= "${selectResult}"> --%>
-<!-- 		<tr> -->
-<%-- 			<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td> --%>
-<%-- 			<td>${fn:escapeXml(result.userName)}</td> --%>
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>ユーザー名</th>
+			<th>種類</th>
+			<th>状況</th>
+		</tr>
+		</thead>
 
-<!-- 			<td> -->
-<%-- 				<c:choose> --%>
-<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}"> --%>
-<!-- 					<span>通報</span> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}"> --%>
-<!-- 					<span>問い合わせ</span> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}"> --%>
-<!-- 					<span>要望</span> -->
-<%-- 				</c:when> --%>
-<%-- 				</c:choose> --%>
-<!-- 			</td> -->
+	<c:forEach var="result" items= "${selectResult}">
+		<tr>
+			<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td>
+			<td>${fn:escapeXml(result.userName)}</td>
 
-<!-- 			<td> -->
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${fn:escapeXml(result.flag eq 'true')}"> --%>
-<!-- 					<span>解決</span> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:otherwise> --%>
-<!-- 					<span>未解決</span> -->
-<%-- 				</c:otherwise> --%>
-<%-- 			</c:choose> --%>
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<%-- 	</c:forEach> --%>
-<!-- </table> -->
+			<td>
+				<c:choose>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
+					<span>通報</span>
+				</c:when>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
+					<span>問い合わせ</span>
+				</c:when>
+				<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
+					<span>要望</span>
+				</c:when>
+				</c:choose>
+			</td>
 
+			<td>
+			<c:choose>
+				<c:when test="${fn:escapeXml(result.flag eq 'true')}">
+					<span>解決</span>
+				</c:when>
+				<c:otherwise>
+					<span>未解決</span>
+				</c:otherwise>
+			</c:choose>
+			</td>
+		</tr>
+	</c:forEach>
+
+</table>
+
+</table>
 
 
 
@@ -71,22 +81,36 @@
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
  	  <h3>問い合わせ内容</h3>
+
 <form:form action="contacts" method="post" modelAttribute="contact_management">
-	<form:input type="input" path="contactId" readonly="true"/>
+
+ 	  <c:if test="${not empty updateMsg}">
+			<p class="error">${updateMsg}</p>
+	  </c:if>
+
+<form:form action="/contact" method="post" modelAttribute="contact_management">
+
+	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
 	<form:input path="userName" readonly="true"/>
 	</label>
 
-	<br><label>目的<br>
-	<form:input path="contactCategoryId" readonly="true"/>
 
+	<br><label>目的<br>
+	</label>
+
+	<br><label>種類<br>
+
+	<form:hidden path="contactCategoryId" readonly="true"/>
+	<input type="text" value="${contactCategoryId}" readonly/>
 	</label>
 
 	<br><label>本文<br>
-	<%--  form:textarea path="contents" readonly="true"/>--%>
 
-	<form:textarea path="contents"/>
+	<form:textarea path="contents" readonly="true"/>
 	</label>
+
+
 	<form:button  name="update">解決</form:button>
 
  </form:form>
@@ -100,23 +124,29 @@
 
 <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
 
-  <h3>問い合わせ</h3>
-<form:form action="contact_result" method="post" modelAttribute="contactInfo">
+<!--   <h3>問い合わせ</h3> -->
+<%-- <form:form action="contact_result" method="post" modelAttribute="contactInfo"> --%>
 
- <label>目的<br>
- <form:select path="contactCategoryId">
-	<form:option value="1">通報</form:option>
-	<form:option value="2">問い合わせ</form:option>
-	<form:option value="3">要望</form:option>
- </form:select>
- </label>
+<!--  <label>目的<br> -->
+<%--  <form:select path="contactCategoryId"> --%>
+<%-- 	<form:option value="1">通報</form:option> --%>
+<%-- 	<form:option value="2">問い合わせ</form:option> --%>
+<%-- 	<form:option value="3">要望</form:option> --%>
+<%--  </form:select> --%>
+<!--  </label> -->
 
- <br><label>本文<br>
- <form:textarea path="contents"/> </label>
- <br><form:errors path="contents" cssStyle="color: red"/><br>
+<!--  <br><label>本文<br> -->
+<%--  <form:textarea path="contents"/> </label> --%>
+<%--  <br><form:errors path="contents" cssStyle="color: red"/><br> --%>
+
+<<<<<<< HEAD
+<%--  <form:button type= "submit" name= "insert">送信</form:button> --%>
+<%--  </form:form> --%>
 
  <form:button type= "submit" name= "insert">送信</form:button>
  </form:form>
+
+
  <%--  </c:if> --%>
 
 
@@ -125,6 +155,9 @@
 			</div>
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
+
+
 		</div>
+		<script type="text/javascript" src="js/checked.js"></script>
 	</body>
 </html>

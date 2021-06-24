@@ -148,10 +148,38 @@ public class PgContactDao implements ContactDao{
 		param.addValue("userName", userId);
 		param.addValue("userId", userId);
 
-		String getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
-		jdbcTemplate.update(deleteSql, param);
+		//もしデータがない場合はnullを返すという処理。
+		String getName = null;
+
+		try{
+			getName = jdbcTemplate.queryForObject(selectSql, param, String.class);
+			jdbcTemplate.update(deleteSql, param);
+		}catch(Exception e){
+			getName=null;
+		}
 
 		return getName;
+	}
+
+	// 未解決のみ表示
+	@Override
+	public List<Contact> findUnsolved() {
+		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
+					+ "INNER JOIN users ON users.user_id = contact.user_id "
+					+ "WHERE flag=false ORDER BY flag ASC";
+
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
+	}
+
+	// 解決のみ表示
+	@Override
+	public List<Contact> findSolved() {
+		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
+				+ "INNER JOIN users ON users.user_id = contact.user_id "
+				+ "WHERE flag=true ORDER BY flag ASC";
+
+	return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
+
 	}
 
 
