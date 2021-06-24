@@ -18,5 +18,6 @@ public interface AddStoreDao {
 	public void insertImages(int storeId, String paths);
 	public void insertStore(String storeName, String businessHours, Integer citiesId, String address, String tel);
 	public Store findStore(String storeName, Integer citiesId);
+	public void addStoreCategory(int nowStoreId, Integer categoryId);
 
 }

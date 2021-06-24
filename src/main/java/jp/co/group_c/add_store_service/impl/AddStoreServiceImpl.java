@@ -66,6 +66,12 @@ public class AddStoreServiceImpl implements AddStoreService{
 		return addStoreDao.findStore(storeName, citiesId);
 	}
 
+	@Override
+	public void addStoreCategory(int nowStoreId, Integer categoryId) {
+		addStoreDao.addStoreCategory(nowStoreId, categoryId);
+
+	}
+
 
 
 

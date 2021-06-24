@@ -18,4 +18,5 @@ public interface AddStoreService {
 	public void insertStore(String storeName, String businessHours, Integer citiesId, String address, String tel);
 	public void insertImages(int nowStoreId, String paths);
 	public Store findStore(String storeName, Integer citiesId);
+	public void addStoreCategory(int nowStoreId, Integer subCategoryId1);
 }
