@@ -61,7 +61,6 @@ public class HomeController {
 
 		//おすすめ表示
 		List<Store> recommendList = homeService.recommend(userList.get(0).getUserId());
-		Collections.shuffle(recommendList);
 
 		//新しい提案
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
