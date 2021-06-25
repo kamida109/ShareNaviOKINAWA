@@ -77,7 +77,7 @@ public class MyPageController {
 		}
 
 		//カテゴリ表示
-		List<Store> mainCategoryList = homeService.mainCategory(favoriteList.get(0).getStoreName());
+		List<Store> mainCategoryList = homeService.mainCategory();
 
 		//お店リスト送信
 		model.addAttribute("storeList", favoriteList);
