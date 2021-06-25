@@ -18,23 +18,21 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
+
 	<table border="1" id="checked_list">
 		<caption>問い合わせ</caption>
 <form:form action="/contact" method="post" modelAttribute="contact_management">
 
-	<table border="1">
-		<caption>問い合わせ</caption>
-<input type="radio" name="sample" id="solved">解決のみ表示
-<input type="radio" name="sample" id="unsolved">未解決のみ表示
+<input type="radio" name="sample" id="solved">未解決のみ表示
+<input type="radio" name="sample" id="unsolved">解決のみ表示
 <input type="radio" name="sample" id="all">全件表示
 
  </form:form>
-
 		<thead>
 		<tr>
 			<th>ID</th>
 			<th>ユーザー名</th>
-			<th>種類</th>
+			<th>目的</th>
 			<th>状況</th>
 		</tr>
 		</thead>
@@ -73,50 +71,41 @@
 
 </table>
 
-</table>
-
 
 
 
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
  	  <h3>問い合わせ内容</h3>
-
-<form:form action="contacts" method="post" modelAttribute="contact_management">
-
  	  <c:if test="${not empty updateMsg}">
 			<p class="error">${updateMsg}</p>
 	  </c:if>
 
 <form:form action="/contact" method="post" modelAttribute="contact_management">
-
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
 	<form:input path="userName" readonly="true"/>
-	</label>
 
+	</label>
 
 	<br><label>目的<br>
-	</label>
-
-	<br><label>種類<br>
-
 	<form:hidden path="contactCategoryId" readonly="true"/>
 	<input type="text" value="${contactCategoryId}" readonly/>
 	</label>
 
 	<br><label>本文<br>
-
 	<form:textarea path="contents" readonly="true"/>
 	</label>
 
-
-	<form:button  name="update">解決</form:button>
+<!-- flagの値でボタンを表示させる  -->
+			<c:if test="${fn:escapeXml(flag == false)}">
+				<form:button value="${solvedFlag}" name="update">解決</form:button>
+			</c:if>
 
  </form:form>
 
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-	<a href="/user_management">ユーザー管理</a>
+	<br><a href="/user_management">ユーザー管理</a>
 
  <%-- </c:if> --%>
 
@@ -124,28 +113,23 @@
 
 <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
 
-<!--   <h3>問い合わせ</h3> -->
-<%-- <form:form action="contact_result" method="post" modelAttribute="contactInfo"> --%>
+  <h3>問い合わせ</h3>
+<form:form action="contact_result" method="post" modelAttribute="contactInfo">
+<form:errors path="contents" cssStyle="color: red"/>
 
-<!--  <label>目的<br> -->
-<%--  <form:select path="contactCategoryId"> --%>
-<%-- 	<form:option value="1">通報</form:option> --%>
-<%-- 	<form:option value="2">問い合わせ</form:option> --%>
-<%-- 	<form:option value="3">要望</form:option> --%>
-<%--  </form:select> --%>
-<!--  </label> -->
+	 <br><label>目的<br>
+	 <form:select path="contactCategoryId">
+		<form:option value="1">通報</form:option>
+		<form:option value="2">問い合わせ</form:option>
+		<form:option value="3">要望</form:option>
+	 </form:select>
+	 </label>
 
-<!--  <br><label>本文<br> -->
-<%--  <form:textarea path="contents"/> </label> --%>
-<%--  <br><form:errors path="contents" cssStyle="color: red"/><br> --%>
+	 <br><label>本文
+	 <br><form:textarea path="contents"/> </label>
 
-<<<<<<< HEAD
-<%--  <form:button type= "submit" name= "insert">送信</form:button> --%>
-<%--  </form:form> --%>
-
- <form:button type= "submit" name= "insert">送信</form:button>
- </form:form>
-
+	 <form:button type= "submit" name= "insert">送信</form:button>
+	 </form:form>
 
  <%--  </c:if> --%>
 

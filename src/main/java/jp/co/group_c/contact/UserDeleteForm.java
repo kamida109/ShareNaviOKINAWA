@@ -1,9 +1,13 @@
 package jp.co.group_c.contact;
 
+import javax.validation.constraints.NotNull;
+
 //ユーザー削除用のFormクラス
 public class UserDeleteForm {
 
+	@NotNull(message="削除するユーザーIDを入力してください。")
 	private Integer userId;
+
 	private String userName;
 
 	public Integer getUserId() {
