@@ -3,6 +3,7 @@ package jp.co.group_c.controller;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class SignController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private UserInfoService uiService;
@@ -90,8 +94,16 @@ public class SignController {
 		@RequestMapping(value = "/sign_up", params = "insert", method = RequestMethod.POST)
 		public String signUp(@Validated @ModelAttribute("signUp") SignUpForm form, BindingResult bindingResult, Model model) {
 
+			// scriptで表示したoptionがformで取得できなかった場合
+			Integer categoryId1 = Integer.parseInt(request.getParameter("categoryId1"));
+			Integer categoryId2 = Integer.parseInt(request.getParameter("categoryId2"));
+			Integer categoryId3 = Integer.parseInt(request.getParameter("categoryId3"));
+
 			// 入力チェック
 			if(bindingResult.hasErrors()) {
+				form.setCategoryId1(categoryId1);
+				form.setCategoryId2(categoryId2);
+				form.setCategoryId3(categoryId3);
 				model.addAttribute("msg", "未入力や不正な入力があります");
 				return "sign_up";
 			}
@@ -99,12 +111,18 @@ public class SignController {
 			// loginId重複チェック
 			Users userInfo = uiService.checkLoginId(form.getLoginId());
 			if (!Objects.isNull(userInfo)) {
+				form.setCategoryId1(categoryId1);
+				form.setCategoryId2(categoryId2);
+				form.setCategoryId3(categoryId3);
 				model.addAttribute("msg", "既に使用されているIDです");
 				return "sign_up";
 			}
 
 			// passwordチェック
 			if (!(form.getPassword().equals(form.getPasswordRe()))) {
+				form.setCategoryId1(categoryId1);
+				form.setCategoryId2(categoryId2);
+				form.setCategoryId3(categoryId3);
 				model.addAttribute("msg", "PASSが一致しません");
 				return "sign_up";
 			}

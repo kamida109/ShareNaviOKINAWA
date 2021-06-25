@@ -74,17 +74,17 @@
 						var value2 = $("#mainCategory2").val();
 						var value3 = $("#mainCategory3").val();
 						// コントローラに送信
-						$.get("selected/"+value1+"/0", function(data){
+						$.get("pulldown/"+value1, function(data){
 							console.log(data);
 							var obj = data;
 							$("#subCategory1").html(data);
 						})
-						$.get("selected/"+value2+"/1", function(data){
+						$.get("pulldown/"+value2, function(data){
 							console.log(data);
 							var obj = data;
 							$("#subCategory2").html(data);
 						})
-						$.get("selected/"+value3+"/2", function(data){
+						$.get("pulldown/"+value3, function(data){
 							console.log(data);
 							var obj = data;
 							$("#subCategory3").html(data);

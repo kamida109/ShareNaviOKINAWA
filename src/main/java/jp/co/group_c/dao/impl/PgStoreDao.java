@@ -39,7 +39,7 @@ public class PgStoreDao implements StoreDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		List<Store> storeList = jdbcTemplate.query(STORE_SELECT_FAVORITRE, param, new BeanPropertyRowMapper<Store>(Store.class));
-		return storeList;
+		return storeList.isEmpty() ? null : storeList;
 	}
 
 	//レビュー履歴表示メソッド
@@ -47,7 +47,7 @@ public class PgStoreDao implements StoreDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		List<Store> storeList = jdbcTemplate.query(STORE_SELECT_REVIEW, param, new BeanPropertyRowMapper<Store>(Store.class));
-		return storeList;
+		return storeList.isEmpty() ? null : storeList;
 	}
 
 }

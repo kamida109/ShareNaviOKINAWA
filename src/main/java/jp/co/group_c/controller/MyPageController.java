@@ -60,9 +60,6 @@ public class MyPageController {
 		//DBが空の時の対処
 		if(favoriteList == null) {
 			model.addAttribute("notList", "undefinde");
-			model.addAttribute("notRecommendList", "undefinde");
-			model.addAttribute("notPlanList", "undefinde");
-			return "my_page";
 		}
 
 		//レビュー履歴表示
@@ -70,10 +67,7 @@ public class MyPageController {
 
 		//DBが空の時の対処
 		if(reviewList == null) {
-			model.addAttribute("notList", "undefinde");
 			model.addAttribute("notRecommendList", "undefinde");
-			model.addAttribute("notPlanList", "undefinde");
-			return "my_page";
 		}
 
 		//カテゴリ表示
