@@ -10,7 +10,7 @@
 
 	header h1 {
 		position: fixed;
-		top: 0px;
+		margin-top: 5px;
 		left: 5vw;
 		z-index: 5;
 		font-size: 50px;
@@ -20,7 +20,7 @@
 
 	header .signin_userinfo {
 		position: fixed;
-		top: 60px;
+		top: 40px;
 		right: calc(2.5vw + 120px);
 		z-index: 5;
 		font-size: 20px;
@@ -30,7 +30,7 @@
 	header 	.signout{
 		position: fixed;
 		display: block;
-		top: 60px;
+		top: 35px;
 		right: 2.5vw;
 		width: 100px;
 		height: auto;
@@ -46,10 +46,10 @@
 
 	header div {
 		position: fixed;
-		top: 100px;
+		top: 70px;
 		left: 2.5vw;
 		right: 2.5vw;
-		width: 95vw;
+		width: clac(125vw - (2.5vw * 2));
 		height: auto;
 		z-index: 5;
 	}
@@ -74,7 +74,7 @@
 
 	header li a{
 		display: block;
-		width: calc(95vw / 5 - 4px );
+		width: calc((125vw - (2.5vw * 2)) / 5 - 4px );
 		height: 45px;
 		text-align: center;
 		z-index: 6;
@@ -104,5 +104,5 @@
 		bottom: 0;
 		left: 2vw;
 		font-weight: normal;
-		color: #494949;
+		color: #606060;
 	}

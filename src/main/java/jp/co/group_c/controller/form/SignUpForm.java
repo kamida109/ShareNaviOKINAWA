@@ -6,14 +6,21 @@ import javax.validation.constraints.Pattern;
 public class SignUpForm {
 
 	@NotBlank
+	private String userName;
+
+	@NotBlank
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String loginId;
 
 	@NotBlank
-	private String userName;
+	@Pattern(regexp = "[a-zA-Z0-9]*")
+	private String password;
+
+	@NotBlank
+	@Pattern(regexp = "[a-zA-Z0-9]*")
+	private String passwordRe;
 
 	private Integer citiesId;
-	private String citiesName;
 
 	private Integer categoryId1;
 	private Integer categoryId2;
@@ -22,9 +29,12 @@ public class SignUpForm {
 	private Integer mainCategoryId2;
 	private Integer mainCategoryId3;
 
-	@NotBlank
-	@Pattern(regexp = "[a-zA-Z0-9]*")
-	private String password;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getLoginId() {
 		return loginId;
@@ -33,11 +43,18 @@ public class SignUpForm {
 		this.loginId = loginId;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getPassword() {
+		return password;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordRe() {
+		return passwordRe;
+	}
+	public void setPasswordRe(String passwordRe) {
+		this.passwordRe = passwordRe;
 	}
 
 	public Integer getCitiesId() {
@@ -45,13 +62,6 @@ public class SignUpForm {
 	}
 	public void setCitiesId(Integer citiesId) {
 		this.citiesId = citiesId;
-	}
-
-	public String getCitiesName() {
-		return citiesName;
-	}
-	public void setCitiesName(String citiesName) {
-		this.citiesName = citiesName;
 	}
 
 	public Integer getCategoryId1() {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.group_c.controller.form.SignInForm;
+import jp.co.group_c.controller.form.SignUpForm;
 import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.dao.UsersDao;
 import jp.co.group_c.entity.FavoriteCategory;
@@ -18,8 +19,8 @@ public class UserInfoService {
 	UsersDao usersDao;
 
 	// ログインチェック
-	public Users signInCheck(SignInForm userInfo) {
-		return usersDao.findByLoginIdAndPass(userInfo);
+	public Users signInCheck(SignInForm form) {
+		return usersDao.findByLoginIdAndPass(form);
 	}
 
 	// 好きなカテゴリの取得
@@ -32,14 +33,14 @@ public class UserInfoService {
 		return usersDao.findByLoginId(loginId);
 	}
 
-//	// ユーザ情報の登録
-//	public void insertUserInfo(UserInfoForm userInfo) {
-//		usersDao.insertUserInfo(userId, userInfo);
-//	}
+	// ユーザ情報の登録
+	public void insertUserInfo(SignUpForm form) {
+		usersDao.insertUserInfo(form);
+	}
 
 	// ユーザ情報の変更
-	public Users updateUserInfo(Integer userId, UserInfoForm userInfo) {
-		return usersDao.updateUserInfo(userId, userInfo);
+	public Users updateUserInfo(Integer userId, UserInfoForm form) {
+		return usersDao.updateUserInfo(userId, form);
 	}
 
 }

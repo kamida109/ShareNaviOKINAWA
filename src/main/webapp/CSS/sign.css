@@ -3,7 +3,15 @@
 /* 全てのコンテンツを中央揃え */
 .sign_frame {
 	padding-top: 10%;
-	padding-bottom: 5%;
+	text-align: center;
+}
+
+/* topから3%ほどの位置からコンテンツを始める */
+/* bottom3%ほ余白を持っておく */
+/* 全てのコンテンツを中央揃え */
+.sign_up_frame {
+	padding-top: 3%;
+	padding-bottom: 3%;
 	text-align: center;
 }
 
@@ -16,8 +24,9 @@ h1 {
 /* 入力フォームのフレーム */
 .sign_form {
 	display: inline-block;
-	width: auto;
-	padding: 20px 80px 20px 80px;
+	width: 700px;
+	padding: 20px 0px 20px 0px;
+	text-align: center;
 	background-color: #d0ddff88;
 }
 
