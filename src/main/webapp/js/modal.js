@@ -1,4 +1,3 @@
-
 $(function(){
 	$('#review').click(function(){
 		$('.modal_output').fadeIn();
@@ -23,6 +22,7 @@ $(function(){
 		}
 	});
 
+	//	レビュー削除
 	$('#reviewDel').click(function(){
 		let reviewId = $('#reviewId').val();
 
@@ -32,6 +32,7 @@ $(function(){
 	})
 });
 
+// 店舗の削除
 $('#storeDelete').click(function() {
 
 	let storeId = $('#storeId').val();
@@ -43,7 +44,6 @@ $('#storeDelete').click(function() {
 		})
 		location.href = "http://localhost:8080/search";
 	}
-
 	return false;
 });
 

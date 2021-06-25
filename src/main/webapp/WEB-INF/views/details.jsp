@@ -9,17 +9,21 @@
 	<!-- 共通部品_head -->
 	<jsp:include page="/COMMON/head.jsp"/>
 	<body>
+
+
+
 		<div class="white_noise2">
 			<!-- 共通部品_header -->
 			<jsp:include page="/COMMON/header.jsp"/>
+
 			<div class="frame">
-				<div class="input_form">
+			<form:form action="update_store" modelAttribute="update_store">
+			<div class="input_form">
 					<div class="input_form_inner">
 
-					<span>
-						<button type="button" id="storeUpdate">編集</button>
-						<button type="button" id="storeDelete">削除</button>
-					</span>
+					<button name="storeUpdate">編集</button>
+
+					<button id="storeDelete">削除</button>
 
 					<c:forEach var="main" items="${storeDitails}">
 						<input type="hidden" id="storeId" value="${main.storeId}">
@@ -29,6 +33,15 @@
 							店舗名：${main.storeName}
 							評価<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
 						</p>
+
+						<p>カテゴリ:
+							<c:forEach var="category" items="${mainCategoryList}">
+								<c:if test="${mian.storeId eq category.storeId }">
+								${main.categoryName}
+								</c:if>
+							</c:forEach>
+						</p>
+
 						<p>住所：${main.citiesName} ${main.address}</p>
 						<p>営業時間：${main.businessHours}</p>
 
@@ -37,14 +50,16 @@
 
 						<div class="modal_window">
 							<p>レビュー <a id="review" href="">レビューを追加する</a></p>
-							<textarea id="review" rows="5" cols="50">${main.review}</textarea>
+							<textarea id="review" rows="5" cols="50" readonly>${main.review}</textarea>
 						</div>
 					</c:forEach>
 
 					</div>
+					</div>
+					</form:form>
 				</div>
-
 			</div>
+
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
 
@@ -52,7 +67,6 @@
 			<script type="text/javascript" src="js/star.js"></script>
 			<script type="text/javascript" src="js/modal.js"></script>
 
-		</div>
 
 		<div class="modal modal_output">
 			<div class="modal_bg modal_close"></div>
@@ -62,9 +76,10 @@
 				<textarea id="newReview" rows="10" cols="90" placeholder="編集内容を入力してください"></textarea>
 				<p><button type="button" id="comit">確定</button>
 				<button type="button" id="reviewDel">削除</button>
-				<button type="button" class="modal_close" id="return">戻る</button></p>
+				<button type="button" class="modal_close">戻る</button></p>
 			</div>
 		</div>
+
 
 </body>
 </html>
