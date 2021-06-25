@@ -35,8 +35,8 @@
 
 		<form:button type= "submit" name= "select">検索</form:button>
 
-<!-- <table border="1"> -->
-<table style="border:1; text-align:center;">
+<table border="1">
+<!-- <table style="border:1; text-align:center;"> -->
  <thead>
 	<tr>
 		<th>ユーザーID</th>

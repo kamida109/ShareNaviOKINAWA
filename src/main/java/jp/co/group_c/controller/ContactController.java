@@ -118,14 +118,24 @@ public class ContactController {
 	public String updateContact(@Validated @ModelAttribute("contact_management") ContactForm form, BindingResult bindingResult,Model model,
 									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-		 List<Contact> list = contactService.findAll();
-		 model.addAttribute("selectResult", list);
+		// List<Contact> list = contactService.findAll();
+		 //model.addAttribute("selectResult", list);
 
 		 //入力ボックスに何もないときメッセージ表示
-		 if(bindingResult.hasErrors()) {
-			 model.addAttribute("updateMsg", "問い合わせ内容を選択してください");
-			 return "contact";
-		 }
+//		 if(bindingResult.hasErrors()) {
+//			 model.addAttribute("updateMsg", "問い合わせ内容を選択してください");
+//			 return "contact";
+//		 }
+		//contactCategoryIdを判定
+		Integer contactCategoryId = form.getContactCategoryId();
+
+		if(contactCategoryId == 1) {
+			model.addAttribute("contactCategoryId", "通報");
+		}else if(contactCategoryId == 2) {
+			model.addAttribute("contactCategoryId", "問い合わせ");
+		}else if(contactCategoryId == 3) {
+			model.addAttribute("contactCategoryId", "要望");
+		}
 
 		contactService.flagUpdate(form.getContactId());
 		model.addAttribute("updateMsg", "問い合わせ内容を解決しました。");
