@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="jp">
@@ -22,32 +23,33 @@
 					<div class="categoryPull">
 						<div>
 							<form:select path="mainCategoryId1" id="mainCate1">
+								<form:option value=""></form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
 							</form:select>
 							<select id="subCate1" name="subCate1">
-								<option value=""></option>
+								<option selected>-------------</option>
 							</select>
 						</div>
 						<div>
 							<form:select path="mainCategoryId2" id="mainCate2">
+								<form:option value=""></form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
 							</form:select>
 							<select id="subCate2" name="subCate2">
-								<option value=""></option>
+								<option selected>-------------</option>
 							</select>
 						</div>
 						<div>
 							<form:select path="mainCategoryId3" id="mainCate3">
+								<form:option value=""></form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
 							</form:select>
 							<select id="subCate3" name="subCate3">
-								<option value=""></option>
+								<option selected>-------------</option>
 							</select>
 						</div>
 
-
-
-						<a href="" style="font-size: 12px">カテゴリを追加する</a>
+						<a href="/category_process" style="font-size: 12px">カテゴリを追加する</a>
 					</div>
 
 					<div>
@@ -60,9 +62,8 @@
 					</div>
 					<div>
 						TEL：
-						<form:input type="tel" path="tel" placeholder="ハイフン\"-\"不要"/>
+						<form:input type="tel" maxlength="20" path="tel" placeholder="ハイフン\"-\"不要"/>
 					</div>
-
 
 					<div>
 						営業時間：<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00&#13;　　火曜定休日"/>
@@ -86,10 +87,6 @@
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 				<script>
 					$(function(){
-						// 子カテゴリをはじめは非表示
-						$("#subCate1").hide();
-						$("#subCate2").hide();
-						$("#subCate3").hide();
 						// 親カテゴリを変更したときの処理
 						$("#mainCate1").change(function(){
 							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
@@ -156,10 +153,8 @@
 									document.getElementById("selectImage").innerHTML = imageList;
 								}
 							};
-
 							// ファイルの読み込み(Data URI Schemeの取得)
 							fileReader.readAsDataURL(img);
-
 						}
 					}
 

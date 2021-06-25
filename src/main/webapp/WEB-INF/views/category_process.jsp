@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html lang="jp">
+	<!-- 共通部品_head -->
+	<jsp:include page="/COMMON/head.jsp"/>
+	<body>
+		<div class="white_noise2">
+			<!-- 共通部品_header -->
+			<jsp:include page="/COMMON/header.jsp"/>
+			<div class="frame">
+
+				<!-- ---------- ここから本体 ---------- -->
+
+				<h2>カテゴリの追加</h2>
+				<h2>カテゴリ操作</h2>
+				<p class="error">${existErr}</p>
+				<form:form action="category_process_check" modelAttribute="category_process" method="Post">
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${authority == 1}"> --%>
+							<p>
+								<form:select path="mainCategory" id="mainCate">
+									<form:option value="0" label=""></form:option>
+									<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
+								</form:select>
+								<select id="subCate" name="subCate">
+									<option selected value="">-------------</option>
+								</select>
+								<form:select path="process">
+									<form:option value="追加"/>
+									<form:option value="更新"/>
+									<form:option value="削除"/>
+								</form:select>
+							</p>
+							<p>
+								<form:input path="pCategoryName"/>
+							</p>
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<%-- 							<form:select path="mainCategory"> --%>
+<%-- 								<form:option value=""></form:option> --%>
+<%-- 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/> --%>
+<%-- 							</form:select> --%>
+<%-- 							<form:input path="pCategoryName"/> --%>
+<%-- 					</c:otherwise> --%>
+<%-- 				</c:choose> --%>
+					<p><button class="btn" type="submit" name="check">確認</button></p>
+				</form:form>
+				<script type="text/javascript">
+					$(function(){
+						// 親カテゴリを変更したときの処理
+						$("#mainCate").change(function(){
+							// 親カテゴリが選択されたときに、valueに選択された内容を入れる
+							var value = $("#mainCate").val();
+							// 子カテゴリ表示
+							$("#subCate").show();
+							// コントローラに送信
+							$.get("pulldown2/"+value, function(data){
+								console.log(data);
+								var obj = data;
+								$("#subCate").html(data);
+							})
+						})
+					})
+				</script>
+				<!-- ---------- ここまで本体 ---------- -->
+
+			</div>
+			<!-- 共通部品_footer -->
+			<footer id="footer"></footer>
+		</div>
+	</body>
+</html>

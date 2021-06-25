@@ -40,6 +40,13 @@ public class AddStoreController {
 	@RequestMapping(value = "/add_store", method = RequestMethod.GET)
 	public String addStore(@ModelAttribute("add_store") AddStoreForm form, Model model) {
 
+		session.removeAttribute("setImages");
+		session.removeAttribute("storeList");
+		session.removeAttribute("notList");
+		session.removeAttribute("mainCategoryList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notPlanList");
+
 		List<City> cityList = addStoreService.allCity();
 		List<Category> mainCateList = addStoreService.selectMainCategory();
 		List<Category> childCateList = addStoreService.selectAllChildCategory();
@@ -48,50 +55,65 @@ public class AddStoreController {
 		model.addAttribute("mainCategory", mainCateList);
 		model.addAttribute("childCategory", childCateList);
 
-		System.out.println(cityList.size());
-		System.out.println(mainCateList.size());
-		System.out.println(childCateList.size());
-
 		return "add_store";
 	}
 
 
+	/*----------------------------------------------------------------------------------------------------*/
+
+
+
 	// 店舗登録確認
 	@RequestMapping(value = "/add_store_check", method = RequestMethod.POST)
+	@Transactional
 	public String addStoreCheck(@Validated @ModelAttribute("add_store") AddStoreForm form, BindingResult bindingResult,
 								 @RequestParam("subCate1") String cateName1,
 								 @RequestParam("subCate2") String cateName2,
-								 @RequestParam("subCate3") String cateName3, Model model) throws IllegalStateException, IOException {
+								 @RequestParam("subCate3") String cateName3, Model model) /*throws IllegalStateException, IOException*/ {
 
-		System.out.println("form.getStoreImages()：" + form.getStoreImages());
-		//System.out.println(form.getStoreImages().get(0).getOriginalFilename());
-
+		System.out.println("★form.getStoreImages()：" + form.getStoreImages());
+		System.out.println("★サブカテ1："+cateName1);
+		System.out.println("★サブカテ2："+cateName2);
+		System.out.println("★サブカテ3："+cateName3);
 
 
 		/*画像保存*/
-		if(form.getStoreImages() != null) {
-			System.out.println("写真格納処理開始");
+		if(form.getStoreImages().get(0) != null) {
+			System.out.println("▲写真格納処理開始");
 
 			List<MultipartFile> formImg = form.getStoreImages();
+			String aaa = "";
 
-			for (MultipartFile file : formImg) {
+			System.out.println("★formImg："+formImg);
+			try {
+				for (MultipartFile file : formImg) {
 
-				String formFileName = file.getOriginalFilename();
-				String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
-				File uploadFile = new File(imgUploadPath,formFileName);
-				System.out.println("getPath："+uploadFile.getPath());
+					String formFileName = file.getOriginalFilename();
+					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
+					File uploadFile = new File(imgUploadPath,formFileName);
+					System.out.println("★getPath："+uploadFile.getPath());
 
-				file.transferTo(uploadFile);
+					/*アクセスが拒否されました*/
+					file.transferTo(uploadFile);
+
+					aaa += "<img src=\"\\IMAGES\\store\\"+uploadFile.getName()+"\" style=\"width:400px;\">";
+				}
+				session.setAttribute("setImages", formImg);
+				System.out.println("★formImg："+ formImg);
+				model.addAttribute("checkImage", aaa);
+				model.addAttribute("imagesNum", formImg.size());
+				System.out.println("▼写真格納処理終了");
+
+			} catch(IllegalStateException e) {
+				System.out.println("☆--------IllegalStateException--------☆");
+
+			} catch(IOException e) {
+				System.out.println("☆--------IOException---------☆");
+
 			}
-
-			session.setAttribute("setImages", formImg);
-
-			System.out.println("formImg："+ formImg);
-
-			model.addAttribute("imagesNum", formImg.size());
-
-			System.out.println("写真格納処理終了");
 		}
+
+
 		/*画像保存*/
 
 
@@ -118,27 +140,36 @@ public class AddStoreController {
 
 		form.setAddress1Name(addStoreService.findCity(form.getAddress1()).getCitiesName());
 
-		form.setMainCategoryName1(mainCate1.getCategoryName());
-		form.setMainCategoryName2(mainCate2.getCategoryName());
-		form.setMainCategoryName3(mainCate3.getCategoryName());
-
 		try {
+			form.setMainCategoryName1(mainCate1.getCategoryName());
 			form.setSubCategoryId1(subCate1.getCategoryId());
-			form.setSubCategoryId2(subCate2.getCategoryId());
-			form.setSubCategoryId3(subCate3.getCategoryId());
-
 			form.setSubCategoryName1(subCate1.getCategoryName());
+			model.addAttribute("cateName1", form.getSubCategoryName1());
+		}catch (NullPointerException e) {
+			System.out.println("★１ぬるぽ");
+		}
+		try {
+			form.setMainCategoryName2(mainCate2.getCategoryName());
+			form.setSubCategoryId2(subCate2.getCategoryId());
 			form.setSubCategoryName2(subCate2.getCategoryName());
+			model.addAttribute("cateName2", form.getSubCategoryName2());
+		}catch (NullPointerException e) {
+			System.out.println("★２ぬるぽ");
+		}
+		try {
+			form.setMainCategoryName3(mainCate3.getCategoryName());
+			form.setSubCategoryId3(subCate3.getCategoryId());
 			form.setSubCategoryName3(subCate3.getCategoryName());
-		} catch (NullPointerException e) {
-			System.out.println("ぬるぽ");
+			model.addAttribute("cateName3", form.getSubCategoryName3());
+		}catch (NullPointerException e) {
+			System.out.println("★３ぬるぽ");
 		}
 
 		return "add_store_check";
 	}
 
 
-
+/*----------------------------------------------------------------------------------------------------*/
 
 
 
@@ -157,34 +188,55 @@ public class AddStoreController {
 		//↑店舗情報追加
 
 		int nowStoreId = addStoreService.findStore(form.getStoreName(), form.getAddress1()).getStoreId();
+
 		//↓店舗カテゴリ
 
+		System.out.println("★カテゴリ1：" + form.getSubCategoryName1());
+		if(form.getSubCategoryId1() != null) {
+			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId1());
+		}
+		System.out.println("★カテゴリ2：" + form.getSubCategoryName2());
+		if(form.getSubCategoryId2() != null) {
+			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId2());
+		}
+		System.out.println("★カテゴリ3：" + form.getSubCategoryName3());
+		if(form.getSubCategoryId3() != null) {
+			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId3());
+		}
 
-//		addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId1());
 
 		//↑店舗カテゴリ
+
 		//↓画像をテーブルに保存
 
-		System.out.println("form.getStoreImages()：" + form.getStoreImages());
-		if(form.getStoreImages() != null) {
+		System.out.println("★画像配列：" + session.getAttribute("setImages"));
 
-
+		if(session.getAttribute("setImages") != null) {
 
 			List<MultipartFile> formImg = (List<MultipartFile>)session.getAttribute("setImages");
 
-			System.out.println(formImg);
+			//画像の数だけループ
+//			try {
+				for (MultipartFile file : formImg) {
+					String formFileName = file.getOriginalFilename();
+					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
+//					String imgDeletePath = context.getRealPath("/") + "/IMAGES/set/";
 
-			for (MultipartFile file : formImg) {
-				String formFileName = file.getOriginalFilename();
-				//System.out.println("formFileName："+formFileName);
-				String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
-				//System.out.println("imgUploadPath："+imgUploadPath);
-				File uploadImg = new File(imgUploadPath,formFileName);
-				//System.out.println("uplpadImg："+uploadImg.getName());
-				//System.out.println("uplpadImg："+uploadImg.getPath());
+					File uploadFile = new File(imgUploadPath,formFileName);
+//					File deleteFile = new File(imgDeletePath,formFileName);
 
-				addStoreService.insertImages(nowStoreId, uploadImg.getPath()); //AbsolutePath = 絶対パス
-			}
+					System.out.println("あああああ"+uploadFile);
+
+//					file.transferTo(uploadFile);
+					addStoreService.insertImages(nowStoreId, uploadFile.getPath());
+//					deleteFile.delete();
+				}
+//			} catch(IllegalStateException e) {
+//				System.out.println("☆--------IllegalStateException--------☆");
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 		}
 
 		//↑画像をテーブルに保存

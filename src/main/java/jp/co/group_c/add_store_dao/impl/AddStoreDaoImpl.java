@@ -28,9 +28,12 @@ public class AddStoreDaoImpl implements AddStoreDao {
 												   "VALUES (:store_name, :business_hours, :cities_id, :address, :tel, CURRENT_DATE)";
 	private static final String INSERT_IMAGES = "INSERT INTO images (store_id, paths) VALUES (:store_id, :paths)";
 
+	private static final String INSERT_STORE_CATEGORY = "INSERT INTO store_category VALUES (:store_id, :category_id)";
 	private static final String SELECT_STORE = "SELECT * FROM store ";
 	private static final String WHERE_STORE = "WHERE store_name = :store_name "+
-												  "AND cities_id = :cities_id";
+												  "AND cities_id = :cities_id ";
+
+
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -120,7 +123,7 @@ public class AddStoreDaoImpl implements AddStoreDao {
 	//店舗検索
 	@Override
 	public Store findStore(String storeName, Integer citiesId) {
-		String sql = SELECT_STORE + WHERE_STORE;
+		String sql = SELECT_STORE + WHERE_STORE + "ORDER BY store_id DESC";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("store_name", storeName);
 		param.addValue("cities_id", citiesId);
@@ -153,6 +156,15 @@ public class AddStoreDaoImpl implements AddStoreDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("store_id", storeId);
 		param.addValue("paths", paths);
+		jdbcTemplate.update(sql, param);
+	}
+
+	@Override
+	public void addStoreCategory(int nowStoreId, Integer categoryId) {
+		String sql = INSERT_STORE_CATEGORY;
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("store_id", nowStoreId);
+		param.addValue("category_id", categoryId);
 		jdbcTemplate.update(sql, param);
 	}
 }
