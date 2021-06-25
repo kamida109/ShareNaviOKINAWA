@@ -31,7 +31,7 @@
 		<tr>
 			<th>ID</th>
 			<th>ユーザー名</th>
-			<th>種類</th>
+			<th>目的</th>
 			<th>状況</th>
 		</tr>
 		</thead>
@@ -84,18 +84,17 @@
 	<form:input type="hidden" path="contactId" readonly="true"/>
 	<label>ユーザー名<br>
 	<form:input path="userName" readonly="true"/>
+
 	</label>
 
-	<br><label>種類<br>
+	<br><label>目的<br>
 	<form:hidden path="contactCategoryId" readonly="true"/>
 	<input type="text" value="${contactCategoryId}" readonly/>
 	</label>
 
 	<br><label>本文<br>
-
 	<form:textarea path="contents" readonly="true"/>
 	</label>
-
 
 	<form:button  name="update">解決</form:button>
 
@@ -113,20 +112,21 @@
   <h3>問い合わせ</h3>
 <form:form action="contact_result" method="post" modelAttribute="contactInfo">
 
- <label>目的<br>
- <form:select path="contactCategoryId">
-	<form:option value="1">通報</form:option>
-	<form:option value="2">問い合わせ</form:option>
-	<form:option value="3">要望</form:option>
- </form:select>
- </label>
+	 <label>目的<br>
+	 <form:select path="contactCategoryId">
+		<form:option value="1">通報</form:option>
+		<form:option value="2">問い合わせ</form:option>
+		<form:option value="3">要望</form:option>
+	 </form:select>
+	 </label>
 
- <br><label>本文<br>
- <form:textarea path="contents"/> </label>
- <br><form:errors path="contents" cssStyle="color: red"/><br>
+	 <br><label>本文
+	 <br><form:errors path="contents" cssStyle="color: red"/>
+	 <br><form:textarea path="contents"/> </label>
 
- <form:button type= "submit" name= "insert">送信</form:button>
- </form:form>
+
+	 <form:button type= "submit" name= "insert">送信</form:button>
+	 </form:form>
 
  <%--  </c:if> --%>
 

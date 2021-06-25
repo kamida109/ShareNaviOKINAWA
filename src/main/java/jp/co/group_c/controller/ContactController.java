@@ -35,12 +35,13 @@ public class ContactController {
 
 	 // 問い合わせ送信処理（一般ユーザー用）
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model) {
+	public String contact(@Validated @ModelAttribute("contactInfo") ContactForm form,  BindingResult bindingResult, Model model,
+										@ModelAttribute("contact_management") ContactForm contactForm) {
 
 		//バリデーションの結果で処理分岐
 		if(bindingResult.hasErrors()) {
-			return "contact";
-		}
+		return "contact";
+	}
 
 		//引数の中はContactFormのフィールドにつながる
 		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
@@ -108,11 +109,18 @@ public class ContactController {
 
 	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
 	@RequestMapping(value = "/contact" , params = "update", method = RequestMethod.POST)
-	public String updateContact(@ModelAttribute("contact_management") ContactForm form, Model model,
+	public String updateContact(@Validated @ModelAttribute("contact_management") ContactForm form, BindingResult bindingResult,Model model,
 									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
 		 List<Contact> list = contactService.findAll();
 		 model.addAttribute("selectResult", list);
+
+		 //入力ボックスに何もないときメッセージ表示
+		 if(bindingResult.hasErrors()) {
+
+			 model.addAttribute("updateMsg", "問い合わせ内容を選択してください");
+			 return "contact";
+		 }
 
 		contactService.flagUpdate(form.getContactId());
 		model.addAttribute("updateMsg", "問い合わせ内容を解決しました。");
@@ -141,8 +149,6 @@ public class ContactController {
 			return "user_management";
 		}
 
-
-
 		model.addAttribute("userManagementList", list);
 
 		return "user_management";
@@ -166,7 +172,6 @@ public class ContactController {
 					return "user_management";
 				}
 
-		//String getUserName = contactService.managementDelete(userDeleteForm.getUserId());
 		model.addAttribute("msg", "ユーザー" + (getUserName) + "さんを削除しました。");
 
 		return "user_management";
