@@ -1,14 +1,12 @@
 package jp.co.group_c.contact;
 
-import javax.validation.constraints.NotEmpty;
-
 public class ContactForm {
 
 	//フィールド
 	private Integer contactId;
 	private Integer userId;
 
-	@NotEmpty
+	//@NotEmpty
 	private String userName;
 
 	private Integer contactCategoryId;

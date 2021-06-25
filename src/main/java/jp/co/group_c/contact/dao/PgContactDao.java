@@ -43,6 +43,9 @@ public class PgContactDao implements ContactDao{
 	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name, login_id"
 			+ " FROM users WHERE ";
 
+	//ユーザーIDでの昇順
+	private static final String ORDER_BY = " ORDER BY user_id ASC";
+
 	//ユーザー管理画面での削除用
 	private static final String GET_NAME = "SELECT user_name FROM users WHERE user_id = :userId";
 	private static final String DELETE = "DELETE FROM users WHERE user_id = :userId";
@@ -122,17 +125,15 @@ public class PgContactDao implements ContactDao{
 			condition.add("user_id= :userId");
 			param.addValue("userId", userId);
 		}
-			System.out.println(userId);
 
 		if(!ParamUtil.isNullOrEmpty(userName)) {
 			condition.add("user_name= :userName");
 			param.addValue("userName", userName);
 		}
-			System.out.println(userName);
 
 		String whereString = String.join(" AND ", condition.toArray(new String[] {}));
 
-		String sql = FINDBY_ID_OR_NAME + whereString;
+		String sql = FINDBY_ID_OR_NAME + whereString + ORDER_BY;
 
 			System.out.println(sql);
 
@@ -166,7 +167,7 @@ public class PgContactDao implements ContactDao{
 	public List<Contact> findUnsolved() {
 		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
 					+ "INNER JOIN users ON users.user_id = contact.user_id "
-					+ "WHERE flag=false ORDER BY flag ASC";
+					+ "WHERE flag=false ORDER BY contact_id ASC, flag ASC";
 
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
 	}
@@ -176,7 +177,7 @@ public class PgContactDao implements ContactDao{
 	public List<Contact> findSolved() {
 		String sql = "SELECT contact_id, user_name, contact_category_id, flag FROM contact\n"
 				+ "INNER JOIN users ON users.user_id = contact.user_id "
-				+ "WHERE flag=true ORDER BY flag ASC";
+				+ "WHERE flag=true ORDER BY contact_id ASC, flag ASC";
 
 	return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Contact>(Contact.class));
 
