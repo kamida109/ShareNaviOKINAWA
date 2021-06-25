@@ -79,11 +79,15 @@
 					let prace = $("#prace").val();
 					let check = $('#check').prop("checked");
 
-					if(keyWord){
-						$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, "turbolinks:load",function(data){
-							location.reload();
-						})
+					if(keyWord[0]===undefined){
+						console.log(keyWord);
+						keyWord = "empty";
 					}
+
+					$.get("result/"+keyWord+'/'+subCategory+'/'+prace+'/'+check, function(data){
+						location.reload();
+					})
+
 				})
 
 				</script>

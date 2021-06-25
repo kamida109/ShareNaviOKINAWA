@@ -1,5 +1,4 @@
 $(function(){
-
 	$("#mainCategory1").change(function(){
 		let value = $("#mainCategory1").val();
 		if(value != 0){

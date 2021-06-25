@@ -17,6 +17,15 @@
 					<c:forEach items="${storeDitails}" var="update">
 
 					<div>
+						<c:if test="${not empty errMsg }">
+							${errMsg}
+						</c:if>
+					</div>
+
+					<form:hidden path="storeId"/>
+					<form:hidden path="reviewId"/>
+
+					<div>
 						<label>店舗名：</label><form:input path="storeName"/>
 						<form:errors path="storeName" />
 					</div>
@@ -87,8 +96,6 @@
 					<div>
 						<label>登録日：</label><form:input path="insertDay" readonly="true" />
 					</div>
-
-
 
 					</c:forEach>
 

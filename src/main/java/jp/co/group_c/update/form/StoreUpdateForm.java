@@ -6,17 +6,27 @@ import javax.validation.constraints.NotBlank;
 
 public class StoreUpdateForm {
 	private Integer storeId;
+
+	private String businessHours;
+
+	private Integer citiesId;
+
+	private String address;
+
+	private String tel;
+
+	private Date insertDay;
+
+	private Integer reviewId;
+
+	private Integer hyouka;
+
+	private Integer categoryId;
+
+	private Integer subCategoryId;
+
 	@NotBlank(message="店舗名は必須です")
 	private String storeName;
-	private String businessHours;
-	private Integer citiesId;
-	private String address;
-	private String tel;
-	private Date insertDay;
-	private Integer reviewId;
-	private Integer hyouka;
-	private Integer categoryId;
-	private Integer subCategoryId;
 
 	// アクセサ
 	public Integer getStoreId() {

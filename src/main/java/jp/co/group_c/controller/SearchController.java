@@ -109,10 +109,6 @@ public class SearchController {
 			return "redirect:search";
 		}
 
-		if(keyWord.isEmpty()) {
-			return "redirect:search";
-		}
-
 		Integer intSubCategory = Integer.parseInt(subCategory);
 		Integer intPrace = Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
@@ -149,6 +145,9 @@ public class SearchController {
 		List<Store> storeDitails = searchService.storeDitails(id);
 		session.setAttribute("storeDitails", storeDitails);
 
+		List<Store> storeCategoryList = searchService.storeCategory();
+		session.setAttribute("mainCategoryList", storeCategoryList);
+
 		return "details";
 	}
 
@@ -176,6 +175,8 @@ public class SearchController {
 	public void storeDelete(@PathVariable("storeId") Integer id) {
 
 		searchService.storeDelete(id);
+		session.removeAttribute("storeDitails");
+		session.removeAttribute("mainCategoryList");
 	}
 
 }
