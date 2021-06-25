@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import jp.co.group_c.contact.InqueryForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.util.ParamUtil;
@@ -51,12 +52,11 @@ public class PgContactDao implements ContactDao{
 	private static final String DELETE = "DELETE FROM users WHERE user_id = :userId";
 
 
-	//プレースホルダーを使うときはこの型のクラス使う
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	//問い合わせ内容登録
-	public void contactInsert(Contact contact) {
+	public void contactInsert(InqueryForm contact) {
 		String sql = CONTACT_INSERT;
 
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -95,7 +95,6 @@ public class PgContactDao implements ContactDao{
 
 		jdbcTemplate.update(sql, param);
 	}
-
 
 
 	//IDと名前検索未入力時

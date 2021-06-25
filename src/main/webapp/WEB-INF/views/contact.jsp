@@ -14,20 +14,19 @@
 			<div class="frame">
 
 				<!-- ---------- ここから本体 ---------- -->
+
 <!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
-
- <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
-
+<c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
 
 	<table border="1" id="checked_list">
 		<caption>問い合わせ</caption>
-<form:form action="/contact" method="post" modelAttribute="contact_management">
+	<form:form action="/contact" method="post" modelAttribute="contact_management">
 
-<input type="radio" name="sample" id="solved">未解決のみ表示
-<input type="radio" name="sample" id="unsolved">解決のみ表示
-<input type="radio" name="sample" id="all">全件表示
+		<input type="radio" name="sample" id="solved">未解決のみ表示
+		<input type="radio" name="sample" id="unsolved">解決のみ表示
+		<input type="radio" name="sample" id="all">全件表示
 
- </form:form>
+ 	</form:form>
 		<thead>
 		<tr>
 			<th>ID</th>
@@ -69,8 +68,7 @@
 		</tr>
 	</c:forEach>
 
-</table>
-
+	</table>
 
 
 
@@ -81,41 +79,40 @@
 			<p class="error">${updateMsg}</p>
 	  </c:if>
 
-<form:form action="/contact" method="post" modelAttribute="contact_management">
-	<form:input type="hidden" path="contactId" readonly="true"/>
-	<label>ユーザー名<br>
-	<form:input path="userName" readonly="true"/>
+	<form:form action="/contact" method="post" modelAttribute="contact_management">
+		<form:input type="hidden" path="contactId" readonly="true"/>
+		<label>ユーザー名<br>
+		<form:input path="userName" readonly="true"/>
 
-	</label>
+		</label>
 
-	<br><label>目的<br>
-	<form:hidden path="contactCategoryId" readonly="true"/>
-	<input type="text" value="${contactCategoryId}" readonly/>
-	</label>
+		<br><label>目的<br>
+		<form:hidden path="contactCategoryId" readonly="true"/>
+		<input type="text" value="${contactCategoryId}" readonly/>
+		</label>
 
-	<br><label>本文<br>
-	<form:textarea path="contents" readonly="true"/>
-	</label>
+		<br><label>本文<br>
+		<form:textarea path="contents" readonly="true"/>
+		</label>
 
-<!-- flagの値でボタンを表示させる  -->
+		<!-- flagの値でボタンを表示させる  -->
 			<c:if test="${fn:escapeXml(flag == false)}">
 				<form:button value="${solvedFlag}" name="update">解決</form:button>
 			</c:if>
 
- </form:form>
+</form:form>
 
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-	<br><a href="/user_management">ユーザー管理</a>
-
- <%-- </c:if> --%>
-
+		<br><a href="/user_management">ユーザー管理</a>
+</c:if>
 
 
-<%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
 
-  <h3>問い合わせ</h3>
-<form:form action="contact_result" method="post" modelAttribute="contactInfo">
-<form:errors path="contents" cssStyle="color: red"/>
+<c:if test= "${fn:escapeXml(signInUser.authorityId)==2}">
+
+	  <h3>問い合わせ</h3>
+	<form:form action="contact_result" method="post" modelAttribute="contactInfo">
+	<form:errors path="contents" cssStyle="color: red"/>
 
 	 <br><label>目的<br>
 	 <form:select path="contactCategoryId">
@@ -131,7 +128,7 @@
 	 <form:button type= "submit" name= "insert">送信</form:button>
 	 </form:form>
 
- <%--  </c:if> --%>
+</c:if>
 
 
 				<!-- ---------- ここまで本体 ---------- -->

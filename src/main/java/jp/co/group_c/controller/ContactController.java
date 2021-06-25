@@ -21,6 +21,7 @@ import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.service.ContactService;
+import jp.co.group_c.entity.Users;
 
 @Controller
 public class ContactController {
@@ -36,17 +37,17 @@ public class ContactController {
 
 	 // 問い合わせ送信処理（一般ユーザー用）
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String contact(@Validated @ModelAttribute("contactInfo") InqueryForm form,  BindingResult bindingResult, Model model,
+	public String contact(@Validated @ModelAttribute("contactInfo") InqueryForm inqueryForm,  BindingResult bindingResult, Model model,
 										@ModelAttribute("contact_management") ContactForm contactForm) {
 
 		//バリデーションの結果で処理分岐
 		if(bindingResult.hasErrors()) {
 		return "contact";
 	}
-
 		//引数の中はInqueryFormのフィールドにつながる
-		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
-		contactService.contactInsert(contact);
+		//Contact contact = new Contact(inqueryForm.getUserId(), inqueryForm.getContactCategoryId(), inqueryForm.getContents(), inqueryForm.isFlag());
+		inqueryForm.setUserId(((Users)(session.getAttribute("signInUser"))).getUserId());
+		contactService.contactInsert(inqueryForm);
 
 		return "contact_result";
 	}
@@ -57,8 +58,7 @@ public class ContactController {
 	public String jampContact(@ModelAttribute("contactInfo") ContactForm form, Model model,
 								@ModelAttribute("contact_management") ContactForm contactForm) {
 
-		// sessionからログインユーザの情報を取得して
-		// ログインユーザが管理者なら
+		// sessionからログインユーザの情報を取得してログインユーザが管理者なら
 		// 問い合わせ情報を全件取得(あとあと全件じゃなくなるかも)
 		// ORDER BY でcontactcategoryの昇順に取得してください
 
@@ -68,10 +68,8 @@ public class ContactController {
 			flag++;
 		}
 
-
 		return "contact";
 	}
-
 
 	// 問い合わせ内容詳細表示
 	@RequestMapping(value = "/contact/{id}")
@@ -109,8 +107,7 @@ public class ContactController {
 
 		 }
 
-
-		return "contact";
+		 return "contact";
 	}
 
 	//★ 問い合わせ内容詳細表示→解決ボタン押したとき
@@ -118,14 +115,9 @@ public class ContactController {
 	public String updateContact(@Validated @ModelAttribute("contact_management") ContactForm form, BindingResult bindingResult,Model model,
 									@ModelAttribute("contactInfo") ContactForm contactForm) {
 
-		// List<Contact> list = contactService.findAll();
+		 //List<Contact> list = contactService.findAll();
 		 //model.addAttribute("selectResult", list);
 
-		 //入力ボックスに何もないときメッセージ表示
-//		 if(bindingResult.hasErrors()) {
-//			 model.addAttribute("updateMsg", "問い合わせ内容を選択してください");
-//			 return "contact";
-//		 }
 		//contactCategoryIdを判定
 		Integer contactCategoryId = form.getContactCategoryId();
 
@@ -150,12 +142,11 @@ public class ContactController {
 		return "user_management";
 	}
 
-	//ユーザー管理画面で
-	//検索ボタン押されたとき、この画面に戻る
+	//ユーザー管理画面で検索ボタン押されたとき、この画面に戻る
 	@RequestMapping(value = "/user_management", params = "select", method = RequestMethod.POST)
-	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm form, BindingResult bindingResult, Model model) {
+	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm userManagementForm, BindingResult bindingResult, Model model) {
 
-		UserManagement userManagement = new UserManagement(form.getUserId(), form.getUserName());
+		UserManagement userManagement = new UserManagement(userManagementForm.getUserId(), userManagementForm.getUserName());
 		List<UserManagement> list = contactService.managementFind(userManagement);
 
 		//IDか名前での検索結果がないとき
@@ -178,6 +169,19 @@ public class ContactController {
 			return "user_management";
 		}
 
+		//ログインユーザーは削除できないようにする
+		//入力フォームの値
+		Integer inputUserId = userDeleteForm.getUserId();
+
+		//sessionからユーザーIdをとる
+		Integer sessionUserId = ((Users)(session.getAttribute("signInUser"))).getUserId();
+
+		if(inputUserId.equals(sessionUserId)) {
+			model.addAttribute("errMsg", "ログインユーザーは削除できません。");
+			return "user_management";
+		}
+
+
 		//削除するIDが存在しない場合
 		String getUserName = contactService.managementDelete(userDeleteForm.getUserId());
 
@@ -187,7 +191,6 @@ public class ContactController {
 				}
 
 		model.addAttribute("msg", "ユーザー" + (getUserName) + "さんを削除しました。");
-
 		return "user_management";
 	}
 
@@ -212,7 +215,6 @@ public class ContactController {
 
 //		model.addAttribute("selectResult", list);
 		session.setAttribute("selectResult", list);
-
 		return null;
 	}
 
