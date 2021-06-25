@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.group_c.category_process.service.CategoryProcessService;
 import jp.co.group_c.controller.form.CategoryProcessForm;
 import jp.co.group_c.entity.Category;
-import jp.co.group_c.service.search.SearchService;
+import jp.co.group_c.search.service.SearchService;
 
 @Controller
 public class CategoryProcessController {

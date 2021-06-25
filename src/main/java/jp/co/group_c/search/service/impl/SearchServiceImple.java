@@ -1,4 +1,4 @@
-package jp.co.group_c.service.search.impl;
+package jp.co.group_c.search.service.impl;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
-import jp.co.group_c.service.search.SearchService;
+import jp.co.group_c.search.dao.SearchDao;
+import jp.co.group_c.search.service.SearchService;
 
 @Service
 @Transactional
@@ -50,6 +50,30 @@ public class SearchServiceImple implements SearchService{
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
 		return searchDao.partStoreSearch(storeName, hyouka);
+	}
+
+	// 店舗詳細用の検索メソッド
+	@Override
+	public List<Store> storeDitails(Integer id) {
+		return searchDao.storeDitails(id);
+	}
+
+	// レビュー上書き
+	@Override
+	public void reviewUpdate(Integer id, String review) {
+		searchDao.reviewUpdate(id, review);
+	}
+
+	// レビュー削除
+	@Override
+	public void reviewDelete(Integer id) {
+		searchDao.reviewDelete(id);
+	}
+
+	// 店舗削除
+	@Override
+	public void storeDelete(Integer id) {
+		searchDao.storeDelete(id);
 	}
 
 }

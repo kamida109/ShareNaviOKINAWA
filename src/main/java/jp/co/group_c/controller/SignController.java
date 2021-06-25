@@ -21,8 +21,8 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Users;
+import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.service.UserInfoService;
-import jp.co.group_c.service.search.SearchService;
 
 @Controller
 public class SignController {

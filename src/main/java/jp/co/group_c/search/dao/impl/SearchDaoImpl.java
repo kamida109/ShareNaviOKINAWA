@@ -1,4 +1,4 @@
-package jp.co.group_c.dao.search.impl;
+package jp.co.group_c.search.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import jp.co.group_c.dao.search.SearchDao;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.search.dao.SearchDao;
 
 @Repository
 public class SearchDaoImpl implements SearchDao{
@@ -32,18 +32,29 @@ public class SearchDaoImpl implements SearchDao{
 
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
-	private static final String SQL_SEARCH = "SELECT s.store_id, store_name, category_name, cities_name, avg(hyouka) AS hyouka, string_agg(paths, '')"
+	private static final String SQL_SEARCH = "SELECT DISTINCT s.store_id, store_name, cities_name, avg(hyouka) AS hyouka\n"
 												+ "FROM store AS s\n"
 												+ "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
 												+ "JOIN category AS c ON sc.category_id = c.category_id\n"
 												+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
 												+ "JOIN review AS r ON s.store_id = r.store_id\n"
-												+ "JOIN images AS i ON s.store_id = i.store_id\n"
 												+ "WHERE 1=1";
 
-	public static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
+	private static final String STORE_CATEGORY = "SELECT sc.store_id, category_name\n"
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
+
+	private static final String STORE_DITAILS = "SELECT * \n"
+													+ "FROM store AS s\n"
+													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
+													+ "JOIN review AS r ON s.store_id = r.store_id\n"
+													+ "WHERE s.store_id = :storeId";
+
+	private static final String NEW_REVIEW ="UPDATE review\n"
+												+ "SET review = :review\n"
+												+ "WHERE review_id = :reviewId";
+
+	private static final String STORE_DELETE = "DELETE FROM store WHERE store_id = :storeId";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -125,14 +136,14 @@ public class SearchDaoImpl implements SearchDao{
 			param.addValue("city", cityId);
 		}
 
-		storeSearch += "GROUP BY s.store_id, store_name, category_name, city.cities_id, cities_name";
+		storeSearch += "GROUP BY s.store_id, store_name, cities_name, hyouka";
 
 		// 評価3以上
 		if(hyouka) {
 			storeSearch += "\nHAVING avg(hyouka) >= 3";
 		}
 
-		storeSearch += "\nORDER BY city.cities_id";
+//		storeSearch += "\nORDER BY city.cities_id";
 
 		storeList = jdbcTemplate.query(storeSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
 		return storeList;
@@ -150,7 +161,7 @@ public class SearchDaoImpl implements SearchDao{
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
 		String partSearch = SQL_SEARCH + "AND store_name LIKE :storeName\n"
-							+ "GROUP BY s.store_id, store_name, category_name, cities_name";
+							+ "GROUP BY s.store_id, store_name, cities_name";
 		param.addValue("storeName", storeName);
 
 		if(hyouka) {
@@ -160,6 +171,45 @@ public class SearchDaoImpl implements SearchDao{
 		List<Store> partStore = jdbcTemplate.query(partSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
 
 		return partStore;
+	}
+
+	// 店舗詳細用の検索メソッド
+	@Override
+	public List<Store> storeDitails(Integer id) {
+		String ditails = STORE_DITAILS;
+		param.addValue("storeId", id);
+		List<Store> storeDitails = jdbcTemplate.query(ditails, param, new BeanPropertyRowMapper<Store>(Store.class));
+
+		return storeDitails;
+	}
+
+	// レビューの追加、編集
+	@Override
+	public void reviewUpdate(Integer id, String review) {
+		String strReview = NEW_REVIEW;
+
+		param.addValue("reviewId", id);
+		param.addValue("review", review);
+
+		jdbcTemplate.update(strReview, param);
+	}
+
+	// レビュー削除
+	@Override
+	public void reviewDelete(Integer id) {
+		String reviewDel = "UPDATE review  SET review = null WHERE review_id = :reviewId";
+		param.addValue("reviewId", id);
+
+		jdbcTemplate.update(reviewDel, param);
+	}
+
+	// 店舗の削除
+	@Override
+	public void storeDelete(Integer id) {
+		String delete = STORE_DELETE;
+		param.addValue("storeId", id);
+
+		jdbcTemplate.update(delete, param);
 	}
 
 }

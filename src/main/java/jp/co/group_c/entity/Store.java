@@ -28,6 +28,15 @@ public class Store {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
+	public Store(Integer storeId, String storeName, String businessHours, Integer cityId, String address, String tel) {
+		this.storeId = storeId;
+		this.storeName = storeName;
+		this.businessHours = businessHours;
+		this.citiesId = cityId;
+		this.address = address;
+		this.tel = tel;
+	}
+
 	/* アクセサ */
 	public Integer getStoreId() {
 		return storeId;

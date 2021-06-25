@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.controller.form.SearchForm;
@@ -19,7 +20,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
-import jp.co.group_c.service.search.SearchService;
+import jp.co.group_c.search.service.SearchService;
 
 @Controller
 public class SearchController {
@@ -41,8 +42,7 @@ public class SearchController {
 	public String jampSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 	//public String jumpSearch(@ModelAttribute("userInfo") SearchForm form, Model model) {
 
-		session.removeAttribute("storeList");
-		session.removeAttribute("notList");
+		session.removeAttribute("setImages");
 
 		List<Cities> citiesList = searchService.cities();
 		session.setAttribute("cities", citiesList);
@@ -52,40 +52,6 @@ public class SearchController {
 
 		return "search";
 	}
-
-
-//	// 検索結果
-//	@RequestMapping(value = "/searchResult", method=RequestMethod.GET)
-//	public String searchResult(@ModelAttribute("userInfo") SearchForm form, Model model) {
-//
-//		String subCategory = null;
-//		subCategory =request.getParameter("name");
-//
-//		// サブカテゴリが未選択の時
-//		if(subCategory==null || form.getMainCategoryId()==0) {
-//			return "redirect:search";
-//		}
-//
-//		List<Store> storeList = searchService.storeSearch(form.getStoreName(), subCategory, form.getCitiesId(), form.isHyouka());
-//		// 店舗検索
-//		if(!storeList.isEmpty()) {
-//			model.addAttribute("storeList", storeList);
-//		} else {
-//			model.addAttribute("notList", "undefinde");
-//		}
-//
-//		// あいまい検索用にキーワードの前後に「%」をつける
-//		String index = "%" + form.getStoreName() + "%";
-//		// あいまい検索
-//		List<Store> partStoreList = searchService.partStoreSearch(index, form.isHyouka());
-//		model.addAttribute("ssstoreList", partStoreList);
-//
-//		List<Store> storeCategoryList = searchService.storeCategory();
-//		model.addAttribute("mainCategoryList", storeCategoryList);
-//
-//		return "search";
-//
-//	}
 
 	// セレクトタグを非同期で切替
 	@RequestMapping(value="/pulldown/{value}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
@@ -134,11 +100,15 @@ public class SearchController {
 	public String searchResult(@PathVariable("keyWord")String keyWord, @PathVariable("subCategory")String subCategory,
 			@PathVariable("prace")String prace, @PathVariable("check")String check, Model model) {
 
-		String inputSubCategory = null;
-		inputSubCategory =request.getParameter("name");
+		session.removeAttribute("storeList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notList");
+		session.removeAttribute("notPlanList");
+		session.removeAttribute("mainCategoryList");
 
 		// サブカテゴリが未選択の時
-		if(inputSubCategory=="------------") {
+		if(subCategory.equals("------------")) {
+			session.setAttribute("notList", "undefinde");
 			return "redirect:search";
 		}
 
@@ -148,13 +118,8 @@ public class SearchController {
 
 		List<Store> storeList = searchService.storeSearch(keyWord, intSubCategory, intPrace, boolCheck);
 
-		for(Store s : storeList) {
-			System.out.println(s.getStoreName());
-		}
-
 		// 店舗検索
 		if(!storeList.isEmpty()) {
-		//	model.addAttribute("storeList", storeList);
 			session.setAttribute("storeList", storeList);
 		} else {
 			session.setAttribute("notList", "undefinde");
@@ -164,19 +129,57 @@ public class SearchController {
 		String index = "%" + keyWord + "%";
 		// あいまい検索
 		List<Store> partStoreList = searchService.partStoreSearch(index, boolCheck);
-		session.setAttribute("ssstoreList", partStoreList);
+		if(!partStoreList.isEmpty()) {
+			session.setAttribute("planList", partStoreList);
+		} else {
+			session.setAttribute("notPlanList", "undefinde");
+		}
 
 		List<Store> storeCategoryList = searchService.storeCategory();
-		model.addAttribute("mainCategoryList", storeCategoryList);
+		session.setAttribute("mainCategoryList", storeCategoryList);
 
 		return null;
 	}
 
-
 	// 店舗詳細画面
-	@RequestMapping(value = "/details"/*"/details/{id}"*/)
-	public String details() {
+	@RequestMapping(value = "/details")
+	public String details(@RequestParam("storeId") Integer id, Model model) {
+
+		List<Store> storeDitails = searchService.storeDitails(id);
+		session.setAttribute("storeDitails", storeDitails);
+
+		List<Store> storeCategoryList = searchService.storeCategory();
+		session.setAttribute("mainCategoryList", storeCategoryList);
+
 		return "details";
+	}
+
+	// レビューを非同期で変更
+	@RequestMapping(value="/inputReview/{reviewId}/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void newReview(@PathVariable("reviewId") Integer id, @PathVariable("newReview") String review) {
+
+		searchService.reviewUpdate(id, review);
+
+	}
+
+	// レビュー削除
+	@RequestMapping(value="/reviewDel/{reviewId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void reviewDel(@PathVariable("reviewId") Integer id) {
+
+		searchService.reviewDelete(id);
+
+	}
+
+	// 店舗削除を非同期で実装
+	@RequestMapping(value="/storeDelete/{storeId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void storeDelete(@PathVariable("storeId") Integer id) {
+
+		searchService.storeDelete(id);
+		session.removeAttribute("storeDitails");
+		session.removeAttribute("mainCategoryList");
 	}
 
 }
