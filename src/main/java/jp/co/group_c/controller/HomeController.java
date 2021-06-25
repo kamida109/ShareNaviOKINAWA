@@ -47,7 +47,7 @@ public class HomeController {
 		}
 
 		//カテゴリ表示
-		List<Store> mainCategoryList = homeService.mainCategory(newArrivalList.get(0).getStoreName());
+		List<Store> mainCategoryList = homeService.mainCategory();
 
 		//ユーザー情報の取得
 		List<Users> userList = homeService.users();
@@ -66,11 +66,15 @@ public class HomeController {
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
 		Collections.shuffle(planList);
 
-		//DBが何もない時の対策
-			model.addAttribute("storeList", newArrivalList);
-			model.addAttribute("mainCategoryList", mainCategoryList);
-			model.addAttribute("recommendList", recommendList);
-			model.addAttribute("planList", planList);
+		//画像表示
+		List<Store> imageList = homeService.image();
+
+		//宣言したList達をModelに保存
+		model.addAttribute("storeList", newArrivalList);
+		model.addAttribute("mainCategoryList", mainCategoryList);
+		model.addAttribute("recommendList", recommendList);
+		model.addAttribute("planList", planList);
+		model.addAttribute("imageList", imageList);
 
 		return "home";
 	}
