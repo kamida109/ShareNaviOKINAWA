@@ -122,8 +122,6 @@ public class MyPageController {
 	@RequestMapping(value = "/user_info", params = "update", method = RequestMethod.POST)
 	public String updateUserInfo(@Validated @ModelAttribute("userInfo") UserInfoForm form, BindingResult bindingResult, Model model) {
 
-		System.out.print(bindingResult.getFieldError());
-
 		// 入力チェック
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("msg", "未入力や不正な入力があります");
