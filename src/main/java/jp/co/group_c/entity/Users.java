@@ -7,18 +7,18 @@ public class Users {
 	private String userName;
 	private Integer citiesId;
 	private String citiesName;
-	private Integer authoeityId;
+	private Integer authorityId;
 	private String loginId;
 	private String password;
 
 	public Users() {};
 
-	public Users(Integer userId, String userName, Integer citiesId, String citiesName, Integer authoeityId, String loginId, String password) {
+	public Users(Integer userId, String userName, Integer citiesId, String citiesName, Integer authorityId, String loginId, String password) {
 		this.userId = userId;
 		this.userName = userName;
 		this.citiesId = citiesId;
 		this.citiesName = citiesName;
-		this.authoeityId = authoeityId;
+		this.authorityId = authorityId;
 		this.loginId = loginId;
 		this.password = password;
 	}
@@ -51,11 +51,11 @@ public class Users {
 		this.citiesName = citiesName;
 	}
 
-	public Integer getAuthoeityId() {
-		return authoeityId;
+	public Integer getAuthorityId() {
+		return authorityId;
 	}
-	public void setAuthoeityId(Integer authoeityId) {
-		this.authoeityId = authoeityId;
+	public void setAuthorityId(Integer authorityId) {
+		this.authorityId = authorityId;
 	}
 
 	public String getLoginId() {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import jp.co.group_c.controller.form.UserInfoForm;
 import jp.co.group_c.dao.StoreDao;
-import jp.co.group_c.dao.UserDao;
+import jp.co.group_c.dao.UsersDao;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.entity.Users;
@@ -19,7 +19,7 @@ public class MyPageService {
 	StoreDao storeDao;
 
 	@Autowired
-	UserDao userDao;
+	UsersDao usersDao;
 
 	public List<Store> favoriteStore(Integer userId) {
 		return storeDao.favoriteStore(userId);
@@ -30,14 +30,14 @@ public class MyPageService {
 	}
 
 	public Users checkLoginId(String loginId) {
-		return userDao.findByLoginId(loginId);
+		return usersDao.findByLoginId(loginId);
 	}
 
 	public List<FavoriteCategory> findFavoriteCategory(Integer userId) {
-		return userDao.findFavoriteCategory(userId);
+		return usersDao.findFavoriteCategory(userId);
 	}
 
 	public Users updateUserInfo(Integer userId, UserInfoForm userInfo) {
-		return userDao.updateUserInfo(userId, userInfo);
+		return usersDao.updateUserInfo(userId, userInfo);
 	}
 }

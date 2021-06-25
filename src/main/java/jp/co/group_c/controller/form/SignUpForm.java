@@ -3,7 +3,7 @@ package jp.co.group_c.controller.form;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public class UserInfoForm {
+public class SignUpForm {
 
 	@NotBlank
 	@Pattern(regexp = "[a-zA-Z0-9]*")
@@ -22,6 +22,9 @@ public class UserInfoForm {
 	private Integer mainCategoryId2;
 	private Integer mainCategoryId3;
 
+	@NotBlank
+	@Pattern(regexp = "[a-zA-Z0-9]*")
+	private String password;
 
 	public String getLoginId() {
 		return loginId;

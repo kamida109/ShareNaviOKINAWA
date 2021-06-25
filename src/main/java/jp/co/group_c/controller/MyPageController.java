@@ -19,19 +19,23 @@ import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.entity.Users;
 import jp.co.group_c.homeService.HomeService;
-import jp.co.group_c.mypage.service.MyPageService;
+import jp.co.group_c.service.StoreService;
+import jp.co.group_c.service.UserInfoService;
 
 @Controller
 public class MyPageController {
 
     @Autowired
-    HttpSession session;
+    private HttpSession session;
 
     //@Autowired
-    //HttpServletRequest request;
+    //private HttpServletRequest request;
 
     @Autowired
-	private MyPageService myPageService;
+	private UserInfoService uiService;
+
+    @Autowired
+	private StoreService storeService;
 
     @Autowired
 	private HomeService homeService;
@@ -51,7 +55,7 @@ public class MyPageController {
 		Users signInUser = (Users)session.getAttribute("signInUser");
 
 		//お気に入り表示
-		List<Store> favoriteList = myPageService.favoriteStore(signInUser.getUserId());
+		List<Store> favoriteList = storeService.favoriteStore(signInUser.getUserId());
 
 		//DBが空の時の対処
 		if(favoriteList == null) {
@@ -62,7 +66,7 @@ public class MyPageController {
 		}
 
 		//レビュー履歴表示
-		List<Store> reviewList = myPageService.reviewStore(signInUser.getUserId());
+		List<Store> reviewList = storeService.reviewStore(signInUser.getUserId());
 
 		//DBが空の時の対処
 		if(reviewList == null) {
@@ -80,8 +84,6 @@ public class MyPageController {
 		model.addAttribute("recommendList", reviewList);
 		model.addAttribute("mainCategoryList", mainCategoryList);
 
-
-
 		return "my_page";
 	}
 
@@ -89,17 +91,9 @@ public class MyPageController {
 	@RequestMapping(value = "/user_info")
 	public String jumpUserInfo() {
 
-		// ユーザ情報の更新とログインユーザのセッション更新
-		Users signInUser = myPageService.checkLoginId("groupC");
-		session.setAttribute("signInUser", signInUser);
-		signInUser.setPassword(null);	//念のためpasswordはnullに
-		List<FavoriteCategory> favoriteList = myPageService.findFavoriteCategory(signInUser.getUserId());
-		session.setAttribute("favoriteCategory", favoriteList);
-
 		//session破棄
 		session.removeAttribute("storeList");
 		session.removeAttribute("notList");
-		session.removeAttribute("mainCategoryList");
 		session.removeAttribute("planList");
 		session.removeAttribute("notPlanList");
 		session.removeAttribute("setImages");
@@ -107,9 +101,10 @@ public class MyPageController {
 		return "user_info";
 	}
 
-	// 登録情報変更画面
+	// 登録情報変更画面に飛ぶ
 	@RequestMapping(value = "/user_info_update")
 	public String UserInfo(@ModelAttribute("userInfo") UserInfoForm form, Model model) {
+
 		Users signInUser = (Users)session.getAttribute("signInUser");
 		form.setLoginId(signInUser.getLoginId());
 		form.setUserName(signInUser.getUserName());
@@ -139,7 +134,7 @@ public class MyPageController {
 		Users signInUser = (Users)session.getAttribute("signInUser");
 
 		// loginId重複チェック
-		Users userInfo = myPageService.checkLoginId(form.getLoginId());
+		Users userInfo = uiService.checkLoginId(form.getLoginId());
 		if (!Objects.isNull(userInfo) && !(form.getLoginId().equals(signInUser.getLoginId()))) {
 			model.addAttribute("msg", "既に使用されているIDです");
 			return "/user_info_update";
@@ -156,10 +151,10 @@ public class MyPageController {
 		*/
 
 		// ユーザ情報の更新とログインユーザのセッション更新
-		signInUser = myPageService.updateUserInfo(signInUser.getUserId(), form);
+		signInUser = uiService.updateUserInfo(signInUser.getUserId(), form);
 		session.setAttribute("signInUser", signInUser);
 		signInUser.setPassword(null);	//念のためpasswordはnullに
-		List<FavoriteCategory> favoriteList = myPageService.findFavoriteCategory(signInUser.getUserId());
+		List<FavoriteCategory> favoriteList = uiService.findFavoriteCategory(signInUser.getUserId());
 		session.setAttribute("favoriteCategory", favoriteList);
 
 		model.addAttribute("msg", "登録内容を変更しました");

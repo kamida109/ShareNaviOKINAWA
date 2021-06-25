@@ -15,13 +15,13 @@
 
 				<p class="error">${msg}</p>
 
-				<form action="home">
+				<form:form action="sign_in" method="post" modelAttribute="signIn">
 					<div class="sign_form_hidden">
-					<p><label>ID : <input type="text" name="userId"/></label></p>
-					<p><label>PASS : <input type="password" name="pass"/></label></p>
+					<p><label>ID : <form:input type="text" path="loginId"/></label></p>
+					<p><label>PASS : <form:input type="password" path="password"/></label></p>
 					</div>
-					<p><button class="btn" type="submit" name="sign_in">LOGIN<small> >></small></button></p>
-				</form>
+					<p><form:button class="btn" type="submit" name="sign_in">LOGIN<small> >></small></form:button></p>
+				</form:form>
 
 				<p><button class="btn" type="button" onclick="location.href='sign_up'">新規登録</button></p>
 
