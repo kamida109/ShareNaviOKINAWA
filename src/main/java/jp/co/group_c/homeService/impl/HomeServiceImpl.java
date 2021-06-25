@@ -26,8 +26,8 @@ public class HomeServiceImpl implements HomeService{
 
 	//カテゴリ表示用メソッド
 	@Override
-	public List<Store> mainCategory(String storeName) {
-		return homeDao.mainCategory(storeName);
+	public List<Store> mainCategory() {
+		return homeDao.mainCategory();
 	}
 
 	//ユーザー情報取得メソッド
@@ -46,6 +46,12 @@ public class HomeServiceImpl implements HomeService{
 	@Override
 	public List<Store> plan(int userId) {
 		return homeDao.plan(userId);
+	}
+
+	//画像表示メソッド
+	@Override
+	public List<Store> image() {
+		return homeDao.image();
 	}
 
 }
