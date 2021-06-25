@@ -14,8 +14,8 @@ public class UserDeleteForm {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUserId(Integer deleteUserId) {
+		this.userId = deleteUserId;
 	}
 
 	public String getUserName() {

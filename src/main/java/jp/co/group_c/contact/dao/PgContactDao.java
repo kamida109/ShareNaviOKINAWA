@@ -52,7 +52,6 @@ public class PgContactDao implements ContactDao{
 	private static final String DELETE = "DELETE FROM users WHERE user_id = :userId";
 
 
-	//プレースホルダーを使うときはこの型のクラス使う
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -96,7 +95,6 @@ public class PgContactDao implements ContactDao{
 
 		jdbcTemplate.update(sql, param);
 	}
-
 
 
 	//IDと名前検索未入力時

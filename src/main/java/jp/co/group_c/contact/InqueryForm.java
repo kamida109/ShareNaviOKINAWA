@@ -13,6 +13,7 @@ public class InqueryForm {
 
 	@NotEmpty(message="本文を入力してください。")
 	private String contents;
+
 	private boolean flag;
 
 	//ゲッターセッター

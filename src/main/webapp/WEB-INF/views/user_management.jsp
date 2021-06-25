@@ -35,28 +35,28 @@
 
 		<form:button type= "submit" name= "select">検索</form:button>
 
-<table border="1">
-<!-- <table style="border:1; text-align:center;"> -->
- <thead>
-	<tr>
-		<th>ユーザーID</th>
-		<th>名前</th>
-		<th>ログインID</th>
+		<table border="1">
+		<!-- <table style="border:1; text-align:center;"> -->
+		 <thead>
+			<tr>
+				<th>ユーザーID</th>
+				<th>名前</th>
+				<th>ログインID</th>
 
-	</tr>
-  </thead>
-  <tbody>
-  	 <c:forEach var="userManagement" items= "${userManagementList}">
-  		<tr>
-			<td>${fn:escapeXml(userManagement.userId)}</td>
-			<td>${fn:escapeXml(userManagement.userName)}</td>
-			<td>${fn:escapeXml(userManagement.loginId)}</td>
-		</tr>
+			</tr>
+		  </thead>
+		  <tbody>
+		  	 <c:forEach var="userManagement" items= "${userManagementList}">
+		  		<tr>
+					<td>${fn:escapeXml(userManagement.userId)}</td>
+					<td>${fn:escapeXml(userManagement.userName)}</td>
+					<td>${fn:escapeXml(userManagement.loginId)}</td>
+				</tr>
 
- 	</c:forEach>
-   </tbody>
-</table>
-</form:form>
+		 	</c:forEach>
+		   </tbody>
+		</table>
+		</form:form>
 
 		<h3>ユーザーの削除</h3>
 		<form:form action="user_management" method="post" modelAttribute="userManagement">
@@ -69,9 +69,7 @@
 		<form:input path="userId" /></label>
 
 		<form:button type= "submit" name= "delete">確定</form:button>
-
-
-</form:form>
+		</form:form>
 
 
 				<!-- ---------- ここまで本体 ---------- -->
