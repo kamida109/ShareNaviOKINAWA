@@ -18,6 +18,7 @@
 
  <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
 
+
 	<table border="1" id="checked_list">
 		<caption>問い合わせ</caption>
 <form:form action="/contact" method="post" modelAttribute="contact_management">
@@ -96,7 +97,10 @@
 	<form:textarea path="contents" readonly="true"/>
 	</label>
 
-	<form:button  name="update">解決</form:button>
+<!-- flagの値でボタンを表示させる  -->
+			<c:if test="${fn:escapeXml(flag == false)}">
+				<form:button value="${solvedFlag}" name="update">解決</form:button>
+			</c:if>
 
  </form:form>
 

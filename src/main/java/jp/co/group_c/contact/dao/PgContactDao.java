@@ -22,7 +22,7 @@ public class PgContactDao implements ContactDao{
 
 	//問い合わせ内容一覧表示
 	private static final String FIND_ALL = "SELECT contact_id, user_name, contact_category_id, flag FROM contact"
-			+ " INNER JOIN users ON users.user_id = contact.user_id ORDER BY flag ASC";
+			+ " INNER JOIN users ON users.user_id = contact.user_id ORDER BY contact_id ASC, flag ASC";
 
 	//問い合わせ内容詳細の取得
 	private static final String SELECT_FIND ="SELECT contact_id, user_name,"

@@ -82,9 +82,8 @@ public class ContactController {
 		Contact detailInfo = contactService.find(id);
 		model.addAttribute("detailInfo", detailInfo);
 
-
-		 List<Contact> list = contactService.findAll();
-		 model.addAttribute("selectResult", list);
+	    List<Contact> list = contactService.findAll();
+		model.addAttribute("selectResult", list);
 
 		//内容をjspのフォームに入れるとき、セットして引数にゲットする
 		form.setContactId(detailInfo.getContactId());
@@ -102,6 +101,14 @@ public class ContactController {
 		}else if(contactCategoryId == 3) {
 			model.addAttribute("contactCategoryId", "要望");
 		}
+
+		//解決済みのとき解決ボタンを非表示にする
+		 boolean solvedFlag = detailInfo.isFlag();
+		 if(solvedFlag == false) {
+			 model.addAttribute("flag", "false");
+
+		 }
+
 
 		return "contact";
 	}
