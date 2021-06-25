@@ -2,6 +2,7 @@ package jp.co.group_c.contact.service;
 
 import java.util.List;
 
+import jp.co.group_c.contact.InqueryForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 
@@ -9,7 +10,7 @@ public interface ContactService {
 
 	//メソッド
 	//問い合わせ内容登録用（一般ユーザー）
-	public void contactInsert(Contact contact);
+	public void contactInsert(InqueryForm contact);
 
 	//問い合わせ内容一覧表示用（管理者）
 	public List<Contact> findAll();

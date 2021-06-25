@@ -21,6 +21,7 @@ import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.service.ContactService;
+import jp.co.group_c.entity.Users;
 
 @Controller
 public class ContactController {
@@ -36,17 +37,17 @@ public class ContactController {
 
 	 // 問い合わせ送信処理（一般ユーザー用）
 	@RequestMapping(value = "/contact_result",params = "insert", method = RequestMethod.POST)
-	public String contact(@Validated @ModelAttribute("contactInfo") InqueryForm form,  BindingResult bindingResult, Model model,
+	public String contact(@Validated @ModelAttribute("contactInfo") InqueryForm inqueryForm,  BindingResult bindingResult, Model model,
 										@ModelAttribute("contact_management") ContactForm contactForm) {
 
 		//バリデーションの結果で処理分岐
 		if(bindingResult.hasErrors()) {
 		return "contact";
 	}
-
 		//引数の中はInqueryFormのフィールドにつながる
-		Contact contact = new Contact(form.getUserId(), form.getContactCategoryId(), form.getContents(), form.isFlag());
-		contactService.contactInsert(contact);
+		//Contact contact = new Contact(inqueryForm.getUserId(), inqueryForm.getContactCategoryId(), inqueryForm.getContents(), inqueryForm.isFlag());
+		inqueryForm.setUserId(((Users)(session.getAttribute("signInUser"))).getUserId());
+		contactService.contactInsert(inqueryForm);
 
 		return "contact_result";
 	}

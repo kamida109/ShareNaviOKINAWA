@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import jp.co.group_c.contact.InqueryForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.util.ParamUtil;
@@ -56,7 +57,7 @@ public class PgContactDao implements ContactDao{
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	//問い合わせ内容登録
-	public void contactInsert(Contact contact) {
+	public void contactInsert(InqueryForm contact) {
 		String sql = CONTACT_INSERT;
 
 		MapSqlParameterSource param = new MapSqlParameterSource();

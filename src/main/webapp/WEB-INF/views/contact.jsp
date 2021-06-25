@@ -16,7 +16,7 @@
 				<!-- ---------- ここから本体 ---------- -->
 <!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
 
- <%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==1}"> --%>
+<c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
 
 
 	<table border="1" id="checked_list">
@@ -106,12 +106,11 @@
 
 	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
 	<br><a href="/user_management">ユーザー管理</a>
-
- <%-- </c:if> --%>
-
+ </c:if>
 
 
-<%-- <c:if test= "${fn:escapeXml(signInUser.authorityId)==2}"> --%>
+
+<c:if test= "${fn:escapeXml(signInUser.authorityId)==2}">
 
   <h3>問い合わせ</h3>
 <form:form action="contact_result" method="post" modelAttribute="contactInfo">
@@ -131,7 +130,7 @@
 	 <form:button type= "submit" name= "insert">送信</form:button>
 	 </form:form>
 
- <%--  </c:if> --%>
+</c:if>
 
 
 				<!-- ---------- ここまで本体 ---------- -->
