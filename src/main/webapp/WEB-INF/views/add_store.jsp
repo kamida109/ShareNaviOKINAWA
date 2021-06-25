@@ -49,7 +49,7 @@
 							</select>
 						</div>
 
-						<a href="" style="font-size: 12px">カテゴリを追加する</a>
+						<a href="/category_process" style="font-size: 12px">カテゴリを追加する</a>
 					</div>
 
 					<div>

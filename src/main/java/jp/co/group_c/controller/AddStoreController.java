@@ -216,13 +216,27 @@ public class AddStoreController {
 			List<MultipartFile> formImg = (List<MultipartFile>)session.getAttribute("setImages");
 
 			//画像の数だけループ
-			for (MultipartFile file : formImg) {
-				String formFileName = file.getOriginalFilename();
-				String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
-				File uploadImg = new File(imgUploadPath,formFileName);
+//			try {
+				for (MultipartFile file : formImg) {
+					String formFileName = file.getOriginalFilename();
+					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
+//					String imgDeletePath = context.getRealPath("/") + "/IMAGES/set/";
 
-				addStoreService.insertImages(nowStoreId, uploadImg.getPath());
-			}
+					File uploadFile = new File(imgUploadPath,formFileName);
+//					File deleteFile = new File(imgDeletePath,formFileName);
+
+					System.out.println("あああああ"+uploadFile);
+
+//					file.transferTo(uploadFile);
+					addStoreService.insertImages(nowStoreId, uploadFile.getPath());
+//					deleteFile.delete();
+				}
+//			} catch(IllegalStateException e) {
+//				System.out.println("☆--------IllegalStateException--------☆");
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 		}
 
 		//↑画像をテーブルに保存
