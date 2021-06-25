@@ -59,12 +59,10 @@
 
 		<h3>ユーザーの削除</h3>
 		<form:form action="user_management" method="post" modelAttribute="userManagement">
-
-		<c:if test="${not empty errMsg}">
-		<p class="error">${errMsg}</p>
-		</c:if>
-
-		<form:errors path="userId" cssStyle="color: red"/>
+			<form:errors path="userId" cssStyle="color: red"/>
+				<c:if test="${not empty errMsg}">
+				<p class="error">${errMsg}</p>
+				</c:if>
 
 		<br><label>削除するユーザーID:
 		<form:input path="userId" /></label>

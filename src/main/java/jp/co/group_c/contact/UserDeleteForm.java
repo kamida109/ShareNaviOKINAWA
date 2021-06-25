@@ -7,6 +7,7 @@ public class UserDeleteForm {
 
 	@NotNull(message="削除するユーザーIDを入力してください。")
 	private Integer userId;
+
 	private String userName;
 
 	public Integer getUserId() {

@@ -111,8 +111,9 @@
 
   <h3>問い合わせ</h3>
 <form:form action="contact_result" method="post" modelAttribute="contactInfo">
+<form:errors path="contents" cssStyle="color: red"/>
 
-	 <label>目的<br>
+	 <br><label>目的<br>
 	 <form:select path="contactCategoryId">
 		<form:option value="1">通報</form:option>
 		<form:option value="2">問い合わせ</form:option>
@@ -121,9 +122,7 @@
 	 </label>
 
 	 <br><label>本文
-	 <br><form:errors path="contents" cssStyle="color: red"/>
 	 <br><form:textarea path="contents"/> </label>
-
 
 	 <form:button type= "submit" name= "insert">送信</form:button>
 	 </form:form>
