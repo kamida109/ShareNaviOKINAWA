@@ -79,10 +79,6 @@
 					let prace = $("#prace").val();
 					let check = $('#check').prop("checked");
 
-					console.log(keyWord);
-					console.log(subCategory);
-					console.log(prace);
-
 					if(keyWord[0]===undefined){
 						keyWord = "empty";
 					}

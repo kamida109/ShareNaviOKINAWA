@@ -29,6 +29,11 @@
 
 						<p>
 							店舗名：${main.storeName}
+
+						<span id="favorite">
+							<img src="/CSS/image/heart_on.png">
+						</span>
+<!-- 							<img class="favorite_store" src="/CSS/image/heart_off.png"> -->
 						</p>
 
 						<p>
@@ -69,7 +74,7 @@
 			<script type="text/javascript" src="js/jquery.raty.js"></script>
 			<script type="text/javascript" src="js/star.js"></script>
 			<script type="text/javascript" src="js/modal.js"></script>
-
+			<script type="text/javascript" src="js/storeUpdateSelect.js"></script>
 
 		<div class="modal modal_output">
 			<div class="modal_bg modal_close"></div>
