@@ -2,10 +2,10 @@ package jp.co.group_c.update.form;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-
 public class StoreUpdateForm {
 	private Integer storeId;
+
+	private String storeName;
 
 	private String businessHours;
 
@@ -24,9 +24,6 @@ public class StoreUpdateForm {
 	private Integer categoryId;
 
 	private Integer subCategoryId;
-
-	@NotBlank(message="店舗名は必須です")
-	private String storeName;
 
 	// アクセサ
 	public Integer getStoreId() {

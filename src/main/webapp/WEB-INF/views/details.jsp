@@ -9,9 +9,6 @@
 	<!-- 共通部品_head -->
 	<jsp:include page="/COMMON/head.jsp"/>
 	<body>
-
-
-
 		<div class="white_noise2">
 			<!-- 共通部品_header -->
 			<jsp:include page="/COMMON/header.jsp"/>
@@ -29,20 +26,25 @@
 						<input type="hidden" id="storeId" value="${main.storeId}">
 						<input type="hidden" id="storeName" value="${main.storeName}">
 						<input type="hidden" id="reviewId" value="${main.reviewId}">
+
 						<p>
 							店舗名：${main.storeName}
-							評価<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
+						</p>
+
+						<p>
+							評価：<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
 						</p>
 
 						<p>カテゴリ:
 							<c:forEach var="category" items="${mainCategoryList}">
-								<c:if test="${mian.storeId eq category.storeId }">
-								${main.categoryName}
+								<c:if test="${main.storeId eq category.storeId }">
+									${category.categoryName}
 								</c:if>
 							</c:forEach>
 						</p>
 
 						<p>住所：${main.citiesName} ${main.address}</p>
+						<p>電話番号：${main.tel}</p>
 						<p>営業時間：${main.businessHours}</p>
 
 						<p>写真 <a id="phote" href="">写真を追加する</a></p>
@@ -52,12 +54,13 @@
 							<p>レビュー <a id="review" href="">レビューを追加する</a></p>
 							<textarea id="review" rows="5" cols="50" readonly>${main.review}</textarea>
 						</div>
+
 					</c:forEach>
 
 					</div>
-					</div>
-					</form:form>
 				</div>
+			</form:form>
+			</div>
 			</div>
 
 			<!-- 共通部品_footer -->

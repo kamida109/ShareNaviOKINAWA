@@ -29,7 +29,7 @@
 				</tr>
 				<tr>
 					<!-- 店舗名の出力処理 -->
-					<td class="name" colspan="2" align="left"><a href="details">${fn:escapeXml(store.storeName)}</a></td>
+					<td class="name" colspan="2" align="left"><a href="/details?storeId=${store.storeId}">${fn:escapeXml(store.storeName)}</a></td>
 
 					<!-- 評価の出力処理 -->
 					<td class="star" id="star-${store.storeId}"
