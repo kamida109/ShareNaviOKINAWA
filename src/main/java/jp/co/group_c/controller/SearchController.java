@@ -106,13 +106,9 @@ public class SearchController {
 		session.removeAttribute("notPlanList");
 		session.removeAttribute("mainCategoryList");
 
-		// サブカテゴリが未選択の時
-		if(subCategory.equals("------------")) {
-			session.setAttribute("notList", "undefinde");
-			return "redirect:search";
-		}
+		keyWord = (keyWord.equals("empty")) ? "" : keyWord;
 
-		Integer intSubCategory = Integer.parseInt(subCategory);
+		Integer intSubCategory = (subCategory.equals("------------")) ? null : Integer.parseInt(subCategory);
 		Integer intPrace = Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 

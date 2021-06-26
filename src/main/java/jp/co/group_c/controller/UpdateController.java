@@ -17,6 +17,7 @@ import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
+import jp.co.group_c.update.entity.Utility;
 import jp.co.group_c.update.form.StoreUpdateForm;
 import jp.co.group_c.update.service.UpdateService;
 
@@ -60,9 +61,9 @@ public class UpdateController {
 		String subCategory2 = request.getParameter("category2");
 		String subCategory3 = request.getParameter("category3");
 
-		Integer intCategory1 = (isNumber(subCategory1)) ? Integer.parseInt(subCategory1):null;
-		Integer intCategory2 = (isNumber(subCategory2)) ? Integer.parseInt(subCategory2):null;
-		Integer intCategory3 = (isNumber(subCategory3)) ? Integer.parseInt(subCategory3):null;
+		Integer intCategory1 = (Utility.isNumber(subCategory1)) ? Integer.parseInt(subCategory1):null;
+		Integer intCategory2 = (Utility.isNumber(subCategory2)) ? Integer.parseInt(subCategory2):null;
+		Integer intCategory3 = (Utility.isNumber(subCategory3)) ? Integer.parseInt(subCategory3):null;
 
 		if(form.getStoreName().equals("")) {
 			model.addAttribute("errMsg", "店舗名は必須です");
@@ -100,16 +101,6 @@ public class UpdateController {
 	@RequestMapping(value="/updateStoreResult", params="returnDetails", method=RequestMethod.POST)
 	public String updateStoreResult(@ModelAttribute("update_store") StoreUpdateForm form) {
 		return "details";
-	}
-
-	// 数字に変換できるか
-	public boolean isNumber(String val) {
-		try {
-			Integer.parseInt(val);
-			return true;
-		} catch (NumberFormatException nfex) {
-			return false;
-		}
 	}
 
 }
