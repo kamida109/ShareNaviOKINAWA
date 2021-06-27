@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.service.SearchService;
+import jp.co.group_c.update.entity.Favorite;
 import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 import jp.co.group_c.update.entity.Utility;
@@ -101,6 +104,20 @@ public class UpdateController {
 	@RequestMapping(value="/updateStoreResult", params="returnDetails", method=RequestMethod.POST)
 	public String updateStoreResult(@ModelAttribute("update_store") StoreUpdateForm form) {
 		return "details";
+	}
+
+	// お気に入り機能の実装(非同期)
+	@RequestMapping(value="favorite/{storeId}/{flag}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void storeFavorite(@PathVariable("storeId") String storeId, @PathVariable("flag") String flag, Model model) {
+
+		Integer intStoreId = (Utility.isNumber(storeId)) ? Integer.parseInt(storeId):null;
+		Integer intFlag = (Utility.isNumber(flag)) ? Integer.parseInt(flag):null;
+
+		Favorite favarite = new Favorite(1, intStoreId);
+
+		updateService.storeFavorite(favarite, intFlag);
+
 	}
 
 }

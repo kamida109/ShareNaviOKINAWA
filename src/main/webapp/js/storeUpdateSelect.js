@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 $(function(){
 	$("#mainCategory1").change(function(){
 		let value = $("#mainCategory1").val();
@@ -38,9 +42,6 @@ $(function(){
 		}
 	});
 
-	$("#favorite").click(function(){
-		$("#favorite").html('<img class="favorite_store" src="/CSS/image/heart_off.png">');
-	})
 
 //	$("[name]").click(function() {
 //		alert('店舗情報を更新しました');
