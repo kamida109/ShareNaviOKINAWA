@@ -16,58 +16,62 @@
 
 
 				<h2>店舗登録</h2>
+
+				<div class="input_form">
+				<h3>お店の追加</h3>
+
 				<form:form action="add_store_check" modelAttribute="add_store" method="Post" class="addStoreForm" enctype="multipart/form-data">
 
-					名前：<form:input path="storeName"/>
+					<div style="display:inline-block; width: max-content; text-align: right;">
+					<div><label style="font-weight:bold;">名前：
+						<form:input style="margin-top:20px;" path="storeName"/></label>
+					</div><br>
+					<div>
+						<label style="font-weight:bold;">住所：
+						<form:select path="address1">
+							<form:options items="${cities}" itemValue="citiesId" itemLabel="citiesName"/>
+						</form:select></label><br>
+						<form:input path="address2" placeholder="例）小禄2-5-1"/>
+					</div><br>
+					<div>
+						<label style="font-weight:bold;">TEL：
+						<form:input type="tel" maxlength="20" path="tel" placeholder="ハイフン\"-\"不要"/></label>
+					</div><br>
+					<div>
+						<label style="font-weight:bold;">営業時間：<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
+					</div>
+					</div><br><br>
 
-					<div class="categoryPull">
-						<div>
+					<div style="display:inline-block; text-align:left; font-weight:bold;">カテゴリ：</div><div style="display:inline-block; padding-left:350px; text-align:right;"><a href="/category_process" style="font-size: 15px">カテゴリを追加する</a></div>
+					<div class="inner_frame_hidden">
+						<div class="inner_frame_left">
 							<form:select path="mainCategoryId1" id="mainCate1">
-								<form:option value=""></form:option>
+								<form:option value="">-------------</form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
-							</form:select>
+							</form:select><br>
 							<select id="subCate1" name="subCate1">
 								<option selected>-------------</option>
 							</select>
 						</div>
-						<div>
+						<div class="inner_frame_left" style="margin: 0px 5px 0px 5px;">
 							<form:select path="mainCategoryId2" id="mainCate2">
-								<form:option value=""></form:option>
+								<form:option value="">-------------</form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
-							</form:select>
+							</form:select><br>
 							<select id="subCate2" name="subCate2">
 								<option selected>-------------</option>
 							</select>
 						</div>
-						<div>
+						<div class="inner_frame_left">
 							<form:select path="mainCategoryId3" id="mainCate3">
-								<form:option value=""></form:option>
+								<form:option value="">-------------</form:option>
 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
-							</form:select>
+							</form:select><br>
 							<select id="subCate3" name="subCate3">
 								<option selected>-------------</option>
 							</select>
 						</div>
-
-						<a href="/category_process" style="font-size: 12px">カテゴリを追加する</a>
-					</div>
-
-					<div>
-						住所：
-						<form:select path="address1">
-							<form:options items="${cities}" itemValue="citiesId" itemLabel="citiesName"/>
-						</form:select><br>
-
-						<form:input path="address2" placeholder="例）小禄2-5-1"/>
-					</div>
-					<div>
-						TEL：
-						<form:input type="tel" maxlength="20" path="tel" placeholder="ハイフン\"-\"不要"/>
-					</div>
-
-					<div>
-						営業時間：<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00&#13;　　火曜定休日"/>
-					</div>
+					</div><br><br><br>
 
 					<div>
 						<h3>写真</h3>
@@ -81,7 +85,7 @@
 					<p><button class="btn" type="submit" name="check">確認</button></p>
 
 				</form:form>
-
+				</div>
 
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
