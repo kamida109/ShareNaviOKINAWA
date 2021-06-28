@@ -27,8 +27,8 @@
 			<p class="error">${checkMsg}</p>
 			</c:if>
 
-				<label>ID:
-				<form:input path="userId" /></label><tb>
+				<label>ログインID:
+				<form:input path="loginId" /></label><tb>
 				&emsp;
 				<label>名前:
 				<form:input path="userName" /></label><br><br>

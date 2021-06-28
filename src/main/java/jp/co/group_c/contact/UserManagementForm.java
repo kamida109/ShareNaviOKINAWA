@@ -5,9 +5,8 @@ public class UserManagementForm {
 
 	//フィールド
 		private Integer userId;
+		private String loginId;
 		private String userName;
-
-
 
 		//ゲッターセッター
 		public Integer getUserId() {
@@ -16,6 +15,14 @@ public class UserManagementForm {
 		public void setUserId(Integer userId) {
 			this.userId = userId;
 		}
+
+		public String getLoginId() {
+			return loginId;
+		}
+		public void setLoginId(String loginId) {
+			this.loginId = loginId;
+		}
+
 		public String getUserName() {
 			return userName;
 		}
