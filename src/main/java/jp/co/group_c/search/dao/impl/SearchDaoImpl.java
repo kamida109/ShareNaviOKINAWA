@@ -68,8 +68,6 @@ public class SearchDaoImpl implements SearchDao{
 												+ "JOIN users AS u ON r.user_id = u.user_id\n"
 												+ "WHERE store_id = :storeId";
 
-	private static final String REVIEW_NUM = "select count(review_id) from review";
-
 	// 市町村テーブル全件取得
 	@Override
 	public List<Cities> cities() {
@@ -266,11 +264,6 @@ public class SearchDaoImpl implements SearchDao{
 		param.addValue("storeId", storeId);
 		List<Review> reviewList = jdbcTemplate.query(GET_REVIEW, param, new BeanPropertyRowMapper<Review>(Review.class));
 		return reviewList;
-	}
-
-	@Override
-	public List<Review> reviewNum() {
-		return jdbcTemplate.query(REVIEW_NUM, new BeanPropertyRowMapper<Review>(Review.class));
 	}
 
 }

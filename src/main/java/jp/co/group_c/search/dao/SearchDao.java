@@ -49,7 +49,4 @@ public interface SearchDao {
 	// お気に入り店舗情報の取得
 	public List<Favorite> favoriteStore();
 
-	// レビューテーブルの件数取得
-	public List<Review> reviewNum();
-
 }
