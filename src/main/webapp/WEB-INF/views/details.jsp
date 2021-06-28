@@ -24,7 +24,7 @@
 				<button id="storeDelete">削除</button>
 			</c:if>
 
-			<button  id="returnSearch">戻る</button>
+			<button id="backSearch">戻る</button>
 
 			<c:forEach var="main" items="${storeDitails}">
 			<input type="hidden" id="storeId" value="${main.storeId}">

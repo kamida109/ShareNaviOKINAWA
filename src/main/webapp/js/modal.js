@@ -47,3 +47,9 @@ $('#storeDelete').click(function() {
 	return false;
 });
 
+// 戻るボタン
+$('#backSearch').click(function(){
+	$.get("returnSearch/", function(){
+		console.log('戻るボタンクリック');
+	})
+});

@@ -158,7 +158,6 @@ public class SearchController {
 			if(f.getUserId()==userInfo.getUserId() && f.getStoreId()==id) {
 				model.addAttribute("flag", "userFavorite");
 			}
-
 		}
 
 		return "details";
@@ -190,6 +189,22 @@ public class SearchController {
 		searchService.storeDelete(id);
 		session.removeAttribute("storeDitails");
 		session.removeAttribute("mainCategoryList");
+	}
+
+	// 店舗詳細で戻るボタンが押された
+	@RequestMapping(value="/returnSearch/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String returnSearch() {
+
+		session.removeAttribute("storeList");
+		session.removeAttribute("planList");
+		session.removeAttribute("notList");
+		session.removeAttribute("notPlanList");
+		session.removeAttribute("mainCategoryList");
+
+		System.out.println("戻るボタン用メソッド");
+
+		return "redirect:search";
 	}
 
 }
