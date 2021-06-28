@@ -93,13 +93,12 @@
 						<label>評価：</label><form:input path="hyouka" />
 					</div>
 
-					<div>
-						<label>登録日：</label><form:input path="insertDay" readonly="true" />
-					</div>
-
 					</c:forEach>
 
-					<p><button class="btn" type="submit" name="check">確認</button></p>
+					<p>
+						<button class="btn" type="submit" name="updateDetails">確認</button>
+						<button class="btn" type="submit" name="returnDetails">戻る</button>
+					</p>
 				</div>
 				</form:form>
 

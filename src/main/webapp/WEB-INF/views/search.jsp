@@ -80,7 +80,6 @@
 					let check = $('#check').prop("checked");
 
 					if(keyWord[0]===undefined){
-						console.log(keyWord);
 						keyWord = "empty";
 					}
 

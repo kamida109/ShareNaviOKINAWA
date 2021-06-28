@@ -106,13 +106,9 @@ public class SearchController {
 		session.removeAttribute("notPlanList");
 		session.removeAttribute("mainCategoryList");
 
-		// サブカテゴリが未選択の時
-		if(subCategory.equals("------------")) {
-			session.setAttribute("notList", "undefinde");
-			return "redirect:search";
-		}
+		keyWord = (keyWord.equals("empty")) ? "" : keyWord;
 
-		Integer intSubCategory = Integer.parseInt(subCategory);
+		Integer intSubCategory = (subCategory.equals("------------")) ? null : Integer.parseInt(subCategory);
 		Integer intPrace = Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
@@ -150,6 +146,13 @@ public class SearchController {
 
 		List<Store> storeCategoryList = searchService.storeCategory();
 		session.setAttribute("mainCategoryList", storeCategoryList);
+
+		// ユーザー情報の取得
+//		List<Users> userInfo = (List<Users>)session.getAttribute("signInUser");
+//		System.out.println("userId:"+userInfo.get(0).getUserId()+"\nuserName:"+userInfo.get(0).getUserName());
+
+		// お気に入りに登録されているお店情報を取得
+
 
 		return "details";
 	}

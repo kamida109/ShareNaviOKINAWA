@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 $(function(){
 	$("#mainCategory1").change(function(){
 		let value = $("#mainCategory1").val();
@@ -37,5 +41,10 @@ $(function(){
 			$("#subCategory3").hide();
 		}
 	});
+
+
+//	$("[name]").click(function() {
+//		alert('店舗情報を更新しました');
+//	})
 
 });

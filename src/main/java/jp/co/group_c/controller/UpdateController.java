@@ -8,17 +8,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.service.SearchService;
+import jp.co.group_c.update.entity.Favorite;
 import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
+import jp.co.group_c.update.entity.Utility;
 import jp.co.group_c.update.form.StoreUpdateForm;
 import jp.co.group_c.update.service.UpdateService;
 
@@ -55,57 +57,67 @@ public class UpdateController {
 		return "update_store";
 	}
 
-	@RequestMapping(value="/updateStoreResult", method=RequestMethod.POST)
-	public String updateStoreResult(@Validated @ModelAttribute("update_store") StoreUpdateForm form, BindingResult bindingResult, Model model) {
+	@RequestMapping(value="/updateStoreResult", params="updateDetails", method=RequestMethod.POST)
+	public String updateStoreResult(@ModelAttribute("update_store") StoreUpdateForm form, Model model) {
 
 		String subCategory1 = request.getParameter("category1");
 		String subCategory2 = request.getParameter("category2");
 		String subCategory3 = request.getParameter("category3");
 
-		Integer intCategory1 = (isNumber(subCategory1)) ? Integer.parseInt(subCategory1):null;
-		Integer intCategory2 = (isNumber(subCategory2)) ? Integer.parseInt(subCategory2):null;
-		Integer intCategory3 = (isNumber(subCategory3)) ? Integer.parseInt(subCategory3):null;
+		Integer intCategory1 = (Utility.isNumber(subCategory1)) ? Integer.parseInt(subCategory1):null;
+		Integer intCategory2 = (Utility.isNumber(subCategory2)) ? Integer.parseInt(subCategory2):null;
+		Integer intCategory3 = (Utility.isNumber(subCategory3)) ? Integer.parseInt(subCategory3):null;
 
-//		if(bindingResult.hasErrors()) {
-//			System.out.println("入力値チェック");
-//			return "update_store";
-//		}
+		if(form.getStoreName().equals("")) {
+			model.addAttribute("errMsg", "店舗名は必須です");
+			return "update_store";
+		}
 
 		if(intCategory1==null && intCategory2==null && intCategory3==null) {
 			model.addAttribute("errMsg", "カテゴリを一つ以上選択してください");
-			System.out.println("カテゴリ未選択");
 			return "update_store";
 		}
 
 		// 店舗基本情報の更新
 		Store store = new Store(form.getStoreId(), form.getStoreName(), form.getBusinessHours(), form.getCitiesId(), form.getAddress(), form.getTel());
-		updateService.storeUpdate(store);
-
-		System.out.println("レビュー" + form.getReviewId());
-		System.out.println("市町村:"+form.getCitiesId());
 
 		// 店舗評価の更新
 		Review review = new Review(form.getReviewId(), form.getHyouka());
-		updateService.storeRankUpdate(review);
 
 		// 店舗カテゴリの更新
 		StoreCategory sc = new StoreCategory(form.getStoreId(), intCategory1, intCategory2, intCategory3);
+
+		updateService.storeRankUpdate(review);
+		updateService.storeUpdate(store);
 		updateService.storeCategoryUpdate(sc);
 
 		List<Store> storeDitails = searchService.storeDitails(form.getStoreId());
 		session.setAttribute("storeDitails", storeDitails);
 
+		List<Store> storeCategoryList = searchService.storeCategory();
+		session.setAttribute("mainCategoryList", storeCategoryList);
+
 		return "details";
 	}
 
-	// 数字に変換できるか
-	public boolean isNumber(String val) {
-		try {
-			Integer.parseInt(val);
-			return true;
-		} catch (NumberFormatException nfex) {
-			return false;
-		}
+	// 戻るボタンが押されたときの処理
+	@RequestMapping(value="/updateStoreResult", params="returnDetails", method=RequestMethod.POST)
+	public String updateStoreResult(@ModelAttribute("update_store") StoreUpdateForm form) {
+		return "details";
+	}
+
+	// お気に入り機能の実装(非同期)
+	@RequestMapping(value="favorite/{storeId}/{flag}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void storeFavorite(@PathVariable("storeId") String storeId, @PathVariable("flag") String flag, Model model) {
+
+		Integer intStoreId = (Utility.isNumber(storeId)) ? Integer.parseInt(storeId):null;
+		Integer intFlag = (Utility.isNumber(flag)) ? Integer.parseInt(flag):null;
+
+		Favorite favarite = new Favorite(1, intStoreId);
+
+		updateService.storeFavorite(favarite, intFlag);
+
 	}
 
 }

@@ -91,6 +91,7 @@ public class SearchDaoImpl implements SearchDao{
 
 		// 全入力
 		if(!storeName.isEmpty() && subCategory!=null && cityId!=null) {
+			System.out.println("完全一致検索");
 			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
 			param.addValue("subCategory", subCategory);
@@ -99,6 +100,7 @@ public class SearchDaoImpl implements SearchDao{
 
 		// 店舗名+カテゴリ
 		if(!storeName.isEmpty() && subCategory!=null && cityId==null) {
+			System.out.println("店舗名+カテゴリ");
 			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory\n";
 			param.addValue("storeName", storeName);
 			param.addValue("subCategory", subCategory);
@@ -106,6 +108,7 @@ public class SearchDaoImpl implements SearchDao{
 
 		// 店舗名+市町村
 		if(!storeName.isEmpty() && subCategory==null && cityId!=null) {
+			System.out.println("店舗名+市町村");
 			storeSearch += " AND store_name = :storeName AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
 			param.addValue("city", cityId);
@@ -113,25 +116,37 @@ public class SearchDaoImpl implements SearchDao{
 
 		// カテゴリ+市町村
 		if(storeName.isEmpty() && subCategory!=null && cityId!=null) {
+			System.out.println("カテゴリ+市町村");
 			storeSearch += " AND c.category_id = :subCategory AND city.cities_id = :city\n";
 			param.addValue("subCategory", subCategory);
 			param.addValue("city", cityId);
 		}
 
+		// 店舗名+カテゴリ
+		if(!storeName.isEmpty() && subCategory!=null && cityId==null) {
+			System.out.println("店舗名+カテゴリ");
+			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory\n";
+			param.addValue("storeName", storeName);
+			param.addValue("subCategory", subCategory);
+		}
+
 		// 店舗名のみ
 		if(!storeName.isEmpty() && subCategory==null && cityId==null) {
+			System.out.println("店舗名のみ");
 			storeSearch += " AND store_name = :storeName\n";
 			param.addValue("storeName", storeName);
 		}
 
 		// カテゴリのみ
 		if(storeName.isEmpty() && subCategory!=null && cityId==null) {
+			System.out.println("カテゴリのみ");
 			storeSearch += " AND c.category_id = :subCategory\n";
 			param.addValue("subCategory", subCategory);
 		}
 
 		// 市町村のみ
 		if(storeName.isEmpty() && subCategory==null && cityId!=null) {
+			System.out.println("市町村のみ");
 			storeSearch += " AND city.cities_Id = :city\n";
 			param.addValue("city", cityId);
 		}

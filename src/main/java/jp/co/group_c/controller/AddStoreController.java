@@ -244,4 +244,13 @@ public class AddStoreController {
 		return "add_store_result";
 	}
 
+	// 写真の追加
+	@RequestMapping(value = "/addPhoto")
+	public String addPhote(@RequestParam("storeId") Integer id, Model model) {
+
+		System.out.println(id);
+
+		return "addPhoto";
+	}
+
 }

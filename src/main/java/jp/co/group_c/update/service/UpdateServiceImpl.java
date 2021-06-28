@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.update.dao.UpdateDao;
+import jp.co.group_c.update.entity.Favorite;
 import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 
@@ -32,6 +33,12 @@ public class UpdateServiceImpl implements UpdateService{
 	@Override
 	public void storeCategoryUpdate(StoreCategory sc) {
 		updateDao.storeCategoryUpdate(sc);
+	}
+
+	// お店のお気に入り
+	@Override
+	public void storeFavorite(Favorite favorite, Integer flag) {
+		updateDao.storeFavorite(favorite, flag);
 	}
 
 }

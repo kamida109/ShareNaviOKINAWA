@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.update.entity.Favorite;
 import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 
@@ -36,6 +37,12 @@ public class UpdateDaoImpl implements UpdateDao{
 																+ "VALUES (:storeId, :category1), \n"
 																+ "(:storeId, :category2), \n"
 																+ "(:storeId, :category3)";
+
+	private static final String STORE_FAVORITE = "INSERT INTO favorite\n"
+														+ "VALUES (:userId, :storeId)";
+
+	private static final String DELETE_FAVORITE = "DELETE FROM favorite\n"
+													+ "WHERE user_id = :userId AND store_id = :storeId";
 
 	// 店舗の基本情報の更新
 	@Override
@@ -72,6 +79,19 @@ public class UpdateDaoImpl implements UpdateDao{
 		param.addValue("category3", sc.getCategoryId3());
 
 		jdbcTemplate.update(STORE_CATEGORY_UPDATE, param);
+	}
+
+	@Override
+	public void storeFavorite(Favorite favorite, Integer flag) {
+		param.addValue("storeId", favorite.getStoreId());
+		param.addValue("userId", 1);
+
+		if(flag==0) {
+			jdbcTemplate.update(STORE_FAVORITE, param);
+		} else {
+			jdbcTemplate.update(DELETE_FAVORITE, param);
+		}
+
 	}
 
 }
