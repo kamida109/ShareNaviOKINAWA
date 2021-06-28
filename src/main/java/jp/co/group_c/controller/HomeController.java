@@ -35,6 +35,9 @@ public class HomeController {
 		session.removeAttribute("notPlanList");
 		session.removeAttribute("setImages");
 
+		//ユーザー情報の取得
+		List<Users> userList = homeService.users();
+
 		//新着表示
 		List<Store> newArrivalList = homeService.newArrival();
 
@@ -49,8 +52,13 @@ public class HomeController {
 		//カテゴリ表示
 		List<Store> mainCategoryList = homeService.mainCategory();
 
-		//ユーザー情報の取得
-		List<Users> userList = homeService.users();
+		//新着機能の画像表示
+		List<Store> imageList = homeService.image();
+
+		//宣言したListをModelに保存
+		model.addAttribute("storeList", newArrivalList);
+		model.addAttribute("mainCategoryList", mainCategoryList);
+		model.addAttribute("imageList", imageList);
 
 		//DBが空の時の対処
 		if(userList == null) {
@@ -62,19 +70,28 @@ public class HomeController {
 		//おすすめ表示
 		List<Store> recommendList = homeService.recommend(userList.get(0).getUserId());
 
+		//宣言したListをModelに保存
+		model.addAttribute("recommendList", recommendList);
+
+		//DBが空の時の対処
+		if(recommendList == null) {
+			model.addAttribute("notRecommendList", "undefinde");
+			model.addAttribute("notPlanList", "undefinde");
+			return "home";
+		}
+
 		//新しい提案
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
 		Collections.shuffle(planList);
 
-		//新着機能の画像表示
-		List<Store> imageList = homeService.image();
+		//DBが空の時の対処
+		if(planList == null) {
+			model.addAttribute("notPlanList", "undefinde");
+			return "home";
+		}
 
-		//宣言したList達をModelに保存
-		model.addAttribute("storeList", newArrivalList);
-		model.addAttribute("mainCategoryList", mainCategoryList);
-		model.addAttribute("recommendList", recommendList);
+		//宣言したListをModelに保存
 		model.addAttribute("planList", planList);
-		model.addAttribute("imageList", imageList);
 
 		return "home";
 	}
