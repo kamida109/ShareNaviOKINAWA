@@ -16,13 +16,12 @@
 		<div class="frame">
 		<div class="input_form">
 		<div class="input_form_inner">
-
-
+			<h2>画像を追加しました</h2>
+			<a href="/detail">店舗詳細へ戻る</a>
 		</div>
 		</div>
 		</div>
 	</div>
-
 	<!-- 共通部品_footer -->
 	<footer id="footer"></footer>
 	</body>
