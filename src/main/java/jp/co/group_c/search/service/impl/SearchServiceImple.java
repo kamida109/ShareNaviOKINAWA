@@ -11,6 +11,7 @@ import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.dao.SearchDao;
 import jp.co.group_c.search.service.SearchService;
+import jp.co.group_c.update.entity.Favorite;
 
 @Service
 @Transactional
@@ -74,6 +75,13 @@ public class SearchServiceImple implements SearchService{
 	@Override
 	public void storeDelete(Integer id) {
 		searchDao.storeDelete(id);
+	}
+
+	// お気に入り店舗の取得
+	@Override
+	public List<Favorite> favoriteStore() {
+		// TODO 自動生成されたメソッド・スタブ
+		return searchDao.favoriteStore();
 	}
 
 }

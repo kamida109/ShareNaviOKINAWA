@@ -2,7 +2,7 @@ package jp.co.group_c.update.entity;
 
 public class Favorite {
 
-	private Integer userid;
+	private Integer userId;
 	private Integer storeId;
 
 	public Favorite() {
@@ -10,16 +10,16 @@ public class Favorite {
 	}
 
 	public Favorite(Integer userId, Integer storeId) {
-		this.userid = userId;
+		this.userId = userId;
 		this.storeId = storeId;
 	}
 
-	public Integer getUserid() {
-		return userid;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Integer getStoreId() {

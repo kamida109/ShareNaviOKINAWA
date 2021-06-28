@@ -15,6 +15,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.dao.SearchDao;
+import jp.co.group_c.update.entity.Favorite;
 
 @Repository
 public class SearchDaoImpl implements SearchDao{
@@ -55,6 +56,8 @@ public class SearchDaoImpl implements SearchDao{
 												+ "WHERE review_id = :reviewId";
 
 	private static final String STORE_DELETE = "DELETE FROM store WHERE store_id = :storeId";
+
+	private static final String FAVORITE_STORE ="SELECT * FROM favorite";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -225,6 +228,13 @@ public class SearchDaoImpl implements SearchDao{
 		param.addValue("storeId", id);
 
 		jdbcTemplate.update(delete, param);
+	}
+
+	// お気に入り店舗の取得
+	@Override
+	public List<Favorite> favoriteStore() {
+		List<Favorite> favoriteStore = jdbcTemplate.query(FAVORITE_STORE, new BeanPropertyRowMapper<Favorite>(Favorite.class));
+		return favoriteStore;
 	}
 
 }
