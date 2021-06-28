@@ -58,10 +58,26 @@ input[type=checkbox] {
 	margin-right: 5px;
 }
 
+/* checkboxのサイズ */
+input[type=radio] {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
+
 /* selectのサイズ */
 select {
 	width: 200px;
 	height: 35px;
+	border-radius: 3px;
+	font-size: 20px;
+}
+
+/* textareaのサイズと周りが下寄せにならないように */
+textarea{
+	vertical-align: top;
+	width: 400px;
+	height: 200px;
 	border-radius: 3px;
 	font-size: 20px;
 }
@@ -71,11 +87,6 @@ input, select, textarea {
 	border: solid 2px #000080;
 	border-radius: 3px;
 	background-color: #f0ffff;
-}
-
-/* textareaの周りが下寄せにならないように */
-textarea{
-	vertical-align: top;
 }
 
 /* 赤文字 */

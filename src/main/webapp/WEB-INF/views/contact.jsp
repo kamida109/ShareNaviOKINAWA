@@ -15,130 +15,128 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-<!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
-<c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
+	<!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
+	<!-- 管理者 -->
+	<c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
 
-	<table border="1" id="checked_list">
-		<caption>問い合わせ</caption>
-	<form:form action="/contact" method="post" modelAttribute="contact_management">
-
-		<input type="radio" name="sample" id="solved">未解決のみ表示
-		<input type="radio" name="sample" id="unsolved">解決のみ表示
-		<input type="radio" name="sample" id="all">全件表示
-
- 	</form:form>
+		<div class="scroll" style="margin-top:20px; max-height:350px;">
+		<table class="other_table" id="checked_list">
+		<caption><h3 style="margin:0;">問い合わせ</h3>
+		<form:form action="/contact" method="post" modelAttribute="contact_management">
+			<input type="radio" name="sample" id="solved">未解決のみ表示
+			<input type="radio" name="sample" id="unsolved">解決のみ表示
+			<input type="radio" name="sample" id="all">全件表示
+	 	</form:form></caption>
 		<thead>
-		<tr>
-			<th>ID</th>
-			<th>ユーザー名</th>
-			<th>目的</th>
-			<th>状況</th>
-		</tr>
+			<tr>
+				<th>ID</th>
+				<th>ユーザー名</th>
+				<th>目的</th>
+				<th>状況</th>
+			</tr>
 		</thead>
 
-	<c:forEach var="result" items= "${selectResult}">
-		<tr>
-			<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td>
-			<td>${fn:escapeXml(result.userName)}</td>
+		<c:forEach var="result" items= "${selectResult}">
+			<tr>
+				<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td>
+				<td>${fn:escapeXml(result.userName)}</td>
 
-			<td>
 				<c:choose>
-				<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
-					<span>通報</span>
-				</c:when>
-				<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
-					<span>問い合わせ</span>
-				</c:when>
-				<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
-					<span>要望</span>
-				</c:when>
+					<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
+						<td style="background-color:#ffaaaa77;"><span>通報</span></td>
+					</c:when>
+					<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
+						<td style="background-color:#efe8af77;"><span>問い合わせ</span></td>
+					</c:when>
+					<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
+						<td style="background-color:#aaffea77;"><span>要望</span></td>
+					</c:when>
 				</c:choose>
-			</td>
 
-			<td>
-			<c:choose>
-				<c:when test="${fn:escapeXml(result.flag eq 'true')}">
-					<span>解決</span>
-				</c:when>
-				<c:otherwise>
-					<span>未解決</span>
-				</c:otherwise>
-			</c:choose>
-			</td>
-		</tr>
-	</c:forEach>
+				<c:choose>
+					<c:when test="${fn:escapeXml(result.flag eq 'true')}">
+						<td><span>解決</span></td>
+					</c:when>
+					<c:otherwise>
+						<td style="background-color:#ffaaaa77;"><span>未解決</span></td>
+					</c:otherwise>
+				</c:choose>
+
+			</tr>
+		</c:forEach>
 
 	</table>
-
+	</div><br>
 
 
 	<!--ユーザー名をクリックしたときに内容が表示される -->
 
- 	  <h3>問い合わせ内容</h3>
- 	  <c:if test="${not empty updateMsg}">
+	<div class="input_form">
+	<h3>問い合わせ内容</h3>
+	<c:if test="${not empty updateMsg}">
 			<p class="error">${updateMsg}</p>
 	  </c:if>
 
 	<form:form action="/contact" method="post" modelAttribute="contact_management">
 		<form:input type="hidden" path="contactId" readonly="true"/>
-		<label>ユーザー名<br>
-		<form:input path="userName" readonly="true"/>
+		ユーザー名<br>
+		<form:input path="userName" style="text-align:center;" readonly="true"/><br><br>
 
-		</label>
-
-		<br><label>目的<br>
+		目的<br>
 		<form:hidden path="contactCategoryId" readonly="true"/>
-		<input type="text" value="${contactCategoryId}" readonly/>
-		</label>
+		<input type="text" style="text-align:center;" value="${contactCategoryId}" readonly/><br><br>
 
-		<br><label>本文<br>
+		本文<br>
 		<form:textarea path="contents" readonly="true"/>
-		</label>
+		<br>
 
 		<!-- flagの値でボタンを表示させる  -->
 			<c:if test="${fn:escapeXml(flag == false)}">
 				<form:button value="${solvedFlag}" name="update">解決</form:button>
-			</c:if>
+			</c:if><br>
 
-</form:form>
+		</form:form>
+		</div>
 
-	<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-		<br><a href="/user_management">ユーザー管理</a>
-</c:if>
+		<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
+		<br><br><a href="/user_management">ユーザー管理</a><br><br>
 
+	</c:if>
 
+	<!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
+	<!-- 一般ユーザ -->
+	<c:if test= "${fn:escapeXml(signInUser.authorityId)==2}">
 
-<c:if test= "${fn:escapeXml(signInUser.authorityId)==2}">
+		<h2>問い合わせ</h2>
+		<div class="input_form">
+		<form:form action="contact_result" method="post" modelAttribute="contactInfo">
+		<form:errors path="contents" cssStyle="color: red"/>
 
-	  <h3>問い合わせ</h3>
-	<form:form action="contact_result" method="post" modelAttribute="contactInfo">
-	<form:errors path="contents" cssStyle="color: red"/>
+		 <br><label>目的<br>
+		 <form:select path="contactCategoryId">
+			<form:option value="1">通報</form:option>
+			<form:option value="2">問い合わせ</form:option>
+			<form:option value="3">要望</form:option>
+		 </form:select>
+		 </label>
 
-	 <br><label>目的<br>
-	 <form:select path="contactCategoryId">
-		<form:option value="1">通報</form:option>
-		<form:option value="2">問い合わせ</form:option>
-		<form:option value="3">要望</form:option>
-	 </form:select>
-	 </label>
+		 <br><br><label>本文
+		 <br><form:textarea path="contents"/> </label>
 
-	 <br><label>本文
-	 <br><form:textarea path="contents"/> </label>
+		 <br><br><form:button type= "submit" name= "insert">送信</form:button>
+		 </form:form>
+		 <br></div>
 
-	 <form:button type= "submit" name= "insert">送信</form:button>
-	 </form:form>
-
-</c:if>
-
+	</c:if>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
 			</div>
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
-
-
 		</div>
+
 		<script type="text/javascript" src="js/checked.js"></script>
+
 	</body>
 </html>
