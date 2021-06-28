@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="jp">
@@ -20,7 +21,7 @@
 				<p class="error">${lackErr}</p>
 				<form:form action="category_process_check" modelAttribute="category_process" method="Post">
 				<c:choose>
-					<c:when test="${authorityId == 1}">
+					<c:when test="${fn:escapeXml(signInUser.authorityId)==1}">
 
 							<p>
 								<form:select path="mainCategory" id="mainCate">

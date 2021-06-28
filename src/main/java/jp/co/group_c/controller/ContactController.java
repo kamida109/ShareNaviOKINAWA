@@ -146,8 +146,8 @@ public class ContactController {
 	@RequestMapping(value = "/user_management", params = "select", method = RequestMethod.POST)
 	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm userManagementForm, BindingResult bindingResult, Model model) {
 
-		UserManagement userManagement = new UserManagement(userManagementForm.getUserId(), userManagementForm.getUserName());
-		List<UserManagement> list = contactService.managementFind(userManagement);
+		//UserManagement userManagement = new UserManagement(userManagementForm.getUserId(), userManagementForm.getUserName());
+		List<UserManagement> list = contactService.managementFind(userManagementForm);
 
 		//IDか名前での検索結果がないとき
 		if(list.size() == 0) {

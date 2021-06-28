@@ -3,6 +3,7 @@ package jp.co.group_c.contact.dao;
 import java.util.List;
 
 import jp.co.group_c.contact.InqueryForm;
+import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 
@@ -27,7 +28,7 @@ public interface ContactDao {
 
 
 	//IDか名前検索時（ユーザー管理画面で）
-	public List<UserManagement> managementFind(UserManagement userManagement);
+	public List<UserManagement> managementFind(UserManagementForm form);
 
 	//ユーザー管理画面での削除用
 	public String managementDelete(Integer userId);

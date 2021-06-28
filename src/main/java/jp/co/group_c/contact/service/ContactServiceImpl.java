@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.group_c.contact.InqueryForm;
+import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.dao.ContactDao;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
@@ -38,8 +39,8 @@ public class ContactServiceImpl implements ContactService{
 	}
 
 	//ユーザー管理画面での検索用
-	public List<UserManagement> managementFind(UserManagement userManagement){
-		return contactDao.managementFind(userManagement);
+	public List<UserManagement> managementFind(UserManagementForm form){
+		return contactDao.managementFind(form);
 	}
 	//ユーザー管理画面での削除用
 	public String managementDelete(Integer userId) {

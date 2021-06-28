@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jp.co.group_c.contact.InqueryForm;
+import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 import jp.co.group_c.contact.util.ParamUtil;
@@ -42,7 +43,7 @@ public class PgContactDao implements ContactDao{
 
 	//IDと名前検索時
 	private static final String FINDBY_ID_OR_NAME = "SELECT user_id, user_name, login_id"
-			+ " FROM users WHERE ";
+			+ " FROM users WHERE 1=1 AND ";
 
 	//ユーザーIDでの昇順
 	private static final String ORDER_BY = " ORDER BY user_id ASC";
@@ -106,9 +107,9 @@ public class PgContactDao implements ContactDao{
 
 
     //IDと名前検索時
-	public List<UserManagement> managementFind(UserManagement userManagement){
+	public List<UserManagement> managementFind(UserManagementForm form){
 		//未入力時、全検索（Entityのメソッド呼ぶ）
-		if (userManagement == null || userManagement.isEmptyCondition()) {
+		if (ParamUtil.isNullOrEmpty(form.getLoginId()) && ParamUtil.isNullOrEmpty(form.getUserName())) {
 			return managementFindAll();
 		}
 
@@ -116,13 +117,13 @@ public class PgContactDao implements ContactDao{
 		MapSqlParameterSource param = new MapSqlParameterSource();
 
 		//値チェックのためDBからゲットする
-		Integer userId = userManagement.getUserId();
-		String userName = userManagement.getUserName();
+		String loginId = form.getLoginId();
+		String userName = form.getUserName();
 
 		//conditionとparamに追加
-		if(userId != null) {
-			condition.add("user_id= :userId");
-			param.addValue("userId", userId);
+		if(!ParamUtil.isNullOrEmpty(loginId)) {
+			condition.add("login_id= :loginId");
+			param.addValue("loginId", loginId);
 		}
 
 		if(!ParamUtil.isNullOrEmpty(userName)) {
