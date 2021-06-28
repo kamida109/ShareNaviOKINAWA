@@ -219,7 +219,7 @@ public class AddStoreController {
 //			try {
 				for (MultipartFile file : formImg) {
 					String formFileName = file.getOriginalFilename();
-					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
+					String imgUploadPath = "IMAGES/store/";
 //					String imgDeletePath = context.getRealPath("/") + "/IMAGES/set/";
 
 					File uploadFile = new File(imgUploadPath,formFileName);
@@ -245,12 +245,97 @@ public class AddStoreController {
 	}
 
 	// 写真の追加
-	@RequestMapping(value = "/addPhoto")
-	public String addPhote(@RequestParam("storeId") Integer id, Model model) {
+	@RequestMapping(value = "/addPhoto", method = RequestMethod.GET)
+	public String addPhoto(@ModelAttribute("add_photo") AddStoreForm form,
+							@RequestParam("storeId") Integer storeId, Model model) {
 
-		System.out.println(id);
+		System.out.println(storeId);
+		model.addAttribute("nowStoreId",storeId);
 
-		return "addPhoto";
+		return "add_photo";
+	}
+	// 写真の追加確認＆ディレクトリに保存
+	@RequestMapping(value = "/add_photo_check", method = RequestMethod.POST)
+	public String addPhotoCheck(@ModelAttribute("add_photo") AddStoreForm form, Model model) {
+
+		if(form.getStoreImages().get(0) != null) {
+			System.out.println("▲写真格納処理開始");
+
+			List<MultipartFile> formImg = form.getStoreImages();
+			String aaa = "";
+
+			System.out.println("★formImg："+formImg);
+			try {
+				for (MultipartFile file : formImg) {
+
+					String formFileName = file.getOriginalFilename();
+					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
+					File uploadFile = new File(imgUploadPath,formFileName);
+					System.out.println("★getPath："+uploadFile.getPath());
+
+					/*アクセスが拒否されました*/
+					file.transferTo(uploadFile);
+
+					aaa += "<img src=\"\\IMAGES\\store\\"+uploadFile.getName()+"\" style=\"width:400px;\">";
+				}
+				session.setAttribute("addImages", formImg);
+				System.out.println("★formImg："+ formImg);
+				model.addAttribute("checkImage", aaa);
+				model.addAttribute("imagesNum", formImg.size());
+				System.out.println("▼写真格納処理終了");
+
+			} catch(IllegalStateException e) {
+				System.out.println("☆--------IllegalStateException--------☆");
+
+			} catch(IOException e) {
+				System.out.println("☆--------IOException---------☆");
+
+			}
+		} else {
+			model.addAttribute("errMes", "写真が選択されていません");
+			return "add_photo";
+		}
+
+		System.out.println("▲a画像配列：" + form.getStoreImages());
+
+		return "add_photo_check";
+	}
+
+
+
+
+	// 写真パスをテーブルに追加
+	@RequestMapping(value = "/add_photo_result", method = RequestMethod.POST)
+	public String addPhoto(@Validated @ModelAttribute("add_photo") AddStoreForm form,
+							BindingResult bindingResult, Model model) {
+
+		int nowStoreId = form.getStoreId();
+
+		//↓画像をテーブルに保存
+
+		System.out.println("▲画像配列：" + session.getAttribute("addImages"));
+
+		if(session.getAttribute("addImages") != null) {
+
+			@SuppressWarnings("unchecked")
+			List<MultipartFile> formImg = (List<MultipartFile>)session.getAttribute("addImages");
+
+				for (MultipartFile file : formImg) {
+					String formFileName = file.getOriginalFilename();
+					String imgUploadPath = "IMAGES/store/";
+
+					File uploadFile = new File(imgUploadPath,formFileName);
+
+					System.out.println("5555555"+uploadFile);
+
+					addStoreService.insertImages(nowStoreId, uploadFile.getPath());
+
+
+
+				}
+		}
+
+		return "add_photo_result";
 	}
 
 }

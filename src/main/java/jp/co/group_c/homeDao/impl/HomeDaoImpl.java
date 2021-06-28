@@ -99,7 +99,7 @@ public class HomeDaoImpl implements HomeDao{
 		String plan = PLAN;
 		param.addValue("userId", userId);
 		List<Store> planList = jdbcTemplate.query(plan, param, new BeanPropertyRowMapper<Store>(Store.class));
-		return planList;
+		return planList.isEmpty() ? null : planList;
 	}
 
 	//画像表示メソッド

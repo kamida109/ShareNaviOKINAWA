@@ -14,6 +14,10 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
+				<h2>カテゴリ</h2>
+
+				<c:if test="${signInUser.getAuthorityId() == 1}"><h3>カテゴリの操作</h3></c:if>
+				<c:if test="${signInUser.getAuthorityId() == 2}"><h3>カテゴリの追加</h3></c:if>
 				<p>${resultMessage}</p>
 
 				<!-- ---------- ここまで本体 ---------- -->

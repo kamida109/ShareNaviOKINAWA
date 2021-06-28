@@ -61,18 +61,23 @@
 
 		<div class="input_form" style="margin-top:20px;">
 			<h3>ユーザーの削除</h3>
-			<form:form action="user_management" method="post" modelAttribute="userManagement">
-				<form:errors path="userId" cssStyle="color: red"/>
-					<c:if test="${not empty errMsg}">
-					<p class="error">${errMsg}</p>
-					</c:if>
-
-			<label>削除するユーザーID:
+			<p class="error">${errMsg}</p>
+			<form:form action="user_management" method="post" modelAttribute="userDelete">
+			<label>ユーザーID:
 			<form:input path="userId" /></label><br><br>
 
-			<form:button type= "submit" name= "delete">確定</form:button><br>
+			<form:button id ="delete" type="submit" name="delete">確定</form:button><br>
 			</form:form>
 		</div>
+
+		<script>
+			var del = document.getElementById("delete");
+
+			del.addEventListener("click", function(e) {
+				const result = confirm("ユーザを削除しますか？");
+				if(result==false) { e.preventDefault(); }
+			})
+		</script>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

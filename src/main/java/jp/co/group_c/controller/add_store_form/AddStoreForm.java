@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddStoreForm {
 
+	private Integer storeId;
 	@NotBlank(message="店舗名は必須です。")
 	private String storeName;
 	private Integer mainCategoryId1;
@@ -33,7 +34,12 @@ public class AddStoreForm {
 
 
 
-
+	public Integer getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
 	public Integer getMainCategoryId1() {
 		return mainCategoryId1;
 	}
@@ -156,6 +162,5 @@ public class AddStoreForm {
 	public void setStoreImages(List<MultipartFile> storeImages) {
 		this.storeImages = storeImages;
 	}
-
 
 }

@@ -16,13 +16,14 @@
 		<div class="frame">
 		<div class="input_form">
 		<div class="input_form_inner">
-
-
+			<h2>画像を追加しました</h2>
+			<c:forEach var="main" items="${storeDitails}">
+				<a href="/details?storeId=${main.storeId}">店舗詳細へ戻る</a>
+			</c:forEach>
 		</div>
 		</div>
 		</div>
 	</div>
-
 	<!-- 共通部品_footer -->
 	<footer id="footer"></footer>
 	</body>
