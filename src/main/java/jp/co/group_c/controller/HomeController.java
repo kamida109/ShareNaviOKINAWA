@@ -66,7 +66,7 @@ public class HomeController {
 		List<Store> planList = homeService.plan(userList.get(0).getUserId());
 		Collections.shuffle(planList);
 
-		//画像表示
+		//新着機能の画像表示
 		List<Store> imageList = homeService.image();
 
 		//宣言したList達をModelに保存

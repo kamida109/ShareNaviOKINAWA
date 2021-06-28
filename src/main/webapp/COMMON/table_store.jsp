@@ -10,6 +10,7 @@
 				<tr class="top">
 					<td class="image" rowspan="3" valign="middle">
 					<c:set var="counter" value="0" />
+
 						<!-- 写真の出力処理 -->
 							<img class="storeimg" id="img-${store.storeId}" data-count="1"
 								<c:forEach items="${imageList}" var="img">
@@ -25,9 +26,11 @@
 								</c:forEach>
 						>
 					</td>
+
 					<!-- 市町村名の出力処理 -->
 					<td class="cities" colspan="3" align="left" valign="bottom">${store.citiesName}</td>
 				</tr>
+
 				<tr>
 					<!-- 店舗名の出力処理 -->
 					<td class="name" colspan="2" align="left"><a href="/details?storeId=${store.storeId}">${fn:escapeXml(store.storeName)}</a></td>

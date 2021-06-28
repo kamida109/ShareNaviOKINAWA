@@ -3,6 +3,7 @@ package jp.co.group_c.contact.service;
 import java.util.List;
 
 import jp.co.group_c.contact.InqueryForm;
+import jp.co.group_c.contact.UserManagementForm;
 import jp.co.group_c.contact.entity.Contact;
 import jp.co.group_c.contact.entity.UserManagement;
 
@@ -29,7 +30,7 @@ public interface ContactService {
 
 
 	//IDか名前検索時（ユーザー管理画面で）
-	public List<UserManagement> managementFind(UserManagement userManagement);
+	public List<UserManagement> managementFind(UserManagementForm form);
 
 	//ユーザーIDで削除（ユーザー管理画面で）
 	public String managementDelete(Integer userId);

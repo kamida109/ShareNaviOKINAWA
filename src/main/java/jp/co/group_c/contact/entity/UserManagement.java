@@ -1,7 +1,5 @@
 package jp.co.group_c.contact.entity;
 
-import jp.co.group_c.contact.util.ParamUtil;
-
 //ユーザー管理用エンティティ
 //usersテーブルと、storeテーブルから
 public class UserManagement {
@@ -26,15 +24,12 @@ public class UserManagement {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public boolean isEmptyCondition() {
-
-		return userId == null && ParamUtil.isNullOrEmpty(userName);
 	}
 
 	public String getLoginId() {
@@ -43,4 +38,5 @@ public class UserManagement {
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
+
 }
