@@ -145,9 +145,9 @@
 						})
 					})
 
-					var up = document.getElementById("insert");
+					var insert = document.getElementById("insert");
 
-					up.addEventListener("click", function(e) {
+					insert.addEventListener("click", function(e) {
 						const result = confirm("この内容で登録しますか？");
 						if(result==false) { e.preventDefault(); }
 					})

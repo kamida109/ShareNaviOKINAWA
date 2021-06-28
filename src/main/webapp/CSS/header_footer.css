@@ -36,9 +36,9 @@
 		height: auto;
 		text-align: center;
 		z-index: 5;
-		border: 1px solid #ccccec;;
+		border: 1px solid #acacec;
 		border-radius: 5px;
-		background-color: #ccccec;
+		background-color: #acacec;
 		font-size: 20px;
 		text-decoration: none;
 		color: #ffffff;
@@ -80,8 +80,8 @@
 		z-index: 6;
 		font-size: 33px;
 		white-space: nowrap;
-		border: 2px solid #ccccec;
-		background-color: #ccccec;
+		border: 2px solid #acacec;
+		background-color: #acacec;
 		text-decoration: none;
 		color: #ffffff;
 	}

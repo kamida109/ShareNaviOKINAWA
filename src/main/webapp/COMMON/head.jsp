@@ -16,4 +16,3 @@
 
 	<title>ShareNaviOKINAWA</title>
 </head>
-
