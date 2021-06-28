@@ -7,9 +7,10 @@ public class Review {
 	private Integer storeId;
 	private Integer reviewId;
 	private Integer userId;
-	private String reviwe;
+	private String review;
 	private Integer hyouka;
 	private Date review_date;
+	private String userName;
 
 	public Review() {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -42,11 +43,11 @@ public class Review {
 		this.userId = userId;
 	}
 
-	public String getReviwe() {
-		return reviwe;
+	public String getReview() {
+		return review;
 	}
-	public void setReviwe(String reviwe) {
-		this.reviwe = reviwe;
+	public void setReview(String review) {
+		this.review = review;
 	}
 
 	public Integer getHyouka() {
@@ -62,5 +63,15 @@ public class Review {
 	public void setReview_date(Date review_date) {
 		this.review_date = review_date;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
 
 }

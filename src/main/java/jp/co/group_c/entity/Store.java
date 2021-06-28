@@ -23,6 +23,8 @@ public class Store {
 	private Integer hyouka;
 	private Timestamp reviewDate;
 //	private String reviewDate;
+	private Integer userId;
+	private String userName;
 
 	public Store() {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -157,5 +159,20 @@ public class Store {
 		this.reviewDate = reviewDate;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 }

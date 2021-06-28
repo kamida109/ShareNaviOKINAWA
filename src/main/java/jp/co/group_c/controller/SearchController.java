@@ -23,6 +23,7 @@ import jp.co.group_c.entity.Store;
 import jp.co.group_c.entity.Users;
 import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.update.entity.Favorite;
+import jp.co.group_c.update.entity.Review;
 
 @Controller
 public class SearchController {
@@ -147,6 +148,10 @@ public class SearchController {
 		List<Store> storeCategoryList = searchService.storeCategory();
 		session.setAttribute("mainCategoryList", storeCategoryList);
 
+		// レビューテーブルの取得
+		List<Review> reviewList = searchService.reviewList(id);
+		session.setAttribute("reviewList", reviewList);
+
 		// ユーザー情報の取得
 		Users userInfo = (Users)session.getAttribute("signInUser");
 
@@ -157,6 +162,12 @@ public class SearchController {
 
 			if(f.getUserId()==userInfo.getUserId() && f.getStoreId()==id) {
 				model.addAttribute("flag", "userFavorite");
+			}
+		}
+
+		for(Review r : reviewList) {
+			if(r.getUserId()==userInfo.getUserId()) {
+				model.addAttribute("review", "review");
 			}
 		}
 
@@ -175,11 +186,23 @@ public class SearchController {
 	// レビュー削除
 	@RequestMapping(value="/reviewDel/{reviewId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public void reviewDel(@PathVariable("reviewId") Integer id) {
+	public void reviewDel(@PathVariable("reviewId") List<Integer> id) {
 
-		searchService.reviewDelete(id);
+		for(Integer i : id) {
+			searchService.reviewDelete(i.intValue());
+		}
 
 	}
+
+	// レビューの追加
+	@RequestMapping(value="/insertReview/{storeId}/{userId}/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public void reviewDel(@PathVariable("storeId") Integer sId, @PathVariable("userId") Integer uId, @PathVariable("newReview") String review) {
+		System.out.println(sId+uId+review);
+
+		searchService.insertReview(sId, uId, review);
+	}
+
 
 	// 店舗削除を非同期で実装
 	@RequestMapping(value="/storeDelete/{storeId}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
@@ -194,7 +217,7 @@ public class SearchController {
 	// 店舗詳細で戻るボタンが押された
 	@RequestMapping(value="/returnSearch/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String returnSearch() {
+	public void returnSearch() {
 
 		session.removeAttribute("storeList");
 		session.removeAttribute("planList");
@@ -202,9 +225,6 @@ public class SearchController {
 		session.removeAttribute("notPlanList");
 		session.removeAttribute("mainCategoryList");
 
-		System.out.println("戻るボタン用メソッド");
-
-		return "redirect:search";
 	}
 
 }

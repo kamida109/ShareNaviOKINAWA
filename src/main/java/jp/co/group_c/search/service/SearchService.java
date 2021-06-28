@@ -6,6 +6,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.update.entity.Favorite;
+import jp.co.group_c.update.entity.Review;
 
 public interface SearchService {
 
@@ -41,5 +42,14 @@ public interface SearchService {
 
 	// お気に入り店舗情報の取得
 	public List<Favorite> favoriteStore();
+
+	// レビューの追加
+	public void insertReview(Integer storeId, Integer userId, String review);
+
+	// レビューテーブルの取得
+	public List<Review> reviewList(Integer storeId);
+
+	// レビューテーブルの件数取得
+	public List<Review> reviewNum();
 
 }

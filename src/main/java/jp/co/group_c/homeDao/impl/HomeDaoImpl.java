@@ -22,10 +22,10 @@ public class HomeDaoImpl implements HomeDao{
     MapSqlParameterSource param = new MapSqlParameterSource();
 
     //SQL
-    private static final String NEW_ARRIVAL = "SELECT s.store_id, store_name, cities_name, hyouka FROM store AS s\n"
+    private static final String NEW_ARRIVAL = "SELECT s.store_id, store_name, cities_name, avg(hyouka) hyouka FROM store AS s\n"
     											 + "JOIN cities AS city ON s.cities_id = city.cities_id\n"
     											 + "JOIN review AS r ON s.store_id = r.store_id\n"
-    											 + "GROUP BY s.store_id, store_name, cities_name, hyouka\n"
+    											 + "GROUP BY s.store_id, store_name, cities_name\n"
     											 + "ORDER BY s.store_id DESC";
 
     private static final String MAIN_CATEGORY = "SELECT s.store_id, category_name\n"
@@ -34,7 +34,7 @@ public class HomeDaoImpl implements HomeDao{
 
     private static final String USERS = "SELECT * FROM users";
 
-    private static final String RECOMMEND = "SELECT DISTINCT s.store_id, store_name, cities_name, hyouka\n"
+    private static final String RECOMMEND = "SELECT DISTINCT s.store_id, store_name, cities_name, avg(hyouka) AS hyouks\n"
     									       + "FROM store AS s\n"
     									       + "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
     									       + "JOIN category AS c ON sc.category_id = c.category_id\n"
@@ -43,6 +43,7 @@ public class HomeDaoImpl implements HomeDao{
     									       + "WHERE sc.category_id IN (SELECT fc.category_id\n"
     									       + "FROM users AS u\n"
     									       + "JOIN favorite_category AS fc ON :userId = fc.user_id)\n"
+    									       + "GROUP BY s.store_id, store_name, cities_name\n"
     									       + "LIMIT 3";
 
     private static final String PLAN = "SELECT s.store_id, store_name, category_name, cities_name, hyouka\n"

@@ -16,6 +16,7 @@ import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.dao.SearchDao;
 import jp.co.group_c.update.entity.Favorite;
+import jp.co.group_c.update.entity.Review;
 
 @Repository
 public class SearchDaoImpl implements SearchDao{
@@ -45,11 +46,12 @@ public class SearchDaoImpl implements SearchDao{
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
 
-	private static final String STORE_DITAILS = "SELECT * \n"
+	private static final String STORE_DITAILS = "SELECT DISTINCT s.store_id, store_name, s.cities_id, address, tel, cities_name,"
+													+ " avg(hyouka) as hyouka \n"
 													+ "FROM store AS s\n"
 													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
 													+ "JOIN review AS r ON s.store_id = r.store_id\n"
-													+ "WHERE s.store_id = :storeId";
+													+ "WHERE s.store_id = :storeId\n";
 
 	private static final String NEW_REVIEW ="UPDATE review\n"
 												+ "SET review = :review\n"
@@ -58,6 +60,15 @@ public class SearchDaoImpl implements SearchDao{
 	private static final String STORE_DELETE = "DELETE FROM store WHERE store_id = :storeId";
 
 	private static final String FAVORITE_STORE ="SELECT * FROM favorite";
+
+	private static final String INSERT_REVIEW = "INSERT INTO review(store_id, user_id, review, review_date)\n"
+													+ "VALUES (:storeId, :userId, :review, CURRENT_DATE)";
+
+	private static final String GET_REVIEW = "SELECT * FROM review AS r\n"
+												+ "JOIN users AS u ON r.user_id = u.user_id\n"
+												+ "WHERE store_id = :storeId";
+
+	private static final String REVIEW_NUM = "select count(review_id) from review";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -196,12 +207,13 @@ public class SearchDaoImpl implements SearchDao{
 	public List<Store> storeDitails(Integer id) {
 		String ditails = STORE_DITAILS;
 		param.addValue("storeId", id);
+		ditails += "GROUP BY s.store_id, s.cities_id, cities_name";
 		List<Store> storeDitails = jdbcTemplate.query(ditails, param, new BeanPropertyRowMapper<Store>(Store.class));
 
 		return storeDitails;
 	}
 
-	// レビューの追加、編集
+	// レビューの編集
 	@Override
 	public void reviewUpdate(Integer id, String review) {
 		String strReview = NEW_REVIEW;
@@ -215,8 +227,8 @@ public class SearchDaoImpl implements SearchDao{
 	// レビュー削除
 	@Override
 	public void reviewDelete(Integer id) {
-		String reviewDel = "UPDATE review  SET review = null WHERE review_id = :reviewId";
-		param.addValue("reviewId", id);
+		String reviewDel = "DELETE FROM review WHERE review_id = :storeId";
+		param.addValue("storeId", id);
 
 		jdbcTemplate.update(reviewDel, param);
 	}
@@ -235,6 +247,29 @@ public class SearchDaoImpl implements SearchDao{
 	public List<Favorite> favoriteStore() {
 		List<Favorite> favoriteStore = jdbcTemplate.query(FAVORITE_STORE, new BeanPropertyRowMapper<Favorite>(Favorite.class));
 		return favoriteStore;
+	}
+
+	// レビューの追加
+	@Override
+	public void insertReview(Integer storeId, Integer userId, String review) {
+		param.addValue("storeId", storeId);
+		param.addValue("userId", userId);
+		param.addValue("review", review);
+
+		jdbcTemplate.update(INSERT_REVIEW, param);
+	}
+
+	// レビューの取得
+	@Override
+	public List<Review> reviewList(Integer storeId) {
+		param.addValue("storeId", storeId);
+		List<Review> reviewList = jdbcTemplate.query(GET_REVIEW, param, new BeanPropertyRowMapper<Review>(Review.class));
+		return reviewList;
+	}
+
+	@Override
+	public List<Review> reviewNum() {
+		return jdbcTemplate.query(REVIEW_NUM, new BeanPropertyRowMapper<Review>(Review.class));
 	}
 
 }

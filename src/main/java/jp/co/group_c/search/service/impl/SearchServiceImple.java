@@ -12,6 +12,7 @@ import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.dao.SearchDao;
 import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.update.entity.Favorite;
+import jp.co.group_c.update.entity.Review;
 
 @Service
 @Transactional
@@ -82,6 +83,24 @@ public class SearchServiceImple implements SearchService{
 	public List<Favorite> favoriteStore() {
 		// TODO 自動生成されたメソッド・スタブ
 		return searchDao.favoriteStore();
+	}
+
+	// レビューの追加
+	@Override
+	public void insertReview(Integer storeId, Integer userId, String review) {
+		searchDao.insertReview(storeId, userId, review);
+	}
+
+	// レビューの取得
+	@Override
+	public List<Review> reviewList(Integer storeId) {
+		return searchDao.reviewList(storeId);
+	}
+
+	// レビューテーブルの件数取得
+	@Override
+	public List<Review> reviewNum() {
+		return searchDao.reviewNum();
 	}
 
 }

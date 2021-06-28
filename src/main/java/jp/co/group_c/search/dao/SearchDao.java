@@ -6,6 +6,7 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.update.entity.Favorite;
+import jp.co.group_c.update.entity.Review;
 
 public interface SearchDao {
 
@@ -30,6 +31,12 @@ public interface SearchDao {
 	// 店舗詳細用の検索メソッド
 	public List<Store> storeDitails(Integer id);
 
+	// レビューテーブルの取得
+	public List<Review> reviewList(Integer storeId);
+
+	// レビューの追加
+	public void insertReview(Integer storeId, Integer userId, String review);
+
 	// レビューの変更
 	public void reviewUpdate(Integer id, String review);
 
@@ -41,5 +48,8 @@ public interface SearchDao {
 
 	// お気に入り店舗情報の取得
 	public List<Favorite> favoriteStore();
+
+	// レビューテーブルの件数取得
+	public List<Review> reviewNum();
 
 }

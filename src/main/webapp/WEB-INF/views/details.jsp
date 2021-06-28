@@ -29,7 +29,7 @@
 			<c:forEach var="main" items="${storeDitails}">
 			<input type="hidden" id="storeId" value="${main.storeId}">
 			<input type="hidden" id="storeName" value="${main.storeName}">
-			<input type="hidden" id="reviewId" value="${main.reviewId}">
+			<input type="hidden" id="userId" value="${signInUser.userId}">
 
 			<p>
 			店舗名：${main.storeName}
@@ -64,9 +64,28 @@
 			<p>写真 <a id="phote" href="/addPhoto?storeId=${main.storeId}">写真を追加する</a></p>
 			<p><img class="storeimg" src="CSS/image/no_image1.png"><br>※スライドショーの予定</p>
 
+			<p>レビュー <a id="review" href="">レビューを追加する</a></p>
+
 			<div class="modal_window">
-				<p>レビュー <a id="review" href="">レビューを追加する</a></p>
-				<textarea id="review" rows="5" cols="50" readonly>${main.review}</textarea>
+			<c:forEach var="review" items="${reviewList}">
+			<p>
+				<c:if test="${not empty review.review }">
+					投稿者：${review.userName}<br>
+					<c:if test="${signInUser.authorityId eq 1 }">
+						<input type="checkBox" class="delReview" value="${review.reviewId}">
+					</c:if>
+					<textarea id="review" rows="5" cols="50" readonly>${review.review}</textarea>
+				</c:if>
+			</p>
+			<c:if test="${signInUser.userId eq review.userId}">
+				<input type="hidden" id="reviewId" value="${review.reviewId}">
+			</c:if>
+			</c:forEach>
+
+			<c:if test="${signInUser.authorityId eq 1 }">
+				<button type="button" id="reviewDel">レビューの削除</button>
+			</c:if>
+
 			</div>
 
 			</c:forEach>
@@ -84,6 +103,9 @@
 	<script type="text/javascript" src="js/star.js"></script>
 	<script type="text/javascript" src="js/modal.js"></script>
 	<script type="text/javascript" src="js/favorite.js"></script>
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	<script type="text/javascript" src="js/slick.js"></script>
+	<script type="text/javascript" src="js/img.js"></script>
 
 	<div class="modal modal_output">
 		<div class="modal_bg modal_close"></div>
@@ -91,11 +113,16 @@
 			<p>レビューの編集</p>
 			<p id="errMsg"></p>
 			<textarea id="newReview" rows="10" cols="90" placeholder="編集内容を入力してください"></textarea>
-			<p><button type="button" id="comit">確定</button>
-			<c:if test="${signInUser.authorityId eq 1 }">
-				<button type="button" id="reviewDel">削除</button>
-			</c:if>
-			<button type="button" class="modal_close">戻る</button></p>
+			<p>
+				<c:if test="${empty review}">
+					<button type="button" id="reviewInsert">追加</button>
+				</c:if>
+
+				<c:if test="${not empty review}">
+					<button type="button" id="comit">編集</button>
+				</c:if>
+
+				<button type="button" class="modal_close">戻る</button></p>
 		</div>
 	</div>
 </body>

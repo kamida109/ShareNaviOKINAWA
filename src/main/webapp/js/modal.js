@@ -13,6 +13,8 @@ $(function(){
 		let reviewId = $('#reviewId').val();
 		let newReview = $("#newReview").val();
 
+		console.log(reviewId);
+
 		if(newReview[0]===undefined){
 			$("#errMsg").html('レビュー内容を入力してください');
 		} else {
@@ -24,11 +26,36 @@ $(function(){
 
 	//	レビュー削除
 	$('#reviewDel').click(function(){
-		let reviewId = $('#reviewId').val();
+		let reviewId = $('[class=delReview]:checked').map(function(){
+						return $(this).val();
+						}).get();
 
-		$.get("reviewDel/"+reviewId, function(){
-			location.reload();
-		})
+		console.log(reviewId);
+
+		if(!reviewId.length){
+			alert('削除したいレビューにチェックを入れてください');
+		} else {
+			$.get("reviewDel/"+reviewId, function(){
+				location.reload();
+			})
+		}
+
+	})
+
+	// レビューの追加
+	$('#reviewInsert').click(function(){
+		let storeId = $('#storeId').val();
+		let userId = $('#userId').val();
+		let newReview = $("#newReview").val();
+
+		if(newReview[0]===undefined){
+			$("#errMsg").html('レビュー内容を入力してください');
+		} else {
+			$.get("insertReview/"+storeId+'/'+userId+'/'+newReview, function(){
+				location.reload();
+			});
+		}
+
 	})
 });
 
@@ -51,5 +78,7 @@ $('#storeDelete').click(function() {
 $('#backSearch').click(function(){
 	$.get("returnSearch/", function(){
 		console.log('戻るボタンクリック');
+		location.href = "http://localhost:8080/search";
+
 	})
 });
