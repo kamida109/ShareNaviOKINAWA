@@ -17,9 +17,11 @@
 				<h2>カテゴリの追加</h2>
 				<h2>カテゴリ操作</h2>
 				<p class="error">${existErr}</p>
+				<p class="error">${lackErr}</p>
 				<form:form action="category_process_check" modelAttribute="category_process" method="Post">
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${authority == 1}"> --%>
+				<c:choose>
+					<c:when test="${authorityId == 1}">
+
 							<p>
 								<form:select path="mainCategory" id="mainCate">
 									<form:option value="0" label=""></form:option>
@@ -37,15 +39,19 @@
 							<p>
 								<form:input path="pCategoryName"/>
 							</p>
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-<%-- 							<form:select path="mainCategory"> --%>
-<%-- 								<form:option value=""></form:option> --%>
-<%-- 								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/> --%>
-<%-- 							</form:select> --%>
-<%-- 							<form:input path="pCategoryName"/> --%>
-<%-- 					</c:otherwise> --%>
-<%-- 				</c:choose> --%>
+
+					</c:when>
+					<c:otherwise>
+
+							<form:select path="mainCategory">
+								<form:option value=""></form:option>
+								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
+							</form:select>
+							<form:input path="pCategoryName"/>
+							<form:hidden path="process" value="追加"/>
+
+					</c:otherwise>
+				</c:choose>
 					<p><button class="btn" type="submit" name="check">確認</button></p>
 				</form:form>
 				<script type="text/javascript">
