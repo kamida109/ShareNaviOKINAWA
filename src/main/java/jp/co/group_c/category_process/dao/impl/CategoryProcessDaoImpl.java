@@ -15,14 +15,14 @@ import jp.co.group_c.entity.Category;
 public class CategoryProcessDaoImpl implements CategoryProcessDao {
 
 	private static final String SELECT_MAIN_CATEGORY = 		"SELECT * FROM category WHERE main_category IS NULL";
-	private static final String SELECT_CHILD_CATEGORY= 		"SELECT * FROM category WHERE main_category = :main_category";
-	private static final String SELECT_ALL_CHILD_CATEGORY=	"SELECT * FROM category WHERE main_category IS NOT NULL";
+	private static final String SELECT_SUB_CATEGORY= 		"SELECT * FROM category WHERE main_category = :main_category";
+	private static final String SELECT_ALL_SUB_CATEGORY=	"SELECT * FROM category WHERE main_category IS NOT NULL";
 	private static final String SELECT_CATEGORY = 			"SELECT * FROM category ";
 
-	private static final String INSERT_CHILD_CATEGORY = 	"INSERT INTO category (category_name, main_category) VALUES(:category_name, :main_category)";
+	private static final String INSERT_SUB_CATEGORY = 	"INSERT INTO category (category_name, main_category) VALUES(:category_name, :main_category)";
 	private static final String INSERT_MAIN_CATEGORY  = 	"INSERT INTO category (category_name) VALUES(:category_name)";
 
-	private static final String UPDATE_CATEGORY = 			"UPDATE SET category_name = :category_name "+
+	private static final String UPDATE_CATEGORY = 			"UPDATE category SET category_name = :category_name "+
 																"WHERE category_id = :category_id";
 
 	private static final String DELETE_CATEGORY =			"DELETE FROM category WHERE category_id = :category_id";
@@ -40,7 +40,7 @@ public class CategoryProcessDaoImpl implements CategoryProcessDao {
 
 	@Override
 	public List<Category> selectAllChildCategory() {
-		String sql = SELECT_ALL_CHILD_CATEGORY;
+		String sql = SELECT_ALL_SUB_CATEGORY;
 		List<Category> cateList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Category>(Category.class));
 
 		return cateList;
@@ -58,7 +58,7 @@ public class CategoryProcessDaoImpl implements CategoryProcessDao {
 	//子カテゴリ追加
 	@Override
 	public void insertCategory(String categoryName, Integer mainCategoryId) {
-		String sql = INSERT_CHILD_CATEGORY;
+		String sql = INSERT_SUB_CATEGORY;
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("category_name", categoryName);
 		param.addValue("main_category", mainCategoryId);
