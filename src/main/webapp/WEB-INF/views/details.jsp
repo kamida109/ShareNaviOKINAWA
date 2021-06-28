@@ -59,7 +59,7 @@
 						<p>電話番号：${main.tel}</p>
 						<p>営業時間：${main.businessHours}</p>
 
-						<p>写真 <a id="phote" href="/addPhote?storeId=${main.storeId}">写真を追加する</a></p>
+						<p>写真 <a id="phote" href="/addPhoto?storeId=${main.storeId}">写真を追加する</a></p>
 						<p><img class="storeimg" src="CSS/image/no_image1.png"><br>※スライドショーの予定</p>
 
 						<div class="modal_window">
