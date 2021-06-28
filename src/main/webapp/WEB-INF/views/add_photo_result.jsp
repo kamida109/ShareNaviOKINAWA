@@ -17,7 +17,7 @@
 		<div class="input_form">
 		<div class="input_form_inner">
 			<h2>画像を追加しました</h2>
-			<a href="/detail">店舗詳細へ戻る</a>
+			<a href="/details">店舗詳細へ戻る</a>
 		</div>
 		</div>
 		</div>
