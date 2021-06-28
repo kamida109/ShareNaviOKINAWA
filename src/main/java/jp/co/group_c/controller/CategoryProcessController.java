@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jp.co.group_c.category_process.service.CategoryProcessService;
 import jp.co.group_c.controller.form.CategoryProcessForm;
 import jp.co.group_c.entity.Category;
+import jp.co.group_c.entity.Users;
 import jp.co.group_c.search.service.SearchService;
 
 @Controller
@@ -34,6 +35,7 @@ public class CategoryProcessController {
 	@Autowired
 	private HttpSession session;
 
+
 	/*category_process.jsp遷移時の共通処理*/
 	private void defaultCategorySet(Model model) {
 		List<Category> mainCateList = categoryProcessService.selectMainCategory();
@@ -47,8 +49,6 @@ public class CategoryProcessController {
 	@RequestMapping(value = "/category_process", method = RequestMethod.GET)
 	public String categoryProcess(@ModelAttribute("category_process") CategoryProcessForm form, Model model) {
 
-		session.setAttribute("authorityId", null);//一般ユーザー
-		//session.setAttribute("authorityId", 1);//管理者
 		defaultCategorySet(model);
 		return "category_process";
 	}
@@ -61,11 +61,12 @@ public class CategoryProcessController {
 	public String categoryProcessCheck(@Validated @ModelAttribute("category_process") CategoryProcessForm form,
 										BindingResult bindingResult, Model model) {
 
+		Users users = (Users)session.getAttribute("signInUser");
 		String subCateName = request.getParameter("subCate");
 		System.out.println("処理：" + form.getProcess());
 		System.out.println("親カテゴリ：" + form.getMainCategory());
 		System.out.println("子カテゴリ：" + subCateName);
-		System.out.println("セッション："+session.getAttribute("authorityId"));
+		System.out.println("権限："+users.getAuthorityId());
 
 		if(bindingResult.hasErrors()) {
 			defaultCategorySet(model);
@@ -99,7 +100,7 @@ public class CategoryProcessController {
 				form.setMainCategoryName(mainCate.getCategoryName());
 			} else {
 
-				if(session.getAttribute("authorityId") == null) {
+				if(users.getAuthorityId() == 2) {
 					model.addAttribute("lackErr", "親カテゴリ名が選択されていません");
 					defaultCategorySet(model);
 					return "category_process";

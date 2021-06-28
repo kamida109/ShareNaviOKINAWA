@@ -94,7 +94,7 @@
 							// 子カテゴリ表示
 							$("#subCate1").show();
 							// コントローラに送信
-							$.get("pulldown/"+value, function(data){
+							$.get("pulldown2/"+value, function(data){
 								console.log(data);
 								var obj = data;
 								$("#subCate1").html(data);
@@ -106,7 +106,7 @@
 							// 子カテゴリ表示
 							$("#subCate2").show();
 							// コントローラに送信
-							$.get("pulldown/"+value, function(data){
+							$.get("pulldown2/"+value, function(data){
 								console.log(data);
 								var obj = data;
 								$("#subCate2").html(data);
@@ -118,7 +118,7 @@
 							// 子カテゴリ表示
 							$("#subCate3").show();
 							// コントローラに送信
-							$.get("pulldown/"+value, function(data){
+							$.get("pulldown2/"+value, function(data){
 								console.log(data);
 								var obj = data;
 								$("#subCate3").html(data);
