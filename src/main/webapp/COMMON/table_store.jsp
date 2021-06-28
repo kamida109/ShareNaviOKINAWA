@@ -6,24 +6,25 @@
 <div class="scroll">
 	<table class="store_table">
 		<tbody>
-			<c:forEach items="${storeList}" var="store" begin="0" end="4"
-				step="1" varStatus="i">
+			<c:forEach items="${storeList}" var="store" begin="0" end="4" step="1" varStatus="i">
 				<tr class="top">
 					<td class="image" rowspan="3" valign="middle">
-						<!-- 写真の出力処理 --> <c:if
-							test="${store.storeId eq imageList[i.index].storeId}">
-							<c:set var="counter" value="0" />
-							<img class="storeimg" id="img-${store.storeId}"
-								src="${imageList[i.index].paths}" data-count="1"
+					<c:set var="counter" value="0" />
+						<!-- 写真の出力処理 -->
+							<img class="storeimg" id="img-${store.storeId}" data-count="1"
+								<c:forEach items="${imageList}" var="img">
+									<c:if test="${store.storeId eq img.storeId }">
+										src="${img.paths}"
+									</c:if>
+								</c:forEach>
 								<c:forEach begin="1" end="${fn:length(imageList)}" step="1" varStatus="j">
-							<c:if test="${store.storeId eq imageList[j.index].storeId}">
-								<c:set var="counter" value="${counter + 1}"/>
-								  data-img${counter}="${imageList[j.index].paths}"
-							 </c:if>
-						</c:forEach>>
-						</c:if>
+								    <c:if test="${store.storeId eq imageList[j.index].storeId}">
+									    <c:set var="counter" value="${counter + 1}"/>
+								  		data-img${counter}="${imageList[j.index].paths}"
+							 		</c:if>
+								</c:forEach>
+						>
 					</td>
-
 					<!-- 市町村名の出力処理 -->
 					<td class="cities" colspan="3" align="left" valign="bottom">${store.citiesName}</td>
 				</tr>
