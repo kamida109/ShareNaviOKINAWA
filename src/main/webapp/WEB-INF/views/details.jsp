@@ -94,7 +94,5 @@
 				<button type="button" class="modal_close">戻る</button></p>
 			</div>
 		</div>
-
-
 </body>
 </html>

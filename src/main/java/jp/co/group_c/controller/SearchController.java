@@ -149,7 +149,8 @@ public class SearchController {
 		session.setAttribute("mainCategoryList", storeCategoryList);
 
 		// ユーザー情報の取得
-		List<Users> usersInfo = (List<Users>)session.getAttribute("signInUser");
+		List<Users> userInfo = (List<Users>)session.getAttribute("signInUser");
+//		System.out.println("userId:"+userInfo.get(0).getUserId()+"\nuserName:"+userInfo.get(0).getUserName());
 
 		// お気に入りに登録されているお店情報を取得
 
