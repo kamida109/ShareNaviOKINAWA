@@ -44,7 +44,7 @@
 									<form:options items="${category}" itemLabel="categoryName" itemValue="categoryId" />
 								</form:select>
 							</div>
-							<div class="inner_frame_left">
+							<div class="inner_frame_left" style="margin: 0px 5px 0px 5px;">
 								<form:select id="mainCategory2" path="mainCategoryId2">
 									<form:options items="${mainCategory}" itemLabel="categoryName" itemValue="categoryId" />
 								</form:select><br>

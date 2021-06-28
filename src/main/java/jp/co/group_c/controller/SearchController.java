@@ -20,7 +20,9 @@ import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.entity.Users;
 import jp.co.group_c.search.service.SearchService;
+import jp.co.group_c.update.entity.Favorite;
 
 @Controller
 public class SearchController {
@@ -148,11 +150,18 @@ public class SearchController {
 		session.setAttribute("mainCategoryList", storeCategoryList);
 
 		// ユーザー情報の取得
-//		List<Users> userInfo = (List<Users>)session.getAttribute("signInUser");
-//		System.out.println("userId:"+userInfo.get(0).getUserId()+"\nuserName:"+userInfo.get(0).getUserName());
+		Users userInfo = (Users)session.getAttribute("signInUser");
 
 		// お気に入りに登録されているお店情報を取得
+		List<Favorite> favoriteStore = searchService.favoriteStore();
 
+		for(Favorite f : favoriteStore) {
+
+			if(f.getUserId()==userInfo.getUserId() && f.getStoreId()==id) {
+				model.addAttribute("flag", "userFavorite");
+			}
+
+		}
 
 		return "details";
 	}

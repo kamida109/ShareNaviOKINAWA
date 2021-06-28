@@ -5,6 +5,7 @@ import java.util.List;
 import jp.co.group_c.entity.Category;
 import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
+import jp.co.group_c.update.entity.Favorite;
 
 public interface SearchService {
 
@@ -37,5 +38,8 @@ public interface SearchService {
 
 	// 店舗削除
 	public void storeDelete(Integer id);
+
+	// お気に入り店舗情報の取得
+	public List<Favorite> favoriteStore();
 
 }

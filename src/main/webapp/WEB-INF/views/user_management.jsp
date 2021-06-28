@@ -15,34 +15,36 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-
+		<div class="input_form" style="margin-top:20px;">
 		<h3>ユーザー管理</h3>
 		<form:form action="user_management" method="post" modelAttribute="userManagement">
 
-		<c:if test="${not empty msg}">
-		<p class="error">${msg}</p>
-		</c:if>
+			<c:if test="${not empty msg}">
+			<p class="error">${msg}</p>
+			</c:if>
 
-		<c:if test="${not empty checkMsg}">
-		<p class="error">${checkMsg}</p>
-		</c:if>
+			<c:if test="${not empty checkMsg}">
+			<p class="error">${checkMsg}</p>
+			</c:if>
 
-			<label>ID:
-			<form:input path="userId" /></label>
+				<label>ID:
+				<form:input path="userId" /></label><tb>
+				&emsp;
+				<label>名前:
+				<form:input path="userName" /></label><br><br>
 
-			<label>名前:
-			<form:input path="userName" /></label>
+			<form:button type= "submit" name= "select">検索</form:button><br><br>
 
-		<form:button type= "submit" name= "select">検索</form:button>
+		</form:form>
+		</div><br>
 
-		<table border="1">
-		<!-- <table style="border:1; text-align:center;"> -->
+		<div class="scroll" style="margin-top:30px; max-height:350px;">
+		<table class="other_table">
 		 <thead>
 			<tr>
-				<th>ユーザーID</th>
-				<th>名前</th>
-				<th>ログインID</th>
-
+				<th style="top:0px;">ユーザーID</th>
+				<th style="top:0px;">名前</th>
+				<th style="top:0px;">ログインID</th>
 			</tr>
 		  </thead>
 		  <tbody>
@@ -52,25 +54,25 @@
 					<td>${fn:escapeXml(userManagement.userName)}</td>
 					<td>${fn:escapeXml(userManagement.loginId)}</td>
 				</tr>
-
-		 	</c:forEach>
+			</c:forEach>
 		   </tbody>
 		</table>
-		</form:form>
+		</div><br>
 
-		<h3>ユーザーの削除</h3>
-		<form:form action="user_management" method="post" modelAttribute="userManagement">
-			<form:errors path="userId" cssStyle="color: red"/>
-				<c:if test="${not empty errMsg}">
-				<p class="error">${errMsg}</p>
-				</c:if>
+		<div class="input_form" style="margin-top:20px;">
+			<h3>ユーザーの削除</h3>
+			<form:form action="user_management" method="post" modelAttribute="userManagement">
+				<form:errors path="userId" cssStyle="color: red"/>
+					<c:if test="${not empty errMsg}">
+					<p class="error">${errMsg}</p>
+					</c:if>
 
-		<br><label>削除するユーザーID:
-		<form:input path="userId" /></label>
+			<label>削除するユーザーID:
+			<form:input path="userId" /></label><br><br>
 
-		<form:button type= "submit" name= "delete">確定</form:button>
-		</form:form>
-
+			<form:button type= "submit" name= "delete">確定</form:button><br>
+			</form:form>
+		</div>
 
 				<!-- ---------- ここまで本体 ---------- -->
 
