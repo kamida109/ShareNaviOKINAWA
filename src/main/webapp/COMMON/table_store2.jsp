@@ -8,23 +8,14 @@
 		<tbody>
 			<c:forEach items="${recommendList}" var="recommend" begin="0" end="2" step="1" varStatus="i">
 				<tr class="top">
-					<td class="image2" rowspan="3" valign="middle">
-					<c:set var="counter" value="0" />
+					<td class="image" rowspan="3" valign="middle">
 
-						<!-- 写真の出力処理 -->
-							<img class="storeimg" id="img2-${recommend.storeId}" data-count="1"
-								<c:forEach items="${imageList}" var="img">
-									<c:if test="${recommend.storeId eq img.storeId }">
-										src="${img.paths}"
-									</c:if>
-								</c:forEach>
-								<c:forEach begin="1" end="${fn:length(imageList)}" step="1" varStatus="j">
-								    <c:if test="${recommend.storeId eq imageList[j.index].storeId}">
-									    <c:set var="counter" value="${counter + 1}"/>
-								  		data-img${counter}="${imageList[j.index].paths}"
-							 		</c:if>
-								</c:forEach>
-						>
+					<!-- 写真の出力処理 -->
+						<c:forEach items="${imageList}" var="img">
+							<c:if test="${recommend.storeId eq img.storeId }">
+								<img class="storeimg" src="${img.paths}">
+							</c:if>
+						</c:forEach>
 					</td>
 
 					<!-- 市町村名の出力処理 -->
@@ -53,7 +44,7 @@
 			<c:if test="${not empty notRecommendList}">
 				<p>検索した内容が見つかりません</p>
 				<p>
-					店舗を登録したい場合は<br> <a href="input">こちらをクリック</a>
+					店舗を登録したい場合は<br> <a href="add_store">こちらをクリック</a>
 				</p>
 			</c:if>
 		</tbody>
