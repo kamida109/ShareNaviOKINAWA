@@ -18,7 +18,6 @@ import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.update.entity.Favorite;
-import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 import jp.co.group_c.update.entity.Utility;
 import jp.co.group_c.update.form.StoreUpdateForm;
@@ -52,7 +51,8 @@ public class UpdateController {
 		form.setAddress(list.get(0).getAddress());
 		form.setTel(list.get(0).getTel());
 		form.setHyouka(list.get(0).getHyouka());
-		form.setReviewId(list.get(0).getReviewId());
+
+		System.out.println(form.getHyouka()+","+form.getStoreId());
 
 		return "update_store";
 	}
@@ -82,12 +82,13 @@ public class UpdateController {
 		Store store = new Store(form.getStoreId(), form.getStoreName(), form.getBusinessHours(), form.getCitiesId(), form.getAddress(), form.getTel());
 
 		// 店舗評価の更新
-		Review review = new Review(form.getReviewId(), form.getHyouka());
+		int sId = form.getStoreId();
+//		Review review = new Review(sId, form.getHyouka());
 
 		// 店舗カテゴリの更新
 		StoreCategory sc = new StoreCategory(form.getStoreId(), intCategory1, intCategory2, intCategory3);
 
-		updateService.storeRankUpdate(review);
+		updateService.storeRankUpdate(sId, form.getHyouka());
 		updateService.storeUpdate(store);
 		updateService.storeCategoryUpdate(sc);
 

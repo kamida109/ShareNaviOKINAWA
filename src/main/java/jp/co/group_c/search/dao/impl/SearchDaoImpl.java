@@ -50,7 +50,7 @@ public class SearchDaoImpl implements SearchDao{
 													+ " avg(hyouka) as hyouka \n"
 													+ "FROM store AS s\n"
 													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
-													+ "JOIN review AS r ON s.store_id = r.store_id\n"
+													+ "LEFT JOIN review AS r ON s.store_id = r.store_id\n"
 													+ "WHERE s.store_id = :storeId\n";
 
 	private static final String NEW_REVIEW ="UPDATE review\n"

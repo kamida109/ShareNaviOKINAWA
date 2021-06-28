@@ -31,6 +31,10 @@
 			<input type="hidden" id="storeName" value="${main.storeName}">
 			<input type="hidden" id="userId" value="${signInUser.userId}">
 
+			<c:forEach var="review" items="${reviewList}">
+				<input type="hidden" id="reviewId" value="${review.reviewId}">
+			</c:forEach>
+
 			<p>
 			店舗名：${main.storeName}
 
