@@ -35,6 +35,9 @@
 
 		<script type="text/javascript" src="js/jquery.raty.js"></script>
 		<script type="text/javascript" src="js/star.js"></script>
+
+		<script type="text/javascript" src="js/slick.min.js"></script>
+		<script type="text/javascript" src="js/slick.js"></script>
 		<script type="text/javascript" src="js/img.js"></script>
 
 	</body>
