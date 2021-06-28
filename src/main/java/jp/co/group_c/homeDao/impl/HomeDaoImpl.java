@@ -90,7 +90,7 @@ public class HomeDaoImpl implements HomeDao{
 		String recommend = RECOMMEND;
 		param.addValue("userId", userId);
 		List<Store> recommendList = jdbcTemplate.query(recommend, param, new BeanPropertyRowMapper<Store>(Store.class));
-		return recommendList;
+		return recommendList.isEmpty() ? null : recommendList;
 	}
 
 	//新しい提案メソッド
