@@ -57,8 +57,7 @@ public class HomeDaoImpl implements HomeDao{
     									 + "ORDER BY random() LIMIT 1";
 
     private static final String IMAGE = "SELECT s.store_id, paths FROM store AS s\n"
-    									  + "JOIN images AS i ON s.store_id = i.store_id\n"
-    									  + "ORDER BY s.store_id DESC";
+    									  + "JOIN images AS i ON s.store_id = i.store_id";
 
     //新着機能メソッド
 	@Override
