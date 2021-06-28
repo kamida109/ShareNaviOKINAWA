@@ -15,46 +15,52 @@
 
 				<!-- ---------- ここから本体 ---------- -->
 
-				<h2>カテゴリの追加</h2>
-				<h2>カテゴリ操作</h2>
-				<p class="error">${existErr}</p>
-				<p class="error">${lackErr}</p>
-				<form:form action="category_process_check" modelAttribute="category_process" method="Post">
-				<c:choose>
-					<c:when test="${fn:escapeXml(signInUser.authorityId)==1}">
+				<h2>カテゴリ</h2>
 
-							<p>
-								<form:select path="mainCategory" id="mainCate">
-									<form:option value="0" label=""></form:option>
+				<div class="input_form">
+					<c:if test="${fn:escapeXml(signInUser.authorityId)==1}"><h3>カテゴリ操作</h3></c:if>
+					<c:if test="${fn:escapeXml(signInUser.authorityId)==2}"><h3>カテゴリ追加</h3></c:if>
+					<p class="error">${existErr}</p>
+					<p class="error">${lackErr}</p>
+					<form:form action="category_process_check" modelAttribute="category_process" method="Post">
+					<c:choose>
+						<c:when test="${fn:escapeXml(signInUser.authorityId)==1}">
+
+								<p>
+									<form:select path="process">
+										<form:option value="追加"/>
+										<form:option value="更新"/>
+										<form:option value="削除"/>
+									</form:select><br><br>
+									<form:select path="mainCategory" id="mainCate">
+										<form:option value="0" label=""></form:option>
+										<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
+									</form:select>
+									<select id="subCate" name="subCate">
+										<option selected value="">-------------</option>
+									</select>
+
+								</p>
+								<p>
+									<form:input path="pCategoryName"/>
+								</p>
+
+						</c:when>
+						<c:otherwise>
+
+								<form:select path="mainCategory">
+									<form:option value=""></form:option>
 									<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
 								</form:select>
-								<select id="subCate" name="subCate">
-									<option selected value="">-------------</option>
-								</select>
-								<form:select path="process">
-									<form:option value="追加"/>
-									<form:option value="更新"/>
-									<form:option value="削除"/>
-								</form:select>
-							</p>
-							<p>
 								<form:input path="pCategoryName"/>
-							</p>
+								<form:hidden path="process" value="追加"/>
 
-					</c:when>
-					<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+						<p><button class="btn" type="submit" name="check">確認</button></p>
+					</form:form>
+				</div>
 
-							<form:select path="mainCategory">
-								<form:option value=""></form:option>
-								<form:options items="${mainCategory}" itemValue="categoryId" itemLabel="categoryName"/>
-							</form:select>
-							<form:input path="pCategoryName"/>
-							<form:hidden path="process" value="追加"/>
-
-					</c:otherwise>
-				</c:choose>
-					<p><button class="btn" type="submit" name="check">確認</button></p>
-				</form:form>
 				<script type="text/javascript">
 					$(function(){
 						// 親カテゴリを変更したときの処理
