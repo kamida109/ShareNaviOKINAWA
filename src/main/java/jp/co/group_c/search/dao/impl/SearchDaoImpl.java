@@ -242,6 +242,7 @@ public class SearchDaoImpl implements SearchDao{
 		jdbcTemplate.update(delete, param);
 	}
 
+
 	// お気に入り店舗の取得
 	@Override
 	public List<Favorite> favoriteStore() {
