@@ -137,21 +137,23 @@ public class ContactController {
 
 	// ユーザ管理画面に飛ぶ
 	@RequestMapping(value = "/user_management")
-	public String jampUserManagement(@ModelAttribute("userManagement") UserManagementForm form) {
+	public String jampUserManagement(@ModelAttribute("userManagement") UserManagementForm form,
+									@ModelAttribute("userDelete") UserDeleteForm userDeleteForm) {
 
 		return "user_management";
 	}
 
 	//ユーザー管理画面で検索ボタン押されたとき、この画面に戻る
 	@RequestMapping(value = "/user_management", params = "select", method = RequestMethod.POST)
-	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm userManagementForm, BindingResult bindingResult, Model model) {
+	public String managementSelect (@Validated @ModelAttribute("userManagement") UserManagementForm userManagementForm, BindingResult bindingResult,
+									@ModelAttribute("userDelete") UserDeleteForm userDeleteForm, Model model) {
 
 		//UserManagement userManagement = new UserManagement(userManagementForm.getUserId(), userManagementForm.getUserName());
 		List<UserManagement> list = contactService.managementFind(userManagementForm);
 
 		//IDか名前での検索結果がないとき
 		if(list.size() == 0) {
-			model.addAttribute("checkMsg", "対象のユーザーは存在しません。");
+			model.addAttribute("checkMsg", "対象のユーザーは存在しません");
 			return "user_management";
 		}
 
@@ -162,10 +164,11 @@ public class ContactController {
 
 	//確定ボタン押されたとき、この画面に戻る（削除）
 	@RequestMapping(value = "/user_management", params = "delete", method = RequestMethod.POST)
-	public String managementDelete (@Validated @ModelAttribute("userManagement") UserDeleteForm userDeleteForm, BindingResult bindingResult, Model model) {
+	public String managementDelete (@Validated @ModelAttribute("userDelete") UserDeleteForm userDeleteForm, BindingResult bindingResult, @ModelAttribute("userManagement") UserManagementForm userManagementForm, Model model) {
 
 		//ユーザーID未入力のとき
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("errMsg", "削除するユーザのユーザIDを入力してください");
 			return "user_management";
 		}
 

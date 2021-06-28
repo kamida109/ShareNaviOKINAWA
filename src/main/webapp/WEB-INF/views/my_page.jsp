@@ -23,11 +23,19 @@
 					<jsp:include page="/COMMON/table_store2.jsp"/>
 				</details>
 
+				<jsp:include page="/COMMON/table_recommend.jsp"/>
+
+
 				<!-- ---------- ここまで本体 ---------- -->
 
 			</div>
 			<!-- 共通部品_footer -->
 			<footer id="footer"></footer>
 		</div>
+
+		<script type="text/javascript" src="js/jquery.raty.js"></script>
+		<script type="text/javascript" src="js/star.js"></script>
+		<script type="text/javascript" src="js/img.js"></script>
+
 	</body>
 </html>
