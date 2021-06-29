@@ -88,7 +88,7 @@ public class UpdateDaoImpl implements UpdateDao{
 	@Override
 	public void storeFavorite(Favorite favorite, Integer flag) {
 		param.addValue("storeId", favorite.getStoreId());
-		param.addValue("userId", 1);
+		param.addValue("userId", favorite.getUserId());
 
 		if(flag==0) {
 			jdbcTemplate.update(STORE_FAVORITE, param);

@@ -108,14 +108,17 @@ public class UpdateController {
 	}
 
 	// お気に入り機能の実装(非同期)
-	@RequestMapping(value="favorite/{storeId}/{flag}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="favorite/{storeId}/{userId}/{flag}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public void storeFavorite(@PathVariable("storeId") String storeId, @PathVariable("flag") String flag, Model model) {
+	public void storeFavorite(@PathVariable("storeId") String storeId, @PathVariable("userId") String userId, @PathVariable("flag") String flag, Model model) {
 
 		Integer intStoreId = (Utility.isNumber(storeId)) ? Integer.parseInt(storeId):null;
 		Integer intFlag = (Utility.isNumber(flag)) ? Integer.parseInt(flag):null;
+		Integer intUserId = (Utility.isNumber(userId)) ? Integer.parseInt(userId):null;
 
-		Favorite favarite = new Favorite(1, intStoreId);
+		System.out.println(userId);
+
+		Favorite favarite = new Favorite(intUserId, intStoreId);
 
 		updateService.storeFavorite(favarite, intFlag);
 

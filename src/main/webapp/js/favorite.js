@@ -5,6 +5,7 @@ $(function(){
 	$("#favorite").click(function(){
 		let flag = $("#flagStatus").val();
 		let storeId = $("#storeId").val();
+		let userId = $('#userId').val();
 
 		console.log(storeId);
 
@@ -12,7 +13,7 @@ $(function(){
 			console.log(flag+':お気に入り登録');
 			$("#favorite").html('<img class="favorite_store" src="/CSS/image/heart_on.png"><input type="hidden" id="flagStatus" value=1>');
 
-			$.get("favorite/"+storeId+'/'+flag, function(){
+			$.get("favorite/"+storeId+'/'+userId+'/'+flag, function(){
 
 			});
 		} else {

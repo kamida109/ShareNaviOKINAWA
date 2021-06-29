@@ -58,7 +58,7 @@ public class HomeController {
 		//宣言したListをModelに保存
 		model.addAttribute("storeList", newArrivalList);
 		model.addAttribute("mainCategoryList", mainCategoryList);
-		model.addAttribute("imageList", imageList);
+		session.setAttribute("imageList", imageList);
 
 		//DBが空の時の対処
 		if(userList == null) {
