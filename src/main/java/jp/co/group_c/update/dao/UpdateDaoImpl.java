@@ -47,6 +47,8 @@ public class UpdateDaoImpl implements UpdateDao{
 	@Override
 	public void storeUpdate(Store store) {
 
+		System.out.println(store.getBusinessHours());
+
 		param.addValue("storeId", store.getStoreId());
 		param.addValue("storeName", store.getStoreName());
 		param.addValue("businessHours", store.getBusinessHours());

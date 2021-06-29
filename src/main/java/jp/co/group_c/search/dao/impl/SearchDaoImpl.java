@@ -46,7 +46,7 @@ public class SearchDaoImpl implements SearchDao{
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
 
-	private static final String STORE_DITAILS = "SELECT DISTINCT s.store_id, store_name, s.cities_id, address, tel, cities_name,"
+	private static final String STORE_DITAILS = "SELECT DISTINCT s.store_id, store_name, business_hours, s.cities_id, address, tel, cities_name,"
 													+ " avg(hyouka) as hyouka \n"
 													+ "FROM store AS s\n"
 													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"

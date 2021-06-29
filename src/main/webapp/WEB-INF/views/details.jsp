@@ -30,6 +30,7 @@
 			<input type="hidden" id="storeId" value="${main.storeId}">
 			<input type="hidden" id="storeName" value="${main.storeName}">
 			<input type="hidden" id="userId" value="${signInUser.userId}">
+			<input type="hidden" id="userId" value="${main.businessHours}">
 
 			<c:forEach var="review" items="${reviewList}">
 				<input type="hidden" id="reviewId" value="${review.reviewId}">
@@ -83,6 +84,7 @@
 			</p>
 			<c:if test="${signInUser.userId eq review.userId}">
 				<input type="hidden" id="reviewId" value="${review.reviewId}">
+				<input type="hidden" id="reviewId" value="${review.userId}">
 			</c:if>
 			</c:forEach>
 
@@ -118,13 +120,7 @@
 			<p id="errMsg"></p>
 			<textarea id="newReview" rows="10" cols="90" placeholder="編集内容を入力してください"></textarea>
 			<p>
-				<c:if test="${empty review}">
-					<button type="button" id="reviewInsert">追加</button>
-				</c:if>
-
-				<c:if test="${not empty review}">
-					<button type="button" id="comit">編集</button>
-				</c:if>
+				<button type="button" id="reviewInsert">追加</button>
 
 				<button type="button" class="modal_close">戻る</button></p>
 		</div>
