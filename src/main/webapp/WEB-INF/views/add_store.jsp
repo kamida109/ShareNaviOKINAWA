@@ -38,7 +38,8 @@
 						<form:input type="tel" maxlength="20" path="tel" placeholder="ハイフン\"-\"不要"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">営業時間：<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
+						<label style="font-weight:bold;">営業時間：
+						<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
 					</div>
 					</div><br><br>
 

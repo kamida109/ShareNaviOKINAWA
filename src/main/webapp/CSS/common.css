@@ -10,7 +10,7 @@ body {
 	z-index: 0;
 	background-image: url(image/okinawa.jpg);
 	font-size: 25px;
-	color: #000080;
+	color: #000050;
 }
 
 /* 背景画像を白く濁らせる1 */
@@ -19,7 +19,7 @@ body {
 	width: 125%;
 	min-height: 125vh;
 	z-index: 0;
-	background-color: #ffffffa5;
+	background-color: #ffffffc5;
 }
 
 /* 背景画像を白く濁らせる2 */
@@ -28,16 +28,16 @@ body {
 	width: 125%;
 	min-height: 125vh;
 	z-index: 0;
-	background-color: #ffffffd0;
+	background-color: #fffffff5;
 }
 
 /* ボタンの色 */
 button {
-	border: solid 2px #000080;
+	border: solid 2px #000050;
 	border-radius: 3px;
 	background-color: #b0e0ff;
 	font-size: 20px;
-	color: #000080;
+	color: #000050;
 }
 button:hover{
 	background-color: #8fffd3;
@@ -84,7 +84,7 @@ textarea{
 
 /* 各入力部品の色 */
 input, select, textarea {
-	border: solid 2px #000080;
+	border: solid 2px #000050;
 	border-radius: 3px;
 	background-color: #f0ffff;
 }

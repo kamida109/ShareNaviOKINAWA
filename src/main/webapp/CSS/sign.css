@@ -17,7 +17,7 @@
 
 /* タイトル */
 h1 {
-	color: #000080;
+	color: #000050;
 	font-style: italic;
 }
 
@@ -36,5 +36,5 @@ h1 {
 	text-align: right;
 	padding: 0;
 	font-weight: bold;
-	color: #000080;
+	color: #000050;
 }

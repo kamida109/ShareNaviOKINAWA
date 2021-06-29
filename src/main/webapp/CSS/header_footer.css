@@ -15,7 +15,7 @@
 		z-index: 5;
 		font-size: 50px;
 		font-style: italic;
-		color: #000080;
+		color: #000050;
 	}
 
 	header .signin_userinfo {
@@ -24,7 +24,7 @@
 		right: calc(2.5vw + 120px);
 		z-index: 5;
 		font-size: 20px;
-		color: #000080;
+		color: #000050;
 	}
 
 	header 	.signout{
@@ -102,7 +102,8 @@
 	footer {
 		position: fixed;
 		bottom: 0;
-		left: 2vw;
+		left: 1vw;
+		font-size: 20px;
 		font-weight: normal;
 		color: #606060;
 	}

@@ -107,6 +107,8 @@ summary {
 	margin-right: 5%;
 	width: 90%;
 	*/
+	font-size: 30px;
+	font-weight: bold;
 	border: 2px solid #b5b5b5;
 	background-color: #b5b5b5;
 }
@@ -123,7 +125,7 @@ summary {
 	margin-top: 0px;
 	max-height: 500px;
 	padding: 0px 0px 0px 0px;
-	border: 2px solid #b5b5b5;
+	/*border: 2px solid #b5b5b5;*/
 	background-color: #e0e0ffb0;
 	overflow-y: auto;
 }

@@ -23,7 +23,7 @@
 					<jsp:include page="/COMMON/table_store2.jsp"/>
 				</details>
 
-				<jsp:include page="/COMMON/table_recommend.jsp"/>
+
 
 
 				<!-- ---------- ここまで本体 ---------- -->
