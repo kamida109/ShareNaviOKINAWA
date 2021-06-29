@@ -5,16 +5,9 @@
     width: 152px;
 }
 .image .storeimg{
-<<<<<<< HEAD
     height: 300px;
     width: 300px;
-    border: solid 1px black;
-    background-color: lightgreen;
-=======
-    height: 150px;
-    width: 150px;
     background-color: #ffffff;
->>>>>>> branch 'Developer' of https://github.com/kamida109/ShareNaviOKINAWA
     text-align: center;
 }
 .slick-prev:before,
