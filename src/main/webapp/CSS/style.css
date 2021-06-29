@@ -162,6 +162,11 @@ summary {
 	height: 50px;
 }
 
+.store_table td {
+	height: 70px;
+	width: 70px;
+}
+
 /* 一覧表の設定 */
 .other_table th {
 	position: sticky;
