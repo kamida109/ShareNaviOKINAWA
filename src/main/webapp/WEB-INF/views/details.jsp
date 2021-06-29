@@ -68,7 +68,12 @@
 			<p>営業時間：${main.businessHours}</p>
 
 			<p>写真 <a id="phote" href="/addPhoto?storeId=${main.storeId}">写真を追加する</a></p>
-			<p><img class="storeimg" src="CSS/image/no_image1.png"><br>※スライドショーの予定</p>
+			<p class="image"><c:forEach items="${imageList}" var="img">
+					<c:if test="${main.storeId eq img.storeId }">
+						<img class="storeimg" src="${img.paths}">
+					</c:if>
+				</c:forEach>
+			</p>
 
 			<p>レビュー <a id="review" href="">レビューを追加する</a></p>
 

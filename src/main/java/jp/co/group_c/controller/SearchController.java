@@ -21,9 +21,11 @@ import jp.co.group_c.entity.Cities;
 import jp.co.group_c.entity.FavoriteCategory;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.entity.Users;
+import jp.co.group_c.homeService.HomeService;
 import jp.co.group_c.search.service.SearchService;
 import jp.co.group_c.update.entity.Favorite;
 import jp.co.group_c.update.entity.Review;
+
 
 @Controller
 public class SearchController {
@@ -31,6 +33,9 @@ public class SearchController {
 	// 店舗検索画面に飛ぶ
 	@Autowired
 	private SearchService searchService;
+
+	@Autowired
+	private HomeService homeService;
 
 	@Autowired
 	HttpSession session;
@@ -135,6 +140,9 @@ public class SearchController {
 		List<Store> storeCategoryList = searchService.storeCategory();
 		session.setAttribute("mainCategoryList", storeCategoryList);
 
+		List<Store> imageList = homeService.image();
+		session.setAttribute("imageList", imageList);
+
 		return null;
 	}
 
@@ -157,6 +165,9 @@ public class SearchController {
 
 		// お気に入りに登録されているお店情報を取得
 		List<Favorite> favoriteStore = searchService.favoriteStore();
+
+		List<Store> imageList = homeService.image();
+		session.setAttribute("imageList", imageList);
 
 		for(Favorite f : favoriteStore) {
 

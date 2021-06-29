@@ -54,6 +54,9 @@ public class MyPageController {
 
 		Users signInUser = (Users)session.getAttribute("signInUser");
 
+		List<Store> imageList = homeService.image();
+		session.setAttribute("imageList", imageList);
+
 		//お気に入り表示
 		List<Store> favoriteList = storeService.favoriteStore(signInUser.getUserId());
 
