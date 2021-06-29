@@ -114,11 +114,12 @@ public class SearchController {
 
 		keyWord = (keyWord.equals("empty")) ? "" : keyWord;
 
-		// あいまい検索用にキーワードの前後に「%」をつける
+		System.out.println(keyWord);
+
 		String index = "%" + keyWord + "%";
 
 		Integer intSubCategory = (subCategory.equals("------------")) ? null : Integer.parseInt(subCategory);
-		Integer intPrace = Integer.parseInt(prace);
+		Integer intPrace = (prace.equals("1")) ? null : Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
 		List<Store> storeList = searchService.storeSearch(index, intSubCategory, intPrace, boolCheck);
@@ -227,7 +228,7 @@ public class SearchController {
 		session.removeAttribute("mainCategoryList");
 	}
 
-	
+
 	// 店舗詳細で戻るボタンが押された
 	@RequestMapping(value="/returnSearch/", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
