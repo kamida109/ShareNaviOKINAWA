@@ -115,7 +115,7 @@ public class SearchController {
 		keyWord = (keyWord.equals("empty")) ? "" : keyWord;
 
 		Integer intSubCategory = (subCategory.equals("------------")) ? null : Integer.parseInt(subCategory);
-		Integer intPrace = Integer.parseInt(prace);
+		Integer intPrace = (prace.equals("0")) ? null : Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
 		List<Store> storeList = searchService.storeSearch(keyWord, intSubCategory, intPrace, boolCheck);
@@ -209,7 +209,6 @@ public class SearchController {
 	@RequestMapping(value="/insertReview/{storeId}/{userId}/{newReview}", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public void reviewDel(@PathVariable("storeId") Integer sId, @PathVariable("userId") Integer uId, @PathVariable("newReview") String review) {
-		System.out.println(sId+uId+review);
 
 		searchService.insertReview(sId, uId, review);
 	}

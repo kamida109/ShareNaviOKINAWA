@@ -68,25 +68,25 @@
 			<p>営業時間：${main.businessHours}</p>
 
 			<p>写真 <a id="phote" href="/addPhoto?storeId=${main.storeId}">写真を追加する</a></p>
-			<p class="image"><c:forEach items="${imageList}" var="img">
+			<div class="image" style="height:300px; width:300px;"><c:forEach items="${imageList}" var="img">
 					<c:if test="${main.storeId eq img.storeId }">
 						<img class="storeimg" src="${img.paths}">
 					</c:if>
 				</c:forEach>
-			</p>
+			</div>
 
 			<p>レビュー <a id="review" href="">レビューを追加する</a></p>
 
 			<div class="modal_window">
 			<c:forEach var="review" items="${reviewList}">
 			<p>
-				<c:if test="${not empty review.review }">
+<%-- 				<c:if test="${not empty review.review }"> --%>
 					投稿者：${review.userName}<br>
 					<c:if test="${signInUser.authorityId eq 1 }">
 						<input type="checkBox" class="delReview" value="${review.reviewId}">
 					</c:if>
 					<textarea id="review" rows="5" cols="50" readonly>${review.review}</textarea>
-				</c:if>
+<%-- 				</c:if> --%>
 			</p>
 			<c:if test="${signInUser.userId eq review.userId}">
 				<input type="hidden" id="reviewId" value="${review.reviewId}">

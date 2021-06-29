@@ -17,23 +17,19 @@ public class PgStoreDao implements StoreDao {
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	private static final String STORE_SELECT_FAVORITRE = "SELECT s.store_id, store_name, cities_name, avg(hyouka) AS hyouka, paths FROM store AS s\r\n"
+	private static final String STORE_SELECT_FAVORITRE = "SELECT distinct s.store_id, store_name, cities_name, avg(hyouka) AS hyouka FROM store AS s\r\n"
 															+ "JOIN store_category AS sc ON s.store_id = sc.store_id\r\n"
-															+ "JOIN category AS c ON sc.category_id = c.category_id\r\n"
 															+ "JOIN cities AS city ON s.cities_id = city.cities_id\r\n"
 															+ "JOIN review AS r ON s.store_id = r.store_id\r\n"
-															+ "JOIN images AS i ON s.store_id = i.store_id\r\n"
 															+ "WHERE s.store_id IN(SELECT store_id FROM favorite WHERE user_id = :userId)\r\n"
-															+ "GROUP BY s.store_id, store_name, cities_name, paths";
+															+ "GROUP BY s.store_id, store_name, cities_name";
 
-	private static final String STORE_SELECT_REVIEW = "SELECT s.store_id, store_name, cities_name, hyouka, paths FROM store AS s\r\n"
+	private static final String STORE_SELECT_REVIEW = "SELECT distinct s.store_id, store_name, cities_name, avg(hyouka) AS hyouka FROM store AS s\r\n"
 															+ "JOIN store_category AS sc ON s.store_id = sc.store_id\r\n"
-															+ "JOIN category AS c ON sc.category_id = c.category_id\r\n"
 															+ "JOIN cities AS city ON s.cities_id = city.cities_id\r\n"
 															+ "JOIN review AS r ON s.store_id = r.store_id\r\n"
-															+ "JOIN images AS i ON s.store_id = i.store_id\r\n"
 															+ "WHERE r.user_id = :userId\r\n"
-															+ "GROUP BY s.store_id, store_name, cities_name, hyouka, paths";
+															+ "GROUP BY s.store_id, store_name, cities_name, hyouka";
 
 	//お気に入り表示メソッド
 	public List<Store> favoriteStore(int userId) {

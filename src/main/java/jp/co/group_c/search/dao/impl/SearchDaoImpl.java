@@ -30,7 +30,7 @@ public class SearchDaoImpl implements SearchDao{
 	// 入力値の埋め込み
     MapSqlParameterSource param = new MapSqlParameterSource();
 
-    private static final String SQL_CITEIS = "SELECT * FROM cities";
+    private static final String SQL_CITEIS = "SELECT * FROM cities ORDER BY cities_id";
 
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
