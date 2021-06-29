@@ -13,6 +13,8 @@
 			<jsp:include page="/COMMON/header.jsp"/>
 			<div class="frame">
 
+			<h2>検索</h2>
+
 				<div class="input_form">
 				<div class="input_form_inner">
 					<p><label>キーワード：<input type="text" id="keyWord"/></label></p>

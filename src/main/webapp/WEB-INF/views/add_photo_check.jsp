@@ -15,10 +15,9 @@
 
 		<div class="frame">
 		<div class="input_form">
-		<div class="input_form_inner">
 			<form:form action="add_photo_result" modelAttribute="add_photo" method="Post" class="addStoreForm" enctype="multipart/form-data">
 					<div>
-						<h3>写真</h3>
+						<h2>写真の追加</h2>
 					</div>
 					<div id="images">
 						<p id="selectImage">
@@ -29,9 +28,8 @@
 <%-- 					<form:hidden path="storeImages" value="${addImages}"/> --%>
 
 				<p><button class="btn" type="button" onclick="location.href='add_photo'">戻る</button>
-				<button class="btn" type="submit" name="check">確認</button></p>
+				<button class="btn" type="submit" name="check">追加</button></p>
 			</form:form>
-		</div>
 		</div>
 		</div>
 	</div>

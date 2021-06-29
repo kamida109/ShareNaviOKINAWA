@@ -10,6 +10,8 @@
 	<jsp:forward page="/sign_in"/>
 </c:if>
 
+<div class="header">
+
 	<script>
 		$(function(){
 			path = location.pathname
@@ -34,7 +36,7 @@
 	<a href="/home"><h1>ShareNaviOKINAWA</h1></a>
 	<span class="signin_userinfo"><a href="/user_info">${fn:escapeXml(signInUser.userName)}</a>さん</span>
 	<a class="signout" href="/sign_out">LOGOUT</a>
-	<div>
+	<div class="menubar">
 		<ul>
 			<li class="home"><a href="/home">HOME</a></li>
 			<li class="my_page"><a href="/my_page">MY PAGE</a></li>
@@ -44,4 +46,5 @@
 		</ul>
 	</div>
 
+</div>
 </header>

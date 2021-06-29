@@ -62,8 +62,8 @@
 							</div>
 						</div>
 						</div>
+						<br><br><br><form:button id="update" class="btn" type="submid" name="update">変更</form:button>
 					</div>
-					<p><form:button id="update" class="btn" type="submid" name="update">確認</form:button></p>
 				</form:form>
 
 				<script>
