@@ -16,7 +16,7 @@
 	<div class="frame">
 	<form:form action="update_store" modelAttribute="update_store">
 		<div class="input_form">
-			<div class="input_form_inner">
+			<div style="margin-top:20px;">
 
 			<button name="storeUpdate">編集</button>
 
@@ -37,45 +37,58 @@
 				<input type="hidden" id="reviewId" value="${review.reviewId}">
 			</c:forEach>
 
-			<p>
-			店舗名：${main.storeName}
+			<div class="inner_frame_hidden">
+				<div class="inner_frame_left">
+					<p>店舗名：</p>
+					<p>評価：</p>
+					<p>カテゴリ:</p>
+					<p>住所：</p>
+					<p>電話番号：</p>
+					<p>営業時間：</p>
+					<p>写真：</p>
+				</div>
+				<div class="inner_frame_right">
+					<p>
+					${main.storeName}
 
-			<span id="favorite">
-			<c:if test="${empty flag}">
-			<img src="/CSS/image/heart_off.png">
-			<input type="hidden" id="flagStatus" value=0>
-			</c:if>
-
-			<c:if test="${not empty flag}">
-			<img src="/CSS/image/heart_on.png">
-			<input type="hidden" id="flagStatus" value=1>
-			</c:if>
-			</span>
-
-			<p>
-			評価：<span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span>
-			</p>
-
-			<p>カテゴリ:
-			<c:forEach var="category" items="${mainCategoryList}">
-				<c:if test="${main.storeId eq category.storeId }">
-				${category.categoryName}
-				</c:if>
-			</c:forEach></p>
-
-			<p>住所：${main.citiesName} ${main.address}</p>
-			<p>電話番号：${main.tel}</p>
-			<p>営業時間：${main.businessHours}</p>
-
-			<p>写真 <a id="phote" href="/addPhoto?storeId=${main.storeId}">写真を追加する</a></p>
-			<div class="image" style="height:300px; width:300px;"><c:forEach items="${imageList}" var="img">
-					<c:if test="${main.storeId eq img.storeId }">
-						<img class="storeimg" src="${img.paths}">
+					<span id="favorite">
+					<c:if test="${empty flag}">
+					&emsp;<img src="/CSS/image/heart_off.png">
+					<input type="hidden" id="flagStatus" value=0>
 					</c:if>
-				</c:forEach>
+
+					<c:if test="${not empty flag}">
+					&emsp;<img src="/CSS/image/heart_on.png">
+					<input type="hidden" id="flagStatus" value=1>
+					</c:if>
+					</span>
+
+					<p><span class="star" id="star-${store.storeId}" data-star="${main.hyouka}"></span></p>
+
+					<p><c:forEach var="category" items="${mainCategoryList}">
+						<c:if test="${main.storeId eq category.storeId }">
+						<span class="button">${category.categoryName}</span>
+						</c:if>
+					</c:forEach></p>
+
+					<p>${main.citiesName} ${main.address}&emsp;</p>
+					<p>${main.tel}&emsp;</p>
+					<p>${main.businessHours}&emsp;</p>
+					<div class="image" style="margin-top:0; margin-bottom:10px; height:300px; width:300px;">
+						<c:forEach items="${imageList}" var="img">
+						<c:if test="${main.storeId eq img.storeId }">
+							<img class="storeimg" src="${img.paths}">
+						</c:if>
+						</c:forEach>
+					</div>
+					<a id="phote" href="/addPhoto?storeId=${main.storeId}" style="margin-left:200px; font-size: 20px">写真を追加する</a>
+				</div>
 			</div>
 
-			<p>レビュー <a id="review" href="">レビューを追加する</a></p>
+			<div style="clear:both;"></div>
+
+
+			<p>レビュー <br><a id="review" href="" style="margin-left:200px;font-size: 20px">レビューを追加する</a></p>
 
 			<div class="modal_window">
 			<c:forEach var="review" items="${reviewList}">

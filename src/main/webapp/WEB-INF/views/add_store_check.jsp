@@ -22,26 +22,26 @@
 				<form:form action="add_store_result" modelAttribute="add_store" method="Post" class="addStoreForm" enctype="multipart/form-data">
 
 					<div style="display:inline-block; width: max-content; text-align: right;">
-					<div><label style="font-weight:bold;">名前：
+					<div><label>名前：
 						<form:input style="margin-top:20px;" path="storeName" readonly="true"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">住所：
+						<label>住所：
 						<form:hidden path="address1"/>
 						<form:input path="address1Name" readonly="true"/><br>
 						<form:input path="address2" readonly="true"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">TEL：
+						<label>TEL：
 						<form:input type="tel" path="tel" readonly="true"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">営業時間：
+						<label>営業時間：
 						<form:textarea path="workTime" style="resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" readonly="true"/></label>
 					</div>
 					</div><br><br>
 
-					<div style="display:inline-block; text-align:left; font-weight:bold;">カテゴリ：</div><div style="display:inline-block; padding-left:350px; text-align:right;"><a href="/category_process" style="font-size: 15px">カテゴリを追加する</a></div>
+					<div style="display:inline-block; text-align:left;">カテゴリ：</div><div style="display:inline-block; padding-left:350px; text-align:right;"><a href="/category_process" style="font-size: 15px">カテゴリを追加する</a></div>
 					<div class="inner_frame_hidden">
 						<div class="inner_frame_left">
 							<form:hidden path="subCategoryId1"/>
@@ -61,12 +61,12 @@
 					</div><br><br><br>
 
 					<div>
-						<h3>写真</h3>
+
 					</div>
 					<div id="images">
-						<p id="selectImage">
+						<span>写真：</span><span id="selectImage" style="vertical-align:top;">
 							${checkImage}
-						</p>
+						</span>
 					</div>
 					<form:hidden path="storeImages" value="${setImages}"/>
 

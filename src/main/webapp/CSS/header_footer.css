@@ -4,24 +4,33 @@
 	header {
 		position: fixed;
 		top: 0px;
-		height: calc(100px + 45px + 4px);
+		height: calc(100px);
 		z-index: 5;
+	}
+
+	.header {
+		position: fixed;
+		top: 0px;
+		height: calc(100px);
+		width: 125vw;
+		background-color: #dddddd;
+		z-index: 3;
 	}
 
 	header h1 {
 		position: fixed;
-		margin-top: 5px;
-		left: 5vw;
+		margin-top: 2px;
+		left: 3vw;
 		z-index: 5;
-		font-size: 50px;
+		font-size: 40px;
 		font-style: italic;
 		color: #000050;
 	}
 
 	header .signin_userinfo {
 		position: fixed;
-		top: 40px;
-		right: calc(2.5vw + 120px);
+		top: 20px;
+		right: 130px;
 		z-index: 5;
 		font-size: 20px;
 		color: #000050;
@@ -30,26 +39,24 @@
 	header 	.signout{
 		position: fixed;
 		display: block;
-		top: 35px;
-		right: 2.5vw;
+		top: 15px;
+		right: 15px;
 		width: 100px;
 		height: auto;
 		text-align: center;
 		z-index: 5;
-		border: 1px solid #acacec;
+		border: 1px solid #bcbcbc;
 		border-radius: 5px;
-		background-color: #acacec;
+		background-color: #bcbcbc;
 		font-size: 20px;
 		text-decoration: none;
-		color: #ffffff;
+		color: #000050;
 	}
 
-	header div {
+	header .menubar {
 		position: fixed;
-		top: 70px;
-		left: 2.5vw;
-		right: 2.5vw;
-		width: clac(125vw - (2.5vw * 2));
+		top: 50px;
+		width: 125vw;
 		height: auto;
 		z-index: 5;
 	}
@@ -73,28 +80,29 @@
 	}
 
 	header li a{
-		display: block;
-		width: calc((125vw - (2.5vw * 2)) / 5 - 4px );
+		display:table-cell;
+		width: calc( 125vw / 5 );
 		height: 45px;
 		text-align: center;
+		vertical-align: middle;
 		z-index: 6;
-		font-size: 33px;
+		font-size: 25px;
 		white-space: nowrap;
-		border: 2px solid #acacec;
-		background-color: #acacec;
+		border-bottom: 5px solid #dddddd;
+		background-color: #dddddd;
 		text-decoration: none;
-		color: #ffffff;
+		color: #000050;
 	}
 
 	header li a:hover,
 	header .signout:hover {
-		border: 2px solid #8fffd3;
-		background-color: #8fffd3;
+		border-bottom: 5px solid #888888;
+		background-color: #888888;
+		color: #ffffff;
 	}
 
 	header .current {
-		border: 2px solid #5555ff;
-		background-color: #5555ff;
+		border-bottom: 5px solid #5555ff;
 	}
 
 /* ---------- フッター ---------- */

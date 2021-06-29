@@ -23,27 +23,27 @@
 				<form:form action="add_store_check" modelAttribute="add_store" method="Post" class="addStoreForm" enctype="multipart/form-data">
 
 					<div style="display:inline-block; width: max-content; text-align: right;">
-					<div><label style="font-weight:bold;">名前：
+					<div><label>名前：
 						<form:input style="margin-top:20px;" path="storeName"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">住所：
+						<label>住所：
 						<form:select path="address1">
 							<form:options items="${cities}" itemValue="citiesId" itemLabel="citiesName"/>
 						</form:select></label><br>
 						<form:input path="address2" placeholder="例）小禄2-5-1"/>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">TEL：
+						<label>TEL：
 						<form:input type="tel" maxlength="20" path="tel" placeholder="ハイフン\"-\"不要"/></label>
 					</div><br>
 					<div>
-						<label style="font-weight:bold;">営業時間：
+						<label>営業時間：
 						<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
 					</div>
 					</div><br><br>
 
-					<div style="display:inline-block; text-align:left; font-weight:bold;">カテゴリ：</div><div style="display:inline-block; padding-left:350px; text-align:right;"><a href="/category_process" style="font-size: 15px">カテゴリを追加する</a></div>
+					<div style="display:inline-block; text-align:left;">カテゴリ：</div><div style="display:inline-block; padding-left:330px; text-align:right;"><a href="/category_process" style="font-size:20px">カテゴリを追加する</a></div>
 					<div class="inner_frame_hidden">
 						<div class="inner_frame_left">
 							<form:select path="mainCategoryId1" id="mainCate1">
@@ -75,7 +75,7 @@
 					</div><br><br><br>
 
 					<div>
-						<h3>写真</h3>
+						<span>写真：</span>
 						<form:input path="storeImages" type="file" multiple="true" name="storeImg" accept="image/jpeg, image/png" style="width:300px; height:34px;" onchange="OnFileSelect( this );" />
 					</div>
 
