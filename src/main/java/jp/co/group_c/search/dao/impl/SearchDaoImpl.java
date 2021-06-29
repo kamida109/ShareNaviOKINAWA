@@ -34,7 +34,7 @@ public class SearchDaoImpl implements SearchDao{
 
     private static final String SQL_CATEGORY = "SELECT * FROM category";
 
-	private static final String SQL_SEARCH = "SELECT DISTINCT s.store_id, store_name, cities_name, avg(hyouka) AS hyouka\n"
+	private static final String SQL_SEARCH = "SELECT DISTINCT s.store_id, store_name, city.cities_id, cities_name, avg(hyouka) AS hyouka\n"
 												+ "FROM store AS s\n"
 												+ "JOIN store_category AS sc ON s.store_id = sc.store_id\n"
 												+ "JOIN category AS c ON sc.category_id = c.category_id\n"
@@ -104,7 +104,7 @@ public class SearchDaoImpl implements SearchDao{
 		// 全入力
 		if(!storeName.isEmpty() && subCategory!=null && cityId!=null) {
 			System.out.println("完全一致検索");
-			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory AND city.cities_id = :city\n";
+			storeSearch += " AND store_name LIKE :storeName AND c.category_id = :subCategory AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
 			param.addValue("subCategory", subCategory);
 			param.addValue("city", cityId);
@@ -113,7 +113,7 @@ public class SearchDaoImpl implements SearchDao{
 		// 店舗名+カテゴリ
 		if(!storeName.isEmpty() && subCategory!=null && cityId==null) {
 			System.out.println("店舗名+カテゴリ");
-			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory\n";
+			storeSearch += " AND store_name LIKE :storeName AND c.category_id = :subCategory\n";
 			param.addValue("storeName", storeName);
 			param.addValue("subCategory", subCategory);
 		}
@@ -121,7 +121,7 @@ public class SearchDaoImpl implements SearchDao{
 		// 店舗名+市町村
 		if(!storeName.isEmpty() && subCategory==null && cityId!=null) {
 			System.out.println("店舗名+市町村");
-			storeSearch += " AND store_name = :storeName AND city.cities_id = :city\n";
+			storeSearch += " AND store_name LIKE :storeName AND city.cities_id = :city\n";
 			param.addValue("storeName", storeName);
 			param.addValue("city", cityId);
 		}
@@ -137,7 +137,7 @@ public class SearchDaoImpl implements SearchDao{
 		// 店舗名+カテゴリ
 		if(!storeName.isEmpty() && subCategory!=null && cityId==null) {
 			System.out.println("店舗名+カテゴリ");
-			storeSearch += " AND store_name = :storeName AND c.category_id = :subCategory\n";
+			storeSearch += " AND store_name LIKE :storeName AND c.category_id = :subCategory\n";
 			param.addValue("storeName", storeName);
 			param.addValue("subCategory", subCategory);
 		}
@@ -145,7 +145,7 @@ public class SearchDaoImpl implements SearchDao{
 		// 店舗名のみ
 		if(!storeName.isEmpty() && subCategory==null && cityId==null) {
 			System.out.println("店舗名のみ");
-			storeSearch += " AND store_name = :storeName\n";
+			storeSearch += " AND store_name LIKE :storeName\n";
 			param.addValue("storeName", storeName);
 		}
 
@@ -163,14 +163,14 @@ public class SearchDaoImpl implements SearchDao{
 			param.addValue("city", cityId);
 		}
 
-		storeSearch += "GROUP BY s.store_id, store_name, cities_name, hyouka";
+		storeSearch += "GROUP BY s.store_id, store_name, city.cities_id, cities_name, hyouka";
 
 		// 評価3以上
 		if(hyouka) {
 			storeSearch += "\nHAVING avg(hyouka) >= 3";
 		}
 
-//		storeSearch += "\nORDER BY city.cities_id";
+		storeSearch += "\nORDER BY city.cities_id";
 
 		storeList = jdbcTemplate.query(storeSearch, param, new BeanPropertyRowMapper<Store>(Store.class));
 		return storeList;
@@ -188,7 +188,7 @@ public class SearchDaoImpl implements SearchDao{
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
 		String partSearch = SQL_SEARCH + "AND review LIKE :storeName\n"
-							+ "GROUP BY s.store_id, store_name, cities_name";
+							+ "GROUP BY s.store_id, store_name, cities_name, city.cities_id";
 		param.addValue("storeName", storeName);
 
 		if(hyouka) {

@@ -19,53 +19,58 @@
 	<!-- 管理者 -->
 	<c:if test= "${fn:escapeXml(signInUser.authorityId)==1}">
 
+		<h2>問い合わせ管理</h2>
+
+		<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
+		<a href="/user_management">ユーザー管理</a><br><br>
+
 		<div class="scroll" style="margin-top:20px; max-height:350px;">
-		<table class="other_table" id="checked_list">
-		<caption><h3 style="margin:0;">問い合わせ</h3>
-		<form:form action="/contact" method="post" modelAttribute="contact_management">
-			<input type="radio" name="sample" id="solved">未解決のみ表示
-			<input type="radio" name="sample" id="unsolved">解決のみ表示
-			<input type="radio" name="sample" id="all">全件表示
-	 	</form:form></caption>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>ユーザー名</th>
-				<th>目的</th>
-				<th>状況</th>
-			</tr>
-		</thead>
+			<table class="other_table" id="checked_list">
+			<caption style="height:90px;"><h3 style="margin:0;">問い合わせ</h3>
+			<form:form action="/contact" method="post" modelAttribute="contact_management">
+				<label class="button"><input type="radio" name="sample" id="solved" style="display:none;">未解決のみ表示</label>
+				<label class="button"><input type="radio" name="sample" id="unsolved" style="display:none;">解決のみ表示</label>
+				<label class="button"><input type="radio" name="sample" id="all" style="display:none;">全件表示</label>
+		 	</form:form></caption>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>ユーザー名</th>
+					<th>目的</th>
+					<th>状況</th>
+				</tr>
+			</thead>
 
-		<c:forEach var="result" items= "${selectResult}">
-			<tr>
-				<td><a href="/contact/${fn:escapeXml(result.contactId)}">${fn:escapeXml(result.contactId)}</a></td>
-				<td>${fn:escapeXml(result.userName)}</td>
+			<c:forEach var="result" items= "${selectResult}">
+				<tr data-href="/contact/${fn:escapeXml(result.contactId)}">
+					<td>${fn:escapeXml(result.contactId)}</td>
+					<td>${fn:escapeXml(result.userName)}</td>
 
-				<c:choose>
-					<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
-						<td style="background-color:#ffaaaa77;"><span>通報</span></td>
-					</c:when>
-					<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
-						<td style="background-color:#efe8af77;"><span>問い合わせ</span></td>
-					</c:when>
-					<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
-						<td style="background-color:#aaffea77;"><span>要望</span></td>
-					</c:when>
-				</c:choose>
+					<c:choose>
+						<c:when test="${fn:escapeXml(result.contactCategoryId ==1)}">
+							<td style="background-color:#ffaaaa77;"><span>通報</span></td>
+						</c:when>
+						<c:when test="${fn:escapeXml(result.contactCategoryId ==2)}">
+							<td style="background-color:#efe8af77;"><span>問い合わせ</span></td>
+						</c:when>
+						<c:when test="${fn:escapeXml(result.contactCategoryId ==3)}">
+							<td style="background-color:#aaffea77;"><span>要望</span></td>
+						</c:when>
+					</c:choose>
 
-				<c:choose>
-					<c:when test="${fn:escapeXml(result.flag eq 'true')}">
-						<td><span>解決</span></td>
-					</c:when>
-					<c:otherwise>
-						<td style="background-color:#ffaaaa77;"><span>未解決</span></td>
-					</c:otherwise>
-				</c:choose>
+					<c:choose>
+						<c:when test="${fn:escapeXml(result.flag eq 'true')}">
+							<td><span>解決</span></td>
+						</c:when>
+						<c:otherwise>
+							<td style="background-color:#ffaaaa77;"><span>未解決</span></td>
+						</c:otherwise>
+					</c:choose>
 
-			</tr>
-		</c:forEach>
+				</tr>
+			</c:forEach>
 
-	</table>
+		</table>
 	</div><br>
 
 
@@ -98,9 +103,6 @@
 		</form:form>
 		</div>
 
-		<!-- hrefはとぶjspを指定する。コントローラーではリクエストマッピングの値 -->
-		<br><br><a href="/user_management">ユーザー管理</a><br><br>
-
 	</c:if>
 
 	<!-- セッションにあるログインユーザーの権限情報から管理者か一般ユーザーか判断する -->
@@ -128,6 +130,20 @@
 		 <br></div>
 
 	</c:if>
+
+	<script>
+jQuery( function($) {
+    $('tbody tr[data-href]').addClass('clickable').click( function() {
+        window.location = $(this).attr('data-href');
+    }).find('a').hover( function() {
+        $(this).parents('tr').unbind('click');
+    }, function() {
+        $(this).parents('tr').click( function() {
+            window.location = $(this).attr('data-href');
+        });
+    });
+});
+</script>
 
 				<!-- ---------- ここまで本体 ---------- -->
 

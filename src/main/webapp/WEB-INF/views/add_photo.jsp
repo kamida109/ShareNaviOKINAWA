@@ -15,10 +15,9 @@
 
 		<div class="frame">
 		<div class="input_form">
-		<div class="input_form_inner">
 			<form:form action="add_photo_check" modelAttribute="add_photo" method="Post" class="addStoreForm" enctype="multipart/form-data">
 				<div>
-					<h3>写真</h3>
+					<h3>写真の追加</h3>
 					<form:input path="storeImages" type="file" multiple="true" name="storeImg" accept="image/jpeg, image/png" style="width:300px; height:34px;" onchange="OnFileSelect( this );" />
 				</div>
 
@@ -29,7 +28,6 @@
 
 				<p><button class="btn" type="submit" name="check">確認</button></p>
 			</form:form>
-		</div>
 		</div>
 		</div>
 	</div>

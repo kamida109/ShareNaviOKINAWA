@@ -39,7 +39,7 @@
 						<tr class="bottom">
 							<c:forEach var="main" items="${mainCategoryList}">
 								<c:if test="${recommend.storeId eq main.storeId }">
-									<td rowspan="1" colspan="2" valign="top">${main.categoryName}</td>
+									<td rowspan="1" colspan="2" valign="top"><span class="button">${main.categoryName}</span></td>
 								</c:if>
 							</c:forEach>
 						</tr>
@@ -48,7 +48,6 @@
 				</table>
 			</div>
 		</div>
-		<hr>
 	</c:forEach>
 
 	<c:if test="${not empty notRecommendList}">
