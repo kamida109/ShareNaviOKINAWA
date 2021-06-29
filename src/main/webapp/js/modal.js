@@ -78,7 +78,7 @@ $('#storeDelete').click(function() {
 $('#backSearch').click(function(){
 	$.get("returnSearch/", function(){
 		console.log('戻るボタンクリック');
-		location.href = "http://localhost:8080/search";
+		location.href = "http://localhost:8080/home";
 
 	})
 });
