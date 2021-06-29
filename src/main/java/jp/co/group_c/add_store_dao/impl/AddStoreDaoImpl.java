@@ -33,6 +33,7 @@ public class AddStoreDaoImpl implements AddStoreDao {
 	private static final String WHERE_STORE = "WHERE store_name = :store_name "+
 												  "AND cities_id = :cities_id ";
 
+	private static final String INSERT_REVIEW = "INSERT INTO review (store_id) VALUES (:store_id)";
 
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -145,6 +146,13 @@ public class AddStoreDaoImpl implements AddStoreDao {
 		param.addValue("address", address);
 		param.addValue("tel", tel);
 		jdbcTemplate.update(sql, param);
+
+		//空レビュー追加
+		Store store = findStore(storeName, citiesId);//上の店舗検索メソッドで調達
+		String sql2 = INSERT_REVIEW;
+		MapSqlParameterSource param2 = new MapSqlParameterSource();
+		param2.addValue("store_id", store.getStoreId());
+		jdbcTemplate.update(sql2, param2);
 
 	}
 
