@@ -72,6 +72,7 @@ public class HomeController {
 
 		//おすすめ表示
 		List<Store> recommendList = homeService.recommend(userInfo.getUserId());
+		Collections.shuffle(recommendList);
 
 		//宣言したListをModelに保存
 		model.addAttribute("recommendList", recommendList);
