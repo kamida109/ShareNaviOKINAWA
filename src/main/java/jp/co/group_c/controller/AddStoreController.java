@@ -71,27 +71,18 @@ public class AddStoreController {
 								 @RequestParam("subCate2") String cateName2,
 								 @RequestParam("subCate3") String cateName3, Model model) /*throws IllegalStateException, IOException*/ {
 
-		System.out.println("★form.getStoreImages()：" + form.getStoreImages());
-		System.out.println("★サブカテ1："+cateName1);
-		System.out.println("★サブカテ2："+cateName2);
-		System.out.println("★サブカテ3："+cateName3);
-
-
 		/*画像保存*/
 		if(form.getStoreImages().get(0) != null) {
-			System.out.println("▲写真格納処理開始");
 
 			List<MultipartFile> formImg = form.getStoreImages();
 			String aaa = "";
 
-			System.out.println("★formImg："+formImg);
 			try {
 				for (MultipartFile file : formImg) {
 
 					String formFileName = file.getOriginalFilename();
 					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
 					File uploadFile = new File(imgUploadPath,formFileName);
-					System.out.println("★getPath："+uploadFile.getPath());
 
 					/*アクセスが拒否されました*/
 					file.transferTo(uploadFile);
@@ -99,10 +90,8 @@ public class AddStoreController {
 					aaa += "<img src=\"\\IMAGES\\store\\"+uploadFile.getName()+"\" style=\"width:400px;\">";
 				}
 				session.setAttribute("setImages", formImg);
-				System.out.println("★formImg："+ formImg);
 				model.addAttribute("checkImage", aaa);
 				model.addAttribute("imagesNum", formImg.size());
-				System.out.println("▼写真格納処理終了");
 
 			} catch(IllegalStateException e) {
 				System.out.println("☆--------IllegalStateException--------☆");
@@ -146,7 +135,7 @@ public class AddStoreController {
 			form.setSubCategoryName1(subCate1.getCategoryName());
 			model.addAttribute("cateName1", form.getSubCategoryName1());
 		}catch (NullPointerException e) {
-			System.out.println("★１ぬるぽ");
+			System.out.println("★１");
 		}
 		try {
 			form.setMainCategoryName2(mainCate2.getCategoryName());
@@ -154,7 +143,7 @@ public class AddStoreController {
 			form.setSubCategoryName2(subCate2.getCategoryName());
 			model.addAttribute("cateName2", form.getSubCategoryName2());
 		}catch (NullPointerException e) {
-			System.out.println("★２ぬるぽ");
+			System.out.println("★２");
 		}
 		try {
 			form.setMainCategoryName3(mainCate3.getCategoryName());
@@ -162,7 +151,7 @@ public class AddStoreController {
 			form.setSubCategoryName3(subCate3.getCategoryName());
 			model.addAttribute("cateName3", form.getSubCategoryName3());
 		}catch (NullPointerException e) {
-			System.out.println("★３ぬるぽ");
+			System.out.println("★３");
 		}
 
 		return "add_store_check";
@@ -188,18 +177,15 @@ public class AddStoreController {
 		//↑店舗情報追加
 
 		int nowStoreId = addStoreService.findStore(form.getStoreName(), form.getAddress1()).getStoreId();
+		session.setAttribute("newStoreId", nowStoreId);
 
 		//↓店舗カテゴリ
-
-		System.out.println("★カテゴリ1：" + form.getSubCategoryName1());
 		if(form.getSubCategoryId1() != null) {
 			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId1());
 		}
-		System.out.println("★カテゴリ2：" + form.getSubCategoryName2());
 		if(form.getSubCategoryId2() != null) {
 			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId2());
 		}
-		System.out.println("★カテゴリ3：" + form.getSubCategoryName3());
 		if(form.getSubCategoryId3() != null) {
 			addStoreService.addStoreCategory(nowStoreId, form.getSubCategoryId3());
 		}
@@ -208,9 +194,6 @@ public class AddStoreController {
 		//↑店舗カテゴリ
 
 		//↓画像をテーブルに保存
-
-		System.out.println("★画像配列：" + session.getAttribute("setImages"));
-
 		if(session.getAttribute("setImages") != null) {
 
 			List<MultipartFile> formImg = (List<MultipartFile>)session.getAttribute("setImages");
@@ -224,8 +207,6 @@ public class AddStoreController {
 
 					File uploadFile = new File(imgUploadPath,formFileName);
 //					File deleteFile = new File(imgDeletePath,formFileName);
-
-					System.out.println("あああああ"+uploadFile);
 
 //					file.transferTo(uploadFile);
 					addStoreService.insertImages(nowStoreId, uploadFile.getPath());
@@ -249,7 +230,6 @@ public class AddStoreController {
 	public String addPhoto(@ModelAttribute("add_photo") AddStoreForm form,
 							@RequestParam("storeId") Integer storeId, Model model) {
 
-		System.out.println(storeId);
 		model.addAttribute("nowStoreId",storeId);
 
 		return "add_photo";
@@ -259,19 +239,16 @@ public class AddStoreController {
 	public String addPhotoCheck(@ModelAttribute("add_photo") AddStoreForm form, Model model) {
 
 		if(form.getStoreImages().get(0) != null) {
-			System.out.println("▲写真格納処理開始");
 
 			List<MultipartFile> formImg = form.getStoreImages();
 			String aaa = "";
 
-			System.out.println("★formImg："+formImg);
 			try {
 				for (MultipartFile file : formImg) {
 
 					String formFileName = file.getOriginalFilename();
 					String imgUploadPath = context.getRealPath("/") + "/IMAGES/store/";
 					File uploadFile = new File(imgUploadPath,formFileName);
-					System.out.println("★getPath："+uploadFile.getPath());
 
 					/*アクセスが拒否されました*/
 					file.transferTo(uploadFile);
@@ -279,10 +256,8 @@ public class AddStoreController {
 					aaa += "<img src=\"\\IMAGES\\store\\"+uploadFile.getName()+"\" style=\"width:400px;\">";
 				}
 				session.setAttribute("addImages", formImg);
-				System.out.println("★formImg："+ formImg);
 				model.addAttribute("checkImage", aaa);
 				model.addAttribute("imagesNum", formImg.size());
-				System.out.println("▼写真格納処理終了");
 
 			} catch(IllegalStateException e) {
 				System.out.println("☆--------IllegalStateException--------☆");
@@ -295,8 +270,6 @@ public class AddStoreController {
 			model.addAttribute("errMes", "写真が選択されていません");
 			return "add_photo";
 		}
-
-		System.out.println("▲a画像配列：" + form.getStoreImages());
 
 		return "add_photo_check";
 	}
@@ -313,8 +286,6 @@ public class AddStoreController {
 
 		//↓画像をテーブルに保存
 
-		System.out.println("▲画像配列：" + session.getAttribute("addImages"));
-
 		if(session.getAttribute("addImages") != null) {
 
 			@SuppressWarnings("unchecked")
@@ -325,8 +296,6 @@ public class AddStoreController {
 					String imgUploadPath = "IMAGES/store/";
 
 					File uploadFile = new File(imgUploadPath,formFileName);
-
-					System.out.println("5555555"+uploadFile);
 
 					addStoreService.insertImages(nowStoreId, uploadFile.getPath());
 
