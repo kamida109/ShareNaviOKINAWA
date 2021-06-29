@@ -20,7 +20,7 @@ $(function(){
 			console.log(flag+':お気に入り解除');
 			$("#favorite").html('<img class="favorite_store" src="/CSS/image/heart_off.png"><input type="hidden" id="flagStatus" value=0>');
 
-			$.get("favorite/"+storeId+'/'+flag, function(){
+			$.get("favorite/"+storeId+'/'+userId+'/'+flag, function(){
 
 			});
 		}
