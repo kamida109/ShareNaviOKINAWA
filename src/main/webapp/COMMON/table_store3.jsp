@@ -26,8 +26,8 @@
 							<!-- 市町村名の出力処理 -->
 							<td class="cities" rowspan="1" colspan="3" align="left" valign="bottom">${plan.citiesName}</td>
 							<!-- 評価の出力処理 -->
-							<td class="star2" rowspan="1" colspan="3" id="star2-${plan.storeId}"
-								data-star2="${plan.hyouka}"></td>
+							<td class="star3" rowspan="1" colspan="3" id="star3-${plan.storeId}"
+								data-star3="${plan.hyouka}"></td>
 						</tr>
 
 						<tr>
