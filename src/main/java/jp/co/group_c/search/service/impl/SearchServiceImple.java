@@ -97,10 +97,4 @@ public class SearchServiceImple implements SearchService{
 		return searchDao.reviewList(storeId);
 	}
 
-	// レビューテーブルの件数取得
-	@Override
-	public List<Review> reviewNum() {
-		return searchDao.reviewNum();
-	}
-
 }

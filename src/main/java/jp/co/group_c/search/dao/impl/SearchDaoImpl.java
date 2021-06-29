@@ -46,11 +46,11 @@ public class SearchDaoImpl implements SearchDao{
 													+ "FROM store_category AS sc\n"
 													+ "JOIN category AS c ON sc.category_id = c.category_id";
 
-	private static final String STORE_DITAILS = "SELECT DISTINCT s.store_id, store_name, s.cities_id, address, tel, cities_name,"
+	private static final String STORE_DITAILS = "SELECT DISTINCT s.store_id, store_name, business_hours, s.cities_id, address, tel, cities_name,"
 													+ " avg(hyouka) as hyouka \n"
 													+ "FROM store AS s\n"
 													+ "JOIN cities AS city ON s.cities_id = city.cities_id\n"
-													+ "JOIN review AS r ON s.store_id = r.store_id\n"
+													+ "LEFT JOIN review AS r ON s.store_id = r.store_id\n"
 													+ "WHERE s.store_id = :storeId\n";
 
 	private static final String NEW_REVIEW ="UPDATE review\n"
@@ -67,8 +67,6 @@ public class SearchDaoImpl implements SearchDao{
 	private static final String GET_REVIEW = "SELECT * FROM review AS r\n"
 												+ "JOIN users AS u ON r.user_id = u.user_id\n"
 												+ "WHERE store_id = :storeId";
-
-	private static final String REVIEW_NUM = "select count(review_id) from review";
 
 	// 市町村テーブル全件取得
 	@Override
@@ -266,11 +264,6 @@ public class SearchDaoImpl implements SearchDao{
 		param.addValue("storeId", storeId);
 		List<Review> reviewList = jdbcTemplate.query(GET_REVIEW, param, new BeanPropertyRowMapper<Review>(Review.class));
 		return reviewList;
-	}
-
-	@Override
-	public List<Review> reviewNum() {
-		return jdbcTemplate.query(REVIEW_NUM, new BeanPropertyRowMapper<Review>(Review.class));
 	}
 
 }

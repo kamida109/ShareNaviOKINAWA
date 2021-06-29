@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.update.dao.UpdateDao;
 import jp.co.group_c.update.entity.Favorite;
-import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 
 @Service
@@ -25,8 +24,8 @@ public class UpdateServiceImpl implements UpdateService{
 
 	// 店舗の評価更新
 	@Override
-	public void storeRankUpdate(Review review) {
-		updateDao.storeRankUpdate(review);
+	public void storeRankUpdate(Integer sId, Integer hyouka) {
+		updateDao.storeRankUpdate(sId, hyouka);
 	}
 
 	// 店舗カテゴリの更新

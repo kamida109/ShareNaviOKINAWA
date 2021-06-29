@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.group_c.entity.Store;
 import jp.co.group_c.update.entity.Favorite;
-import jp.co.group_c.update.entity.Review;
 import jp.co.group_c.update.entity.StoreCategory;
 
 @Repository
@@ -28,7 +27,7 @@ public class UpdateDaoImpl implements UpdateDao{
 	// 店舗の評価の更新
 	private static final String STORE_RANK = "UPDATE review\n"
 												+ "SET hyouka = :hyouka, review_date = CURRENT_DATE\n"
-												+ "WHERE review_id = :reviewId";
+												+ "WHERE store_id = :storeId";
 
 	private static final String STORE_CATEGORY_DELETE = "DELETE FROM store_category\n"
 															+ "WHERE store_id = :storeId";
@@ -48,6 +47,8 @@ public class UpdateDaoImpl implements UpdateDao{
 	@Override
 	public void storeUpdate(Store store) {
 
+		System.out.println(store.getBusinessHours());
+
 		param.addValue("storeId", store.getStoreId());
 		param.addValue("storeName", store.getStoreName());
 		param.addValue("businessHours", store.getBusinessHours());
@@ -60,9 +61,12 @@ public class UpdateDaoImpl implements UpdateDao{
 
 	// 店舗の評価更新
 	@Override
-	public void storeRankUpdate(Review review) {
-		param.addValue("reviewId", review.getReviewId());
-		param.addValue("hyouka", review.getHyouka());
+	public void storeRankUpdate(Integer sId, Integer hyouka) {
+		System.out.println(sId);
+		System.out.println(hyouka);
+
+		param.addValue("storeId", sId);
+		param.addValue("hyouka", hyouka);
 
 		jdbcTemplate.update(STORE_RANK, param);
 	}

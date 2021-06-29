@@ -65,11 +65,11 @@ $('#storeDelete').click(function() {
 	let storeId = $('#storeId').val();
 	let storeName = $('#storeName').val();
 
-	if(window.confirm('「' + storeName + '」の情報を削除しますか?\nOKを押した場合、検索画面に遷移します')){
+	if(window.confirm('「' + storeName + '」の情報を削除しますか?\nOKを押した場合、HOME画面に遷移します')){
 		$.get("storeDelete/"+storeId, function(){
 			console.log('削除完了');
 		})
-		location.href = "http://localhost:8080/search";
+		location.href = "http://localhost:8080/home";
 	}
 	return false;
 });

@@ -49,7 +49,4 @@ public interface SearchService {
 	// レビューテーブルの取得
 	public List<Review> reviewList(Integer storeId);
 
-	// レビューテーブルの件数取得
-	public List<Review> reviewNum();
-
 }
