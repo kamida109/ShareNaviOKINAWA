@@ -114,11 +114,14 @@ public class SearchController {
 
 		keyWord = (keyWord.equals("empty")) ? "" : keyWord;
 
+		// あいまい検索用にキーワードの前後に「%」をつける
+		String index = "%" + keyWord + "%";
+
 		Integer intSubCategory = (subCategory.equals("------------")) ? null : Integer.parseInt(subCategory);
 		Integer intPrace = (prace.equals("0")) ? null : Integer.parseInt(prace);
 		boolean boolCheck = Boolean.valueOf(check);
 
-		List<Store> storeList = searchService.storeSearch(keyWord, intSubCategory, intPrace, boolCheck);
+		List<Store> storeList = searchService.storeSearch(index, intSubCategory, intPrace, boolCheck);
 
 		// 店舗検索
 		if(!storeList.isEmpty()) {
@@ -127,8 +130,7 @@ public class SearchController {
 			session.setAttribute("notList", "undefinde");
 		}
 
-		// あいまい検索用にキーワードの前後に「%」をつける
-		String index = "%" + keyWord + "%";
+
 		// あいまい検索
 		List<Store> partStoreList = searchService.partStoreSearch(index, boolCheck);
 		if(!partStoreList.isEmpty()) {
