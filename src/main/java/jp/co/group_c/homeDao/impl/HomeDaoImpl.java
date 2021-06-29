@@ -42,7 +42,8 @@ public class HomeDaoImpl implements HomeDao{
     									       + "JOIN review AS r ON s.store_id = r.store_id\n"
     									       + "WHERE sc.category_id IN (SELECT fc.category_id\n"
     									       + "FROM users AS u\n"
-    									       + "JOIN favorite_category AS fc ON :userId = fc.user_id)\n"
+    									       + "JOIN favorite_category AS fc ON u.user_id = fc.user_id\n"
+    									       + "WHERE u.user_id = :userId)\n"
     									       + "GROUP BY s.store_id, store_name, cities_name\n"
     									       + "LIMIT 3";
 

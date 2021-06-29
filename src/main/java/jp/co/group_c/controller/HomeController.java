@@ -38,6 +38,9 @@ public class HomeController {
 		//ユーザー情報の取得
 		List<Users> userList = homeService.users();
 
+		Users userInfo = (Users)session.getAttribute("signInUser");
+
+
 		//新着表示
 		List<Store> newArrivalList = homeService.newArrival();
 
@@ -68,7 +71,7 @@ public class HomeController {
 		}
 
 		//おすすめ表示
-		List<Store> recommendList = homeService.recommend(userList.get(0).getUserId());
+		List<Store> recommendList = homeService.recommend(userInfo.getUserId());
 
 		//宣言したListをModelに保存
 		model.addAttribute("recommendList", recommendList);
@@ -81,7 +84,7 @@ public class HomeController {
 		}
 
 		//新しい提案
-		List<Store> planList = homeService.plan(userList.get(0).getUserId());
+		List<Store> planList = homeService.plan(userInfo.getUserId());
 		Collections.shuffle(planList);
 
 		//DBが空の時の対処
