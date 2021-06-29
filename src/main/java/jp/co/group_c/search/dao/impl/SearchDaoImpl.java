@@ -187,7 +187,7 @@ public class SearchDaoImpl implements SearchDao{
 	// あいまい検索
 	@Override
 	public List<Store> partStoreSearch(String storeName, boolean hyouka) {
-		String partSearch = SQL_SEARCH + "AND store_name LIKE :storeName\n"
+		String partSearch = SQL_SEARCH + "AND review LIKE :storeName\n"
 							+ "GROUP BY s.store_id, store_name, cities_name";
 		param.addValue("storeName", storeName);
 
