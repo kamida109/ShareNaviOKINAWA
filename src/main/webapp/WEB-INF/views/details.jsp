@@ -30,7 +30,7 @@
 			<input type="hidden" id="storeId" value="${main.storeId}">
 			<input type="hidden" id="storeName" value="${main.storeName}">
 			<input type="hidden" id="userId" value="${signInUser.userId}">
-			<input type="hidden" value="${main.businessHours}">
+			<input type="hidden" dfvalue="${main.businessHours}">
 
 			<c:forEach var="review" items="${reviewList}">
 				<input type="hidden" id="reviewId" value="${review.reviewId}">
