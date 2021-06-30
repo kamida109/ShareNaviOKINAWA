@@ -52,12 +52,12 @@
 
 					<span id="favorite">
 					<c:if test="${empty flag}">
-					&emsp;<img src="/CSS/image/heart_off.png">
+					<img src="/CSS/image/heart_off.png">
 					<input type="hidden" id="flagStatus" value=0>
 					</c:if>
 
 					<c:if test="${not empty flag}">
-					&emsp;<img src="/CSS/image/heart_on.png">
+					<img src="/CSS/image/heart_on.png">
 					<input type="hidden" id="flagStatus" value=1>
 					</c:if>
 					</span>
