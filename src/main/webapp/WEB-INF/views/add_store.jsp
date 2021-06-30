@@ -39,11 +39,12 @@
 					</div><br>
 					<div>
 						<label>営業時間：
-						<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 200px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
+						<form:textarea path="workTime" style=" resize:none; font-size: 17px; margin: 0px; height: 50px; width: 192px;" placeholder="例）10:00～19:00 &#13;　　火曜定休日"/></label>
 					</div>
 					</div><br><br>
 
-					<div style="display:inline-block; text-align:left;">カテゴリ：</div><div style="display:inline-block; padding-left:330px; text-align:right;"><a href="/category_process" style="font-size:20px">カテゴリを追加する</a></div>
+					<div style="display:inline-block; text-align:left;">カテゴリ：</div>
+					<div style="display:inline-block; padding-left:330px; text-align:right;"><a href="/category_process" style="font-size:20px">カテゴリを追加する</a></div>
 					<div class="inner_frame_hidden">
 						<div class="inner_frame_left">
 							<form:select path="mainCategoryId1" id="mainCate1">
